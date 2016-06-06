@@ -67,11 +67,6 @@ Data Exchange:
 | url      | URL to image to display on the pin |
 | pinners  | Array of User.id that have pinned this pin |
 
-creator: 'l-amy', username: 'amy', category: 'Food', title: 'Pizza Waffles',
-text: 'Because how could these not go together !',
-url: 'https://s-media-cache-ak0.pinimg.com/75x75/04/0e/47/040e47bff1bb08d54f95b94857673960.jpg',
-pinners: ['l-amy']
-
 ## Non-Functional Requirements
 
 The application processor, memory and storage requirements will fit within the
