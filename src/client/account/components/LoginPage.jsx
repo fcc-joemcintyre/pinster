@@ -69,7 +69,12 @@ export default class LoginPage extends React.Component {
             Login
           </button>
         </form>
-        <a className='twitterButton' href='api/login/twitter'>Log in with Twitter</a>
+        <div className='externalLogins'>
+          <p>Or</p>
+          <div className='externalLogin'>
+            <a className='twitterButton' href='api/login/twitter'>Log in with Twitter</a>
+          </div>
+        </div>
       </div>
     );
   }
