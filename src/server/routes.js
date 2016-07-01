@@ -31,7 +31,7 @@ function init (app) {
   app.delete ('/api/pins/:_id', isAuthenticated, listenerApp.deletePin);
 }
 
-// authenticate, if passing continue, otherwise redirect to home page
+// authenticate, if passing continue, otherwise return 401 (auth failed)
 function isAuthenticated (req, res, next) {
   if (req.isAuthenticated ()) {
     return next ();
