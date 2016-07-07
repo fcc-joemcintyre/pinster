@@ -1,10 +1,10 @@
 import React from 'react';
-import {Link} from 'react-router';
+import {withRouter} from 'react-router';
 import Pin from './Pin.jsx';
 import {deletePin} from '../store/actions';
 import Masonry from 'react-masonry-component';
 
-export default class ManagePage extends React.Component {
+class ManagePage extends React.Component {
   constructor (props, context) {
     super (props, context);
     let s = context.store.getState ();
@@ -30,7 +30,7 @@ export default class ManagePage extends React.Component {
     items.push (
       <div key='0'
         className='addPin'
-        onClick={() => {this.context.router.push ('/add')}}>
+        onClick={() => {this.props.router.push ('/add')}}>
         <div className='addSign'>
           +
         </div>
@@ -45,7 +45,7 @@ export default class ManagePage extends React.Component {
             loggedIn={true}
             editPage={true}
             pin={pin}
-            handleEditPin={(pinId) => {this.context.router.push (`/edit/${pinId}`)}}
+            handleEditPin={(pinId) => {this.props.router.push (`/edit/${pinId}`)}}
             handleDeletePin={(pinId) => {this.context.store.dispatch (deletePin (pinId))}}
           />
         );
@@ -64,7 +64,8 @@ export default class ManagePage extends React.Component {
   }
 }
 
+export default withRouter (ManagePage);
+
 ManagePage.contextTypes = {
-  store: React.PropTypes.object.isRequired,
-  router: React.PropTypes.object.isRequired
+  store: React.PropTypes.object.isRequired
 }

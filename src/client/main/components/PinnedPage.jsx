@@ -1,5 +1,4 @@
 import React from 'react';
-import {Link} from 'react-router';
 import Pin from './Pin.jsx';
 import {setPins, togglePinned} from '../store/actions';
 import Masonry from 'react-masonry-component';
@@ -55,6 +54,5 @@ export default class PinnedPage extends React.Component {
 }
 
 PinnedPage.contextTypes = {
-  store: React.PropTypes.object.isRequired,
-  router: React.PropTypes.object.isRequired
+  store: React.PropTypes.object.isRequired
 }

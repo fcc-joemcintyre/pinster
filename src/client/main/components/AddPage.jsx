@@ -1,11 +1,11 @@
 import React from 'react';
-import {Link} from 'react-router';
+import {withRouter} from 'react-router';
 import {addPin} from '../store/actions';
 import FilteredInput from '../../ui/FilteredInput.jsx';
 
 const textChars = /[ -~]/;
 
-export default class AddPage extends React.Component {
+class AddPage extends React.Component {
   constructor (props, context) {
     super (props, context);
     this.state = {
@@ -24,7 +24,7 @@ export default class AddPage extends React.Component {
       this.context.store.dispatch (addPin (this.state.category, this.state.title, this.state.text, this.state.url))
       .then (success => {
         this.setState ({ error: false });
-        this.context.router.push ('/manage');
+        this.props.router.push ('/manage');
       }).catch (error => {
         this.setState ({ error: true });
       });
@@ -83,7 +83,8 @@ export default class AddPage extends React.Component {
   }
 }
 
+export default withRouter (AddPage);
+
 AddPage.contextTypes = {
-  store: React.PropTypes.object.isRequired,
-  router: React.PropTypes.object.isRequired
+  store: React.PropTypes.object.isRequired
 }

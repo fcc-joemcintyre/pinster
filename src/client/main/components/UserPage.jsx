@@ -1,5 +1,4 @@
 import React from 'react';
-import {Link} from 'react-router';
 import Pin from './Pin.jsx';
 import {setPins, updateLikes, setLike} from '../store/actions';
 import Masonry from 'react-masonry-component';
@@ -56,6 +55,5 @@ export default class UserPage extends React.Component {
 }
 
 UserPage.contextTypes = {
-  store: React.PropTypes.object.isRequired,
-  router: React.PropTypes.object.isRequired
+  store: React.PropTypes.object.isRequired
 }
