@@ -1,5 +1,4 @@
-'use strict';
-const mongoClient = require ('mongodb').MongoClient;
+const MongoClient = require ('mongodb').MongoClient;
 const ObjectId = require ('mongodb').ObjectId;
 const hash = require ('./hash');
 
@@ -8,93 +7,70 @@ let users = null;
 let pins = null;
 
 // connect to database and set up collections
-function init (uri) {
-  console.log ('db.init');
-  return new Promise ((resolve, reject) => {
-    if (db === null) {
-      mongoClient.connect (uri, (err, instance) => {
-        if (err) {
-          console.log ('init err:', err);
-          return reject (err);
-        }
-        db = instance;
-        Promise.resolve ().then (() => {
-          users = db.collection ('users');
-          return users.ensureIndex ({id: 1}, {unique: true});
-        }).then (() => {
-          pins = db.collection ('pins');
-          return pins.ensureIndex ({creator: 1}, {unique: false});
-        }).then (() => {
-          resolve ();
-        }).catch (err => {
-          reject (err);
-        });
-      });
-    } else {
-      resolve ();
-    }
-  });
+async function init (uri) {
+  console.log ('INFO db.init');
+  if (db) { return; }
+
+  try {
+    db = await MongoClient.connect (uri);
+    users = db.collection ('users');
+    pins = db.collection ('pins');
+    await users.ensureIndex ({ id: 1 }, { unique: true });
+    await pins.ensureIndex ({ creator: 1 }, { unique: false });
+  } catch (err) {
+    console.log ('ERROR db.init', err);
+    throw err;
+  }
 }
 
 // Close database and null out references
-function close () {
-  return new Promise ((resolve, reject) => {
-    if (db) {
+async function close () {
+  if (db) {
+    try {
       users = null;
       pins = null;
-      Promise.resolve ().then (() => {
-        return db.close ();
-      }).then (() => {
-        db = null;
-        resolve ();
-      }).catch (() => {
-        db = null;
-        resolve ();
-      });
-    } else {
-      resolve ();
+      await db.close ();
+      db = null;
+    } catch (err) {
+      db = null;
     }
-  });
+  }
+}
+
+function getCollection (name) {
+  const collections = { users, pins };
+  return collections[name];
 }
 
 // Find single user by id
 function findUser (id) {
-  return users.findOne ({id: id});
+  return users.findOne ({ id });
 }
 
 // Insert single user with base data. Additional information through profile.
-function insertLocalUser (username, password) {
-  return new Promise ((resolve, reject) => {
-    Promise.resolve ().then (() => {
-      return findUser ('l-' + username);
-    }).then (result => {
-      if (result !== null) {
-        return reject (new Error ('User already exists'));
-      }
-      let userHash = hash.create (password);
-      let user = {
-        id: 'l-' + username,
-        username: username,
-        hash: userHash.hash,
-        salt: userHash.salt
-      };
-      return users.insert (user, {w:1});
-    }).then (result => {
-      resolve (result);
-    }).catch (err => {
-      reject (err);
-    });
-  });
+async function insertLocalUser (username, password) {
+  const existing = await findUser (`l-${username}`);
+  if (existing) {
+    throw new Error ('User already exists');
+  }
+  const userHash = hash.create (password);
+  const user = {
+    id: `l-${username}`,
+    username,
+    hash: userHash.hash,
+    salt: userHash.salt,
+  };
+  return users.insert (user, { w: 1 });
 }
 
 function insertSocialUser (user) {
-  return users.insert (user, {w:1});
+  return users.insert (user, { w: 1 });
 }
 
 
 // remove user
 function removeUser (id) {
-  return users.remove ({ id: id });
+  return users.remove ({ id });
 }
 
 // get all pins
@@ -104,7 +80,7 @@ function getPins () {
 
 // get pins by creator
 function getPinsByCreator (creator) {
-  return pins.find ({creator: creator}).toArray ();
+  return pins.find ({ creator }).toArray ();
 }
 
 // get a single pin
@@ -114,19 +90,14 @@ function getPin (_id) {
 
 // insert a pin
 function insertPin (newPin) {
-  return pins.insert (newPin, {w:1});
+  return pins.insert (newPin, { w: 1 });
 }
 
 // update a pin
 function updatePin (_id, category, title, text, url) {
   return pins.update (
     { _id: new ObjectId (_id) },
-    { $set: {
-      category: category,
-      title: title,
-      text: text,
-      url: url
-    }}
+    { $set: { category, title, text, url } }
   );
 }
 
@@ -151,20 +122,14 @@ function setPinner (_id, id, value) {
 }
 
 // get list of pinners
-function getPinners (_id) {
-  return new Promise ((resolve, reject) => {
-    Promise.resolve ().then (() => {
-      return pins.findOne ({_id: new ObjectId (_id) });
-    }).then (result => {
-      resolve ((result) ? result.pinners : []);
-    }).catch (err => {
-      reject (err);
-    });
-  });
+async function getPinners (_id) {
+  const data = await pins.findOne ({ _id: new ObjectId (_id) });
+  return data ? data.pinners : [];
 }
 
 exports.init = init;
 exports.close = close;
+exports.getCollection = getCollection;
 exports.findUser = findUser;
 exports.insertLocalUser = insertLocalUser;
 exports.insertSocialUser = insertSocialUser;

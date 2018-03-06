@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Row renders centered content 1`] = `
+.c0 {
+  text-align: center;
+}
+
+<div
+  className="c0"
+>
+  text
+</div>
+`;
+
+exports[`Row renders default layout 1`] = `
+.c0 {
+  text-align: left;
+}
+
+<div
+  className="c0"
+>
+  text
+</div>
+`;
+
+exports[`Row renders left justified content 1`] = `
+.c0 {
+  text-align: left;
+}
+
+<div
+  className="c0"
+>
+  text
+</div>
+`;
+
+exports[`Row renders right justfied content 1`] = `
+.c0 {
+  text-align: right;
+}
+
+<div
+  className="c0"
+>
+  text
+</div>
+`;

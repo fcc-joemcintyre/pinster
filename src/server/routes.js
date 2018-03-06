@@ -1,4 +1,3 @@
-'use strict';
 const passport = require ('passport');
 const listenerUser = require ('./listenerUser');
 const listenerApp = require ('./listenerApp');
@@ -13,7 +12,7 @@ function init (app) {
   app.get ('/api/login/twitter', passport.authenticate ('twitter'));
   app.get ('/api/login/twittercb',
     passport.authenticate ('twitter', { failureRedirect: '/login' }),
-    function (req, res) {
+    (req, res) => {
       console.log ('tauth', req.user);
       res.redirect ('/verifyLogin');
     });
@@ -35,8 +34,9 @@ function init (app) {
 function isAuthenticated (req, res, next) {
   if (req.isAuthenticated ()) {
     return next ();
+  } else {
+    return res.status (401).json ({});
   }
-  res.status (401).json ({});
 }
 
 exports.init = init;

@@ -1,46 +1,29 @@
-'use strict';
 const db = require ('../../dist/db');
 
 describe ('users', function () {
-  beforeEach (function (done) {
-    Promise.resolve ().then (() => {
-      return db.insertLocalUser ('amy', 'test');
-    }).then (() => { done ();
-    }).catch (err => { done (err); });
+  beforeEach (async function () {
+    await db.insertLocalUser ('amy', 'test');
   });
 
-  afterEach (function (done) {
-    Promise.resolve ().then (() => {
-      return db.removeUser ('l-amy');
-    }).then (() => { done ();
-    }).catch (err => { done (err); });
+  afterEach (async function () {
+    await db.removeUser ('l-amy');
   });
 
   describe ('find amy', function () {
-    it ('should be found', function (done) {
-      Promise.resolve ().then (() => {
-        return db.findUser ('l-amy');
-      }).then (result => {
-        if (result) {
-          done ();
-        } else {
-          done (new Error ('not found'));
-        }
-      }).catch (err => { done (err); });
+    it ('should be found', async function () {
+      const result = await db.findUser ('l-amy');
+      if (! result) {
+        throw new Error ('not found');
+      }
     });
   });
 
   describe ('find amyy', function () {
-    it ('should not be found', function (done) {
-      Promise.resolve ().then (() => {
-        return db.findUser ('l-amyy');
-      }).then (result => {
-        if (result) {
-          done (new Error ('should not be found'));
-        } else {
-          done ();
-        }
-      }).catch (err => { done (err); });
+    it ('should not be found', async function () {
+      const result = await db.findUser ('l-amyy');
+      if (result) {
+        throw new Error ('should not be found');
+      }
     });
   });
 });

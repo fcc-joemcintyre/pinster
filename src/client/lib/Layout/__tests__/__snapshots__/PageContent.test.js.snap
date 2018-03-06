@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PageContent renders default component 1`] = `
+.c0 {
+  max-width: 768px;
+  margin: 0 auto;
+  padding: 100px 0px 16px 0px;
+  overflow: auto;
+}
+
+<div
+  className="c0"
+/>
+`;
+
+exports[`PageContent with custom max-width 1`] = `
+.c0 {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 100px 0px 16px 0px;
+  overflow: auto;
+}
+
+<div
+  className="c0"
+/>
+`;

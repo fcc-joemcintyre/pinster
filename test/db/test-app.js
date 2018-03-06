@@ -1,175 +1,112 @@
-'use strict';
 const ObjectId = require ('mongodb').ObjectId;
-const testdb = require ('./test-main').testdb;
 const db = require ('../../dist/db');
-
 
 describe ('pins', function () {
   describe ('query existing pins', function () {
-    it ('all should be found', function (done) {
-      Promise.resolve ().then (() => {
-        return db.getPins ();
-      }).then (result => {
-        if (result.length === 6) {
-          done ();
-        } else {
-          done (new Error ('wrong number found', result.length));
-        }
-      }).catch (err => {
-        done (err);
-      });
+    it ('all should be found', async function () {
+      const result = await db.getPins ();
+      if (result.length !== 6) {
+        throw new Error ('wrong number found', result.length);
+      }
     });
   });
 
   describe ('query existing pins of a user', function () {
-    it ('4 should be found', function (done) {
-      Promise.resolve ().then (() => {
-        return db.getPinsByCreator ('l-amy');
-      }).then (result => {
-        if (result.length === 4) {
-          done ();
-        } else {
-          done (new Error (`wrong number found ${result.length}`));
-        }
-      }).catch (err => {
-        done (err);
-      });
+    it ('4 should be found', async function () {
+      const result = await db.getPinsByCreator ('l-amy');
+      if (result.length !== 4) {
+        throw new Error (`wrong number found ${result.length}`);
+      }
     });
   });
 
   describe ('query pins of non-existing id', function () {
-    it ('should not be found', function (done) {
-      Promise.resolve ().then (() => {
-        return db.getPinsByCreator ('not-a-valid-id');
-      }).then (result => {
-        if (result.length > 0) {
-          done (new Error ('pins with invalid id found'));
-        } else {
-          done ();
-        }
-      }).catch (err => {
-        done (err);
-      });
+    it ('should not be found', async function () {
+      const result = await db.getPinsByCreator ('not-a-valid-id');
+      if (result.length > 0) {
+        throw new Error ('pins with invalid id found');
+      }
     });
   });
 
   describe ('add new pin', function () {
-    it ('should have inserted count 1', function (done) {
-      Promise.resolve ().then (() => {
-        return db.insertPin ({ creator: 'l-newuser', username: 'newuser', category: '', title:'', text: '', url: '', pinners: [] });
-      }).then (result => {
-        if (result.insertedCount === 1) {
-          done ();
-        } else {
-          done (new Error (`insert failed: ${JSON.stringify (result)}`));
-        }
-      }).catch (err => {
-        done (err);
-      });
+    it ('should have inserted count 1', async function () {
+      const result = await db.insertPin (
+        { creator: 'l-newuser', username: 'newuser', category: '', title: '', text: '', url: '', pinners: [] }
+      );
+      if (result.insertedCount !== 1) {
+        throw new Error (`insert failed: ${JSON.stringify (result)}`);
+      }
     });
   });
 });
 
 describe ('pins', function () {
-  beforeEach (function (done) {
-    Promise.resolve ().then (() => {
-      return testdb.pins.update (
-        { _id: new ObjectId (testdb.pinIds[0]) },
-        { $set: { pinners: [] } }
-      );
-    }).then (() => {
-      done ();
-    }).catch (err => {
-      done (err);
-    });
+  let testPinId;
+  before (async function () {
+    const pins = await db.getCollection ('pins').find ().toArray ();
+    if (pins.length === 0) {
+      throw new Error ('Pins not initialized');
+    }
+    testPinId = pins[0]._id.toString ();
+  });
+
+  beforeEach (async function () {
+    await db.getCollection ('pins').update (
+      { _id: new ObjectId (testPinId) },
+      { $set: { pinners: [] } }
+    );
   });
 
   describe ('add 1 pinner', function () {
-    it ('should show id added to pinners', function (done) {
-      Promise.resolve ().then (() => {
-        return db.setPinner (testdb.pinIds[0], 'l-amy', true);
-      }).then (() => {
-        return db.getPinners (testdb.pinIds[0]);
-      }).then (pinners => {
-        if (pinners.length !== 1) {
-          return done (new Error (`Wrong number of pinners: ${pinners.length}`));
-        }
-        done ();
-      }).catch (err => {
-        done (err);
-      });
+    it ('should show id added to pinners', async function () {
+      await db.setPinner (testPinId, 'l-amy', true);
+      const pinners = await db.getPinners (testPinId);
+      if (pinners.length !== 1) {
+        throw new Error (`Wrong number of pinners: ${pinners.length}`);
+      }
     });
   });
 
   describe ('add 2 pinners', function () {
-    it ('should show 2 pinners', function (done) {
-      Promise.resolve ().then (() => {
-        return db.setPinner (testdb.pinIds[0], 'l-amy', true);
-      }).then (() => {
-        return db.setPinner (testdb.pinIds[0], 'l-bob', true);
-      }).then (() => {
-        return db.getPinners (testdb.pinIds[0]);
-      }).then (pinners => {
-        if (pinners.length !== 2) {
-          return done (new Error (`Wrong number of pinners: ${pinners.length}`));
-        }
-        done ();
-      }).catch (err => {
-        done (err);
-      });
+    it ('should show 2 pinners', async function () {
+      await db.setPinner (testPinId, 'l-amy', true);
+      await db.setPinner (testPinId, 'l-bob', true);
+      const pinners = await db.getPinners (testPinId);
+      if (pinners.length !== 2) {
+        throw new Error (`Wrong number of pinners: ${pinners.length}`);
+      }
     });
   });
 
   describe ('add duplicate pinner', function () {
-    it ('should show 1 pinner', function (done) {
-      Promise.resolve ().then (() => {
-        return db.setPinner (testdb.pinIds[0], 'l-amy', true);
-      }).then (() => {
-        return db.setPinner (testdb.pinIds[0], 'l-amy', true);
-      }).then (() => {
-        return db.getPinners (testdb.pinIds[0]);
-      }).then (pinners => {
-        if (pinners.length !== 1) {
-          return done (new Error (`Wrong number of pinners: ${pinners.length}`));
-        }
-        done ();
-      }).catch (err => {
-        done (err);
-      });
+    it ('should show 1 pinner', async function () {
+      await db.setPinner (testPinId, 'l-amy', true);
+      await db.setPinner (testPinId, 'l-amy', true);
+      const pinners = await db.getPinners (testPinId);
+      if (pinners.length !== 1) {
+        throw new Error (`Wrong number of pinners: ${pinners.length}`);
+      }
     });
   });
 
   describe ('add and remove pinner', function () {
-    it ('should show 0 pinners', function (done) {
-      Promise.resolve ().then (() => {
-        return db.setPinner (testdb.pinIds[0], 'l-amy', true);
-      }).then (() => {
-        return db.setPinner (testdb.pinIds[0], 'l-amy', false);
-      }).then (() => {
-        return db.getPinners (testdb.pinIds[0]);
-      }).then (pinners => {
-        if (pinners.length !== 0) {
-          return done (new Error (`Wrong number of pinners: ${[pinners].length}`));
-        }
-        done ();
-      }).catch (err => {
-        done (err);
-      });
+    it ('should show 0 pinners', async function () {
+      await db.setPinner (testPinId, 'l-amy', true);
+      await db.setPinner (testPinId, 'l-amy', false);
+      const pinners = await db.getPinners (testPinId);
+      if (pinners.length !== 0) {
+        throw new Error (`Wrong number of pinners: ${[pinners].length}`);
+      }
     });
   });
 
   describe ('try to get pinners for invalid _id', function () {
-    it ('should return 0 pinners', function (done) {
-      Promise.resolve ().then (() => {
-        return db.getPinners ('000000000000000000000000');
-      }).then (pinners => {
-        if (pinners.length !== 0) {
-          return done (new Error (`Wrong number of pinners: ${pinners.length}`));
-        }
-        done ();
-      }).catch (err => {
-        done (err);
-      });
+    it ('should return 0 pinners', async function () {
+      const pinners = await db.getPinners ('000000000000000000000000');
+      if (pinners.length !== 0) {
+        throw new Error (`Wrong number of pinners: ${pinners.length}`);
+      }
     });
   });
 });

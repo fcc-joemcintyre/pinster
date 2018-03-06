@@ -1,0 +1,211 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FlexGroup renders centered components 1`] = `
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin: 0 -10px;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.c0 > * {
+  margin: 10px 10px 0px 10px;
+}
+
+<div
+  className="c0"
+  spacing="10px"
+>
+  <button
+    type="submit"
+  >
+    SUBMIT
+  </button>
+  <button
+    type="button"
+  >
+    CANCEL
+  </button>
+  <button
+    type="button"
+  >
+    CLEAR
+  </button>
+</div>
+`;
+
+exports[`FlexGroup renders custom spaced components 1`] = `
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin: 0 -20px;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+}
+
+.c0 > * {
+  margin: 20px 20px 0px 20px;
+}
+
+<div
+  className="c0"
+  spacing="20px"
+>
+  <button
+    type="submit"
+  >
+    SUBMIT
+  </button>
+  <button
+    type="button"
+  >
+    CANCEL
+  </button>
+  <button
+    type="button"
+  >
+    CLEAR
+  </button>
+</div>
+`;
+
+exports[`FlexGroup renders default layout 1`] = `
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin: 0 -10px;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+}
+
+.c0 > * {
+  margin: 10px 10px 0px 10px;
+}
+
+<div
+  className="c0"
+  spacing="10px"
+>
+  <button
+    type="submit"
+  >
+    SUBMIT
+  </button>
+  <button
+    type="button"
+  >
+    CANCEL
+  </button>
+  <button
+    type="button"
+  >
+    CLEAR
+  </button>
+</div>
+`;
+
+exports[`FlexGroup renders left justified component 1`] = `
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin: 0 -10px;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+}
+
+.c0 > * {
+  margin: 10px 10px 0px 10px;
+}
+
+<div
+  className="c0"
+  spacing="10px"
+>
+  <button
+    type="submit"
+  >
+    SUBMIT
+  </button>
+  <button
+    type="button"
+  >
+    CANCEL
+  </button>
+  <button
+    type="button"
+  >
+    CLEAR
+  </button>
+</div>
+`;
+
+exports[`FlexGroup renders right justfied components 1`] = `
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin: 0 -10px;
+  -webkit-box-pack: right;
+  -webkit-justify-content: right;
+  -ms-flex-pack: right;
+  justify-content: right;
+}
+
+.c0 > * {
+  margin: 10px 10px 0px 10px;
+}
+
+<div
+  className="c0"
+  spacing="10px"
+>
+  <button
+    type="submit"
+  >
+    SUBMIT
+  </button>
+  <button
+    type="button"
+  >
+    CANCEL
+  </button>
+  <button
+    type="button"
+  >
+    CLEAR
+  </button>
+</div>
+`;

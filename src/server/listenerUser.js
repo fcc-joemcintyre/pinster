@@ -1,15 +1,15 @@
-'use strict';
 const passport = require ('passport');
 const db = require ('./db');
 
 // Initialize listeners (currently empty)
 function init () {
+  // empty
 }
 
 // Login, authenticating user and creating a session
 function login (req, res, next) {
   console.log ('login');
-  passport.authenticate ('local', (err, user, info) => {
+  passport.authenticate ('local', (err, user) => {
     if (err) {
       return next (err);
     }
@@ -18,15 +18,15 @@ function login (req, res, next) {
       console.log ('  login', 'unauthenticated');
       return res.status (401).json ({});
     }
-    req.login (user, (err) => {
-      if (err) {
+    return req.login (user, (err1) => {
+      if (err1) {
         return next (err);
       }
       console.log ('  login', user.username);
-      let result = { id: user.id, username: user.username };
+      const result = { id: user.id, username: user.username };
       return res.status (200).json (result);
     });
-  })(req, res, next);
+  }) (req, res, next);
 }
 
 // logout, closing session
@@ -48,8 +48,8 @@ function verifyLogin (req, res) {
       authenticated: true,
       user: {
         id: req.user.id,
-        username: req.user.username
-      }
+        username: req.user.username,
+      },
     };
     console.log ('  verified', req.user.username);
   } else {
@@ -59,20 +59,19 @@ function verifyLogin (req, res) {
 }
 
 // register new user. If already existing user, return 403 (Forbidden)
-function register (req, res) {
+async function register (req, res) {
   console.log ('register');
   if (! (req.body && req.body.username && req.body.password)) {
     res.status (400).json ({});
   } else {
-    db.insertLocalUser (req.body.username, req.body.password)
-    .then (() => {
+    try {
+      await db.insertLocalUser (req.body.username, req.body.password);
       console.log ('  registered', req.body.username);
       res.status (200).json ({});
-    })
-    .catch (err => {
+    } catch (err) {
       console.log ('  error', err);
       res.status (403).json ({});
-    });
+    }
   }
 }
 

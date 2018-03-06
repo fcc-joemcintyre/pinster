@@ -4,21 +4,27 @@ The Internet is full of images to share and comment on with your friends,
 Pinster lets you show off the ones you like and see the ones other people
 like.
 
-This application is built using *React (15.x)*, *Redux* and *react-router* on
-the client. The server uses *Nodejs (6.x)*, *Express* and *Passport*.
+This application is built using *React (16.x)*, *Redux*, *react-router*
+and *styled-components* on the client. The server uses *Nodejs (8.x)*,
+*Express* and *Passport*. The database is *MongoDB (3.4.x)*.
 
 ## Live instance
 
 The application can be used at https://pinster-jm.herokuapp.com
 
+## CLI Commands
+
+Either *yarn* or *npm* can be used. Where *yarn* is shown, it can be replaced
+with *npm run*.
+
 ## Development setup
 
-Clone the *Github* repo, then install the dependencies using *npm*.
+Clone the *Github* repo, then install the dependencies using *yarn* or *npm*.
 
 ```
 git clone https://github.com/fcc-joemcintyre/pinster.git
 cd pinster
-npm install
+yarn (or npm install)
 ```
 
 The database supported is *MongoDB*. This can be a local or hosted instance (you
@@ -31,7 +37,7 @@ name used by the test runner is *pinsterTest*.
 In a terminal, build can be activated with
 
 ```
-npm run [build | build-stage]
+yarn [build | build-stage]
 ```
 
 The build uses *gulp* to run the set of tasks defined in *gulpfile.js*. The
@@ -49,30 +55,15 @@ set up watches and rerun build elements as file changes are saved.
 Testing can be done for all components,
 
 ```
-npm test
+yarn test
 ```
 
 Or components individually,
 
 ```
-npm run test-db
-npm run test-server
+yarn test-db
+yarn test-server
 ```
-
-### Coverage
-
-Coverage reports are generated using,
-
-```
-npm run coverage
-```
-
-Multiple coverage runs are performed, and then a final coverage run combines
-the separate results. The final report is available in
-*coverage/lcov-report/index.html*
-
-Results for the individual runs are available in the subdirectories under the
-*coverage* directory.
 
 ### Server
 
@@ -80,7 +71,7 @@ In a terminal, continuous server operation, updating on changes,
 can be activated with
 
 ```
-npm start
+yarn start
 ```
 
 The *nodemon* utility provides restart on update.
