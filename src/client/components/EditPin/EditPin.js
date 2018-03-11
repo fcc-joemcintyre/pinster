@@ -14,7 +14,7 @@ class EditPinBase extends React.Component {
 
     this.state = {
       fields: {
-        url: createField ('url', pin.utl, true, [], 'Image location (http...)', inString, outString),
+        url: createField ('url', pin.url, true, [], 'Image location (http...)', inString, outString),
         category: createField ('category', pin.category, true, [], 'Up to 20 characters', inString, outString),
         title: createField ('title', pin.title, true, [], 'Up to 60 characters', inString, outString),
         text: createField ('text', pin.text, true, [], 'Why you like this', inString, outString),
@@ -42,6 +42,7 @@ class EditPinBase extends React.Component {
   render () {
     return (
       <PinForm
+        action='Edit'
         fields={this.state.fields}
         onChange={this.onChange}
         onValidate={this.onValidate}

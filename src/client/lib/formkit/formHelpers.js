@@ -14,7 +14,7 @@
  * @return {Object} Field to be included in *fields* state object
  */
 export function createField (name, initialValue = '', required = false, validators = [],
-  info = null, formatIn = null, formatOut = null) {
+  info = null, formatIn = inString, formatOut = outString) {
   const field = {
     name,
     initialValue: formatIn ? formatIn (initialValue) : initialValue,

@@ -5,11 +5,12 @@ import { fieldPropTypes } from '../../lib/formkit/formPropTypes';
 import { PageContent, FlexGroup } from '../../lib/Layout';
 import { Heading } from '../../lib/Text';
 import { Form } from '../../lib/Form';
-import { Field, FieldInput, FieldTextArea } from '../../lib/FieldBordered';
+import { Field } from '../../lib/FieldBordered';
+import { FieldInput, FieldTextArea } from '../../lib/Field';
 import { Label } from '../../lib/Label';
 import { Button } from '../../lib/Button';
 
-export const PinForm = ({ fields, fields: { url, category, title, text }, onChange, onValidate, onSubmit }) => {
+export const PinForm = ({ action, fields, fields: { url, category, title, text }, onChange, onValidate, onSubmit }) => {
   function resetFocus () {
     const id = getFirstError (fields) || url.name;
     const el = document.getElementById (id);
@@ -20,7 +21,7 @@ export const PinForm = ({ fields, fields: { url, category, title, text }, onChan
 
   return (
     <PageContent>
-      <Heading center>Add Pin</Heading>
+      <Heading center>{action} Pin</Heading>
       <Form center w='300px' onSubmit={(e) => { onSubmit (e).then (() => { resetFocus (); }); }}>
         <Field>
           <Label htmlFor={url.name} required={url.required}>URL</Label>
@@ -64,7 +65,7 @@ export const PinForm = ({ fields, fields: { url, category, title, text }, onChan
         </Field>
         <FlexGroup center>
           <Button type='submit'>
-            Add Pin
+            {action} Pin
           </Button>
         </FlexGroup>
       </Form>
@@ -73,6 +74,7 @@ export const PinForm = ({ fields, fields: { url, category, title, text }, onChan
 };
 
 PinForm.propTypes = {
+  action: PropTypes.string.isRequired,
   fields: PropTypes.shape ({
     url: PropTypes.shape (fieldPropTypes).isRequired,
     category: PropTypes.shape (fieldPropTypes).isRequired,

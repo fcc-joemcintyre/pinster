@@ -10,7 +10,6 @@ exports[`Flex renders default component 1`] = `
 
 <div
   className="c0"
-  wrap={null}
 />
 `;
 
@@ -20,9 +19,6 @@ exports[`Flex renders wrap component 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  -webkit-flex-wrap: wrap;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
 }
 
 <div

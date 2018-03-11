@@ -25,18 +25,20 @@ export const Pin = ({ authenticated, pin, onEditPin, onDeletePin, onTogglePinned
           <Text fs='12px'>{pin.text}</Text>
         </Row>
         <Divider extend='4px' color='#dddddd' />
-        <Row center mb='4px'>{pinImage} {pin.count}</Row>
-        <Flex>
+        <Row center mt='6px' mb='4px'>{pinImage} {pin.count}</Row>
+        <Flex mb='6px'>
           <FlexItem grow>{pin.category}</FlexItem>
           <FlexItem><Link to={`/pins/${pin.creator}`}>{pin.username}</Link></FlexItem>
         </Flex>
         { editPage &&
           <Fragment>
             <Divider extend='4px' color='#dddddd' />
-            <FlexGroup right spacing='4px'>
-              <Button small type='button' onClick={() => onEditPin (pin._id)}>Edit</Button>
-              <Button small type='button' onClick={() => onDeletePin (pin._id)}>Delete</Button>
-            </FlexGroup>
+            <Row mt='6px' mb='6px'>
+              <FlexGroup right spacing='4px'>
+                <Button small type='button' onClick={() => onEditPin (pin._id)}>Edit</Button>
+                <Button small type='button' onClick={() => onDeletePin (pin._id)}>Delete</Button>
+              </FlexGroup>
+            </Row>
           </Fragment>
         }
       </Box>

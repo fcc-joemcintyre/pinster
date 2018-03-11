@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { size } from './textSize';
 
-export const List = styled.ul`
+export const Span = styled.span`
   ${size}
 `;

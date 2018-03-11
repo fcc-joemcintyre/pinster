@@ -19,7 +19,7 @@ export const FieldSelect = ({ field, errors, onChange, onValidate, ...rest }) =>
         }
       </FieldError> :
       <FieldInfo>
-        {field.info || <span>&nbsp;</span>}
+        { (field.info && (field.info !== '')) ? field.info : <span>&nbsp;</span>}
       </FieldInfo>
     }
   </Fragment>

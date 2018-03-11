@@ -1,17 +1,17 @@
 import PropTypes from 'prop-types';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { common } from '../css';
 
 export const Box = styled.div`
   ${common}
-  ${({ inline }) => inline && css`
+  ${({ inline }) => inline && `
     display: inline-block;
   `};
-  ${({ center }) => center && css`
+  ${({ center }) => center && `
     margin-left: auto;
     margin-right: auto;
   `};
-  ${({ bg }) => bg && css`
+  ${({ bg }) => bg && `
     background-color: ${bg}
   `};
 `;

@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { common } from '../css';
+import { FieldText, FieldInfo } from '../Field';
 
 export const Field = styled.div`
   margin: 6px 0 16px 0;
@@ -30,9 +31,21 @@ export const Field = styled.div`
     background-color: aliceblue;
     border: none;
     width: calc(100% - 12px);
+
+    &focus: {
+      background-color: #e6f3ff;
+    }
   }
 
-  > input:focus, select:focus, textarea: focus {
-    background-color: #E6F3FF;
+  > ${FieldText} {
+    display: block;
+    margin: 12px 6px 8px 6px;
+    padding: 4px 0;
+  }
+
+  > ${FieldInfo} {
+    background-color: #F0F0F0;
+    text-align: center;
+    border-radius: 0 0 4px 4px;
   }
 `;

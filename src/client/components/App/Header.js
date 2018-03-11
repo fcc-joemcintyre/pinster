@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { Fixed, Relative, Flex } from '../../lib/Layout';
-import { Heading } from '../../lib/Text';
+import { Title } from '../../lib/Text';
 import { DropMenu, MenuBar, MenuNavLink, MenuSeparator } from '../../lib/Menu';
 
 class HeaderBase extends Component {
@@ -51,7 +51,7 @@ class HeaderBase extends Component {
               <MenuNavLink to='/login'>Login</MenuNavLink>
             </DropMenu>
           }
-          <Title>Pinster</Title>
+          <TitleBox>Pinster</TitleBox>
           { this.props.menu && this.props.authenticated && (this.state.innerWidth >= 320) &&
             <Flex>
               <MenuBar mt='12px'>
@@ -111,7 +111,7 @@ export const Content = styled (Relative)`
   }
 `;
 
-export const Title = styled (Heading)`
+export const TitleBox = styled (Title)`
   display: inline-block;
   vertical-align: top;
   margin: 8px 0 0 0;

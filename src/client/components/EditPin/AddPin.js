@@ -39,6 +39,7 @@ class AddPinBase extends React.Component {
   render () {
     return (
       <PinForm
+        action='Add'
         fields={this.state.fields}
         onChange={this.onChange}
         onValidate={this.onValidate}

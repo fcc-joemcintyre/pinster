@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { darker } from '../css';
 import { size } from './size';
 
@@ -8,10 +8,10 @@ export const Button = styled.button`
   ${size}
   border-radius: 4px;
   cursor: pointer;
-  ${props => (props.primary ? css`
+  ${props => (props.primary ? `
     color: ${props.fg || props.theme.buttonPrimaryColor || '#ffffff'};
     background-color: ${props.bg || props.theme.buttonPrimaryBG || '#0000ff'};
-  ` : css`
+  ` : `
     color: ${props.fg || props.theme.buttonColor || '#ffffff'};
     background-color: ${props.bg || props.theme.buttonBG || '#00007f'};
   `)};

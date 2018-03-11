@@ -1,11 +1,11 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { FilteredInput } from '../FilteredInput';
+import { Input } from '../Input';
 import { FieldInfo, FieldError } from '.';
 
-export const FieldFilteredInput = ({ field, errors, onChange, onValidate, ...rest }) => (
+export const FieldInput = ({ field, errors, onChange, onValidate, ...rest }) => (
   <Fragment>
-    <FilteredInput
+    <Input
       type='text'
       {...rest}
       id={field.name}
@@ -20,13 +20,13 @@ export const FieldFilteredInput = ({ field, errors, onChange, onValidate, ...res
         }
       </FieldError> :
       <FieldInfo>
-        {field.info || <span>&nbsp;</span>}
+        { (field.info && (field.info !== '')) ? field.info : <span>&nbsp;</span>}
       </FieldInfo>
     }
   </Fragment>
 );
 
-FieldFilteredInput.propTypes = {
+FieldInput.propTypes = {
   field: PropTypes.shape ({
     name: PropTypes.string,
     value: PropTypes.string,
@@ -36,7 +36,7 @@ FieldFilteredInput.propTypes = {
   onValidate: PropTypes.func,
 };
 
-FieldFilteredInput.defaultProps = {
+FieldInput.defaultProps = {
   errors: null,
   onValidate: () => { /* no-op */ },
 };
