@@ -6,12 +6,21 @@ export const FlexGroup = styled.div`
   ${common}
   display: flex;
   flex-wrap: wrap;
-  margin: ${props => `0 -${props.spacing}`};
   justify-content: ${props => (props.center ? 'center' : props.right ? 'flex-end' : 'flex-start')};
 
-  > * {
-    margin: ${props => `${props.spacing} ${props.spacing} 0px ${props.spacing}`};
-  }
+  ${({ center, spacing, mt, mb }) => (center ?
+    `
+      > * {
+        margin: ${spacing};
+      }
+    ` : `
+      margin: ${mt || '0'} -${spacing} ${mb || '0'} -${spacing};
+
+      > * {
+        margin: ${spacing} ${spacing} 0px ${spacing}};
+      }
+    `
+  )}
 `;
 
 FlexGroup.propTypes = {

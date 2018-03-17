@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { getFirstError } from '../../lib/formkit/formHelpers';
 import { fieldPropTypes } from '../../lib/formkit/formPropTypes';
-import { PageContent, FlexGroup } from '../../lib/Layout';
+import { PageContent, FlexColumn, FlexGroup } from '../../lib/Layout';
 import { Heading } from '../../lib/Text';
 import { Form } from '../../lib/Form';
 import { Field } from '../../lib/FieldBordered';
@@ -23,47 +23,50 @@ export const PinForm = ({ action, fields, fields: { url, category, title, text }
     <PageContent>
       <Heading center>{action} Pin</Heading>
       <Form center w='300px' onSubmit={(e) => { onSubmit (e).then (() => { resetFocus (); }); }}>
-        <Field>
-          <Label htmlFor={url.name} required={url.required}>URL</Label>
-          <FieldInput
-            field={url}
-            autoFocus
-            maxLength={200}
-            autoCapitalize='none'
-            autoCorrect='off'
-            onChange={onChange}
-            onValidate={onValidate}
-          />
-        </Field>
-        <Field>
-          <Label htmlFor={category.name} required={category.required}>Category</Label>
-          <FieldInput
-            field={category}
-            maxLength={20}
-            onChange={onChange}
-            onValidate={onValidate}
-          />
-        </Field>
-        <Field>
-          <Label htmlFor={title.name} required={title.required}>Title</Label>
-          <FieldInput
-            field={title}
-            maxLength={60}
-            onChange={onChange}
-            onValidate={onValidate}
-          />
-        </Field>
-        <Field>
-          <Label htmlFor={text.name} required={text.required}>Description</Label>
-          <FieldTextArea
-            field={text}
-            rows={5}
-            maxLength={512}
-            onChange={onChange}
-            onValidate={onValidate}
-          />
-        </Field>
-        <FlexGroup center>
+        <FlexColumn>
+          <Field>
+            <Label htmlFor={url.name} required={url.required}>URL</Label>
+            <FieldInput
+              field={url}
+              autoFocus
+              maxLength={200}
+              autoCapitalize='none'
+              autoCorrect='off'
+              onChange={onChange}
+              onValidate={onValidate}
+            />
+          </Field>
+          <Field>
+            <Label htmlFor={category.name} required={category.required}>Category</Label>
+            <FieldInput
+              field={category}
+              maxLength={20}
+              onChange={onChange}
+              onValidate={onValidate}
+            />
+          </Field>
+          <Field>
+            <Label htmlFor={title.name} required={title.required}>Title</Label>
+            <FieldInput
+              field={title}
+              maxLength={60}
+              onChange={onChange}
+              onValidate={onValidate}
+            />
+          </Field>
+          <Field>
+            <Label htmlFor={text.name} required={text.required}>Description</Label>
+            <FieldTextArea
+              field={text}
+              rows={5}
+              maxLength={512}
+              onChange={onChange}
+              onValidate={onValidate}
+            />
+          </Field>
+        </FlexColumn>
+
+        <FlexGroup center mt='20px'>
           <Button type='submit'>
             {action} Pin
           </Button>

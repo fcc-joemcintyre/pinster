@@ -2,6 +2,7 @@ import { Fixed } from './Fixed';
 import { Absolute } from './Absolute';
 import { Relative } from './Relative';
 import { Flex } from './Flex';
+import { FlexColumn } from './FlexColumn';
 import { FlexGroup } from './FlexGroup';
 import { FlexItem } from './FlexItem';
 import { Box } from './Box';
@@ -10,4 +11,4 @@ import { Row } from './Row';
 import { Page } from './Page';
 import { PageContent } from './PageContent';
 
-export { Fixed, Absolute, Relative, Flex, FlexGroup, FlexItem, Box, Column, Row, Page, PageContent };
+export { Fixed, Absolute, Relative, Flex, FlexColumn, FlexGroup, FlexItem, Box, Column, Row, Page, PageContent };

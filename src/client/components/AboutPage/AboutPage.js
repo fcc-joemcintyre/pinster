@@ -6,7 +6,7 @@ import { TextLink } from '../../lib/Link';
 export const AboutPage = () => (
   <PageContent>
     <Heading center>About Pinster</Heading>
-    <Box center noborder mw='500px'>
+    <Box center noborder maxw='500px'>
       <P>
         Written by Joe McIntyre, Pinster is a full stack project defined by FreeCodeCamp.{' '}
         (<TextLink href='https://www.freecodecamp.com/challenges/build-a-pinterest-clone'>Link</TextLink>)

@@ -9,7 +9,6 @@ exports[`FlexGroup renders centered components 1`] = `
   -webkit-flex-wrap: wrap;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
-  margin: 0 -10px;
   -webkit-box-pack: center;
   -webkit-justify-content: center;
   -ms-flex-pack: center;
@@ -17,7 +16,7 @@ exports[`FlexGroup renders centered components 1`] = `
 }
 
 .c0 > * {
-  margin: 10px 10px 0px 10px;
+  margin: 10px;
 }
 
 <div
@@ -51,11 +50,11 @@ exports[`FlexGroup renders custom spaced components 1`] = `
   -webkit-flex-wrap: wrap;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
-  margin: 0 -20px;
   -webkit-box-pack: start;
   -webkit-justify-content: flex-start;
   -ms-flex-pack: start;
   justify-content: flex-start;
+  margin: 0 -20px 0 -20px;
 }
 
 .c0 > * {
@@ -93,11 +92,11 @@ exports[`FlexGroup renders default layout 1`] = `
   -webkit-flex-wrap: wrap;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
-  margin: 0 -10px;
   -webkit-box-pack: start;
   -webkit-justify-content: flex-start;
   -ms-flex-pack: start;
   justify-content: flex-start;
+  margin: 0 -10px 0 -10px;
 }
 
 .c0 > * {
@@ -135,11 +134,11 @@ exports[`FlexGroup renders left justified component 1`] = `
   -webkit-flex-wrap: wrap;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
-  margin: 0 -10px;
   -webkit-box-pack: start;
   -webkit-justify-content: flex-start;
   -ms-flex-pack: start;
   justify-content: flex-start;
+  margin: 0 -10px 0 -10px;
 }
 
 .c0 > * {
@@ -177,11 +176,11 @@ exports[`FlexGroup renders right justfied components 1`] = `
   -webkit-flex-wrap: wrap;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
-  margin: 0 -10px;
   -webkit-box-pack: end;
   -webkit-justify-content: flex-end;
   -ms-flex-pack: end;
   justify-content: flex-end;
+  margin: 0 -10px 0 -10px;
 }
 
 .c0 > * {

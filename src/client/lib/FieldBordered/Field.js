@@ -3,7 +3,6 @@ import { common } from '../css';
 import { FieldText, FieldInfo } from '../Field';
 
 export const Field = styled.div`
-  margin: 6px 0 16px 0;
   ${common}
   border: 1px solid darkgray;
   border-radius: 4px;
@@ -17,7 +16,6 @@ export const Field = styled.div`
     padding: 2px 5px 2px 5px;
     font-size: 14px;
     background-color: white;
-    overflow: hidden;
   }
 
   > label + * {
