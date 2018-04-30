@@ -7,7 +7,7 @@ import { Form } from '../../lib/Form';
 import { Field } from '../../lib/FieldBordered';
 import { FieldFilteredInput } from '../../lib/Field';
 import { Label } from '../../lib/Label';
-import { Heading } from '../../lib/Text';
+import { H1 } from '../../lib/Text';
 import { Button } from '../../lib/Button';
 import { MessageText } from '../../lib/MessageText';
 
@@ -31,7 +31,7 @@ export const RegisterForm = ({ message, fields, fields: { username, password, ve
 
   return (
     <PageContent>
-      <Heading center>Register</Heading>
+      <H1 center>Register</H1>
       <Row center mb='24px'>
         <MessageText status={message.status}>
           {message.text}

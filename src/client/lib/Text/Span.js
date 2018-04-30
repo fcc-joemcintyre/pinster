@@ -1,6 +1,18 @@
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { size } from './textSize';
+import { Font } from './Font';
+import { Size } from './Size';
 
 export const Span = styled.span`
-  ${size}
+  ${Font}
+  ${Size}
+  color: ${props => props.c};
 `;
+
+Span.propTypes = {
+  c: PropTypes.string,
+};
+
+Span.defaultProps = {
+  c: null,
+};

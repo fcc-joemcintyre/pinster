@@ -12,8 +12,8 @@ export const Absolute = styled.div`
 `;
 
 Absolute.propTypes = {
-  top: PropTypes.oneOf ([PropTypes.string, PropTypes.number]),
-  left: PropTypes.oneOf ([PropTypes.string, PropTypes.number]),
-  right: PropTypes.oneOf ([PropTypes.string, PropTypes.number]),
-  bottom: PropTypes.oneOf ([PropTypes.string, PropTypes.number]),
+  top: PropTypes.oneOfType ([PropTypes.string, PropTypes.number]),
+  left: PropTypes.oneOfType ([PropTypes.string, PropTypes.number]),
+  right: PropTypes.oneOfType ([PropTypes.string, PropTypes.number]),
+  bottom: PropTypes.oneOfType ([PropTypes.string, PropTypes.number]),
 };

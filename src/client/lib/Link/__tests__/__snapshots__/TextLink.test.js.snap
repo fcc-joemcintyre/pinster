@@ -1,0 +1,100 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PlainTextLink with color, default render 1`] = `
+.c0 {
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  color: #0000ff;
+}
+
+.c0:visited: {
+  color: #0000ff;
+}
+
+<a
+  c="#0000ff"
+  className="c0"
+  href="#"
+  rel="noopener noreferrer"
+  subject="Hi"
+  target="_blank"
+>
+  text
+</a>
+`;
+
+exports[`PlainTextLink with color, to only, default render 1`] = `
+.c0 {
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  color: #0000ff;
+}
+
+.c0:visited: {
+  color: #0000ff;
+}
+
+<a
+  c="#0000ff"
+  className="c0"
+  href="#"
+  rel="noopener noreferrer"
+  target="_blank"
+>
+  text
+</a>
+`;
+
+exports[`PlainTextLink, default render 1`] = `
+.c0 {
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+
+<a
+  className="c0"
+  href="#"
+  rel="noopener noreferrer"
+  subject="Hi"
+  target="_blank"
+>
+  text
+</a>
+`;
+
+exports[`PlainTextLink, to only, default render 1`] = `
+.c0 {
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+
+<a
+  className="c0"
+  href="#"
+  rel="noopener noreferrer"
+  target="_blank"
+>
+  text
+</a>
+`;
+
+exports[`TextLink, default render 1`] = `
+<a
+  href="#"
+  rel="noopener noreferrer"
+  subject="Hi"
+  target="_blank"
+>
+  text
+</a>
+`;
+
+exports[`TextLink, to only, default render 1`] = `
+<a
+  href="#"
+  rel="noopener noreferrer"
+  target="_blank"
+>
+  text
+</a>
+`;

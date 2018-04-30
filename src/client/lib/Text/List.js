@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { size } from './textSize';
+import { Size } from './Size';
 
 export const List = styled.ul`
-  ${size}
+  ${Size}
 `;

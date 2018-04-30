@@ -172,6 +172,24 @@ export function outString (value = '') {
 }
 
 /**
+ * Convert array of strings to field strings
+ * @param {string[]} value Input values
+ * @return {string[]} Array of field strings
+ */
+export function inStringArray (value = []) {
+  return value.map (inString);
+}
+
+/**
+ * Convert array of field strings to strings
+ * @param {string[]} value Input values
+ * @return {string[]} Array of strings
+ */
+export function outStringArray (value = []) {
+  return value.map (outString);
+}
+
+/**
  * Convert date to field string. Accepts Date object or date strings.
  * @param {string | Date} value Input date
  * @return {string} Date in m/d/yyyy format, or '' if no valid date provided
@@ -236,7 +254,7 @@ export function outInteger (value = 0) {
 /**
  * Convert array of integers to field strings
  * @param {any[]} value Input values
- * @return {string[]} Array of field string
+ * @return {string[]} Array of field strings
  */
 export function inIntegerArray (value = []) {
   return value.map (inInteger);

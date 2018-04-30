@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PlainLink default render 1`] = `
+.c0 {
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+
+<a
+  className="c0"
+  href="#"
+  onClick={[Function]}
+>
+  text
+</a>
+`;
+
+exports[`PlainLink renders with color 1`] = `
+.c0 {
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  color: #000000;
+}
+
+.c0:visited: {
+  color: #000000;
+}
+
+<a
+  c="#000000"
+  className="c0"
+  href="$"
+  onClick={[Function]}
+>
+  text
+</a>
+`;

@@ -11,21 +11,20 @@ export const MenuBar = styled.div`
 `;
 
 const item = css`
+  ${props => props.theme.menuText}
   position: relative;
   margin-right: 10px;
   white-space: nowrap;
-  color: #333333;
   cursor: pointer;
 
   &:last-child {
     margin-right: 0;
   }
   &:hover {
-    color: black;
+    ${props => props.theme.menuTextHover};
   }
   &.active {
-    color: black;
-    font-weight: 600;
+    ${props => props.theme.menuTextActive};
   }
 `;
 
@@ -66,7 +65,7 @@ export const MenuFloating = styled.div`
   right: ${props => (props.right ? 0 : null)};
   border: 1px solid #333333;
   border-top: transparent;
-  background-color: ${props => props.theme.colorPrimary || '#7AC1C1'};
+  background-color: ${props => props.theme.menuColor};
 
   > a {
     display: block;
@@ -75,7 +74,7 @@ export const MenuFloating = styled.div`
     overflow: hidden;
     padding: 6px 20px;
     &:hover {
-      background-color: ${props => (props.theme.colorPrimary ? darker (props.theme.colorPrimary) : darker ('#7AC1C1'))};
+      background-color: ${props => darker (props.theme.menuColor)};
     }
   }
 `;

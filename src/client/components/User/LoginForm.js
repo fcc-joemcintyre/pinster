@@ -7,7 +7,7 @@ import { Form } from '../../lib/Form';
 import { Field } from '../../lib/FieldBordered';
 import { FieldFilteredInput } from '../../lib/Field';
 import { Label } from '../../lib/Label';
-import { Heading } from '../../lib/Text';
+import { H1 } from '../../lib/Text';
 import { Button } from '../../lib/Button';
 import { MessageText } from '../../lib/MessageText';
 
@@ -29,7 +29,7 @@ export const LoginForm = ({ message, fields, fields: { username, password }, onC
 
   return (
     <PageContent>
-      <Heading center>Login</Heading>
+      <H1 center>Login</H1>
       <Row center mb='24px'>
         <MessageText status={message.status}>
           {message.text}

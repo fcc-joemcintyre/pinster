@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { getFirstError } from '../../lib/formkit/formHelpers';
 import { fieldPropTypes } from '../../lib/formkit/formPropTypes';
 import { PageContent, FlexColumn, FlexGroup } from '../../lib/Layout';
-import { Heading } from '../../lib/Text';
+import { H1 } from '../../lib/Text';
 import { Form } from '../../lib/Form';
 import { Field } from '../../lib/FieldBordered';
 import { FieldInput, FieldTextArea } from '../../lib/Field';
@@ -21,7 +21,7 @@ export const PinForm = ({ action, fields, fields: { url, category, title, text }
 
   return (
     <PageContent>
-      <Heading center>{action} Pin</Heading>
+      <H1 center>{action} Pin</H1>
       <Form center w='300px' onSubmit={(e) => { onSubmit (e).then (() => { resetFocus (); }); }}>
         <FlexColumn>
           <Field>

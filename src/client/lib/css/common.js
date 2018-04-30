@@ -18,6 +18,8 @@ export const common = css`
   width:  ${props => props.w};
   max-width:  ${props => props.maxw};
   min-width:  ${props => props.minw};
+  color: ${props => props.c};
+  background-color: ${props => props.bg};
 `;
 
 common.PropTypes = {
@@ -37,4 +39,6 @@ common.PropTypes = {
   w: PropTypes.string,
   minw: PropTypes.string,
   maxw: PropTypes.string,
+  c: PropTypes.string,
+  bg: PropTypes.string,
 };

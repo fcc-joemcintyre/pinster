@@ -1,3 +1,5 @@
-import { TextLink } from './TextLink';
+import { PlainLink } from './PlainLink';
+import { Mailto, PlainMailto } from './Mailto';
+import { TextLink, PlainTextLink } from './TextLink';
 
-export { TextLink };
+export { PlainLink, Mailto, PlainMailto, TextLink, PlainTextLink };

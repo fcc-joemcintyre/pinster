@@ -1,7 +1,9 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { common } from '../css';
 
 export const FlexColumn = styled.div`
+  ${common}
   display: flex;
   flex-direction: column;
   > * {

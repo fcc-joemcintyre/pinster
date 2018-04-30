@@ -11,9 +11,11 @@ export const Button = styled.button`
   ${props => (props.primary ? `
     color: ${props.fg || props.theme.buttonPrimaryColor || '#ffffff'};
     background-color: ${props.bg || props.theme.buttonPrimaryBG || '#0000ff'};
+    border: 1px solid ${props.bg || props.theme.buttonPrimaryBG || '#0000ff'};
   ` : `
     color: ${props.fg || props.theme.buttonColor || '#ffffff'};
     background-color: ${props.bg || props.theme.buttonBG || '#00007f'};
+    border: 1px solid ${props.bg || props.theme.buttonBG || '#00007f'};
   `)};
 
   &:hover {
@@ -24,7 +26,7 @@ export const Button = styled.button`
           bg = '#ffffff';
         }
       } else {
-        bg = (props.primary) ? props.theme.primaryButtonBG || '#0000ff' : props.theme.buttonBG || '#00007f';
+        bg = (props.primary) ? props.theme.buttonPrimaryBG || '#0000ff' : props.theme.buttonBG || '#00007f';
       }
       return darker (bg, 10);
     }};

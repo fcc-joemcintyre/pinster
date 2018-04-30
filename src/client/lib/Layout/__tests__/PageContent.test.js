@@ -11,9 +11,17 @@ test ('PageContent renders default component', () => {
   expect (tree).toMatchSnapshot ();
 });
 
-test ('PageContent with custom max-width', () => {
+test ('PageContent with custom content width', () => {
   const component = renderer.create (
-    <PageContent maxWidth='1024px' />
+    <PageContent maxw='1024px' />
+  );
+  const tree = component.toJSON ();
+  expect (tree).toMatchSnapshot ();
+});
+
+test ('PageContent with custom content width and padding', () => {
+  const component = renderer.create (
+    <PageContent maxw='1024px' p='60px 0 20px 0' />
   );
   const tree = component.toJSON ();
   expect (tree).toMatchSnapshot ();

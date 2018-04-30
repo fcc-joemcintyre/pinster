@@ -2,23 +2,21 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-export const TextLink = ({ to, children, ...props }) => (
-  <a
-    href={to}
-    target='_blank'
-    rel='noopener noreferrer'
-    {...props}
-  >
-    {children}
-  </a>
+export const Mailto = ({ to, subject, children, ...props }) => (
+  <a href={`mailto:${to}${subject && `?subject=${subject}`}`} {...props}>{children}</a>
 );
 
-TextLink.propTypes = {
+Mailto.propTypes = {
   to: PropTypes.string.isRequired,
+  subject: PropTypes.string,
   children: PropTypes.node.isRequired,
 };
 
-export const PlainTextLink = styled (TextLink)`
+Mailto.defaultProps = {
+  subject: null,
+};
+
+export const PlainMailto = styled (Mailto)`
   text-decoration: none;
   ${({ c }) => c && `
     color: ${c};
