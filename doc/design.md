@@ -1,9 +1,7 @@
 # Pinster Design
 
 The *Pinster* application is a full stack application project defined by
-FreeCodeCamp at
-
-https://www.freecodecamp.com/challenges/build-a-pinterest-clone
+FreeCodeCamp.
 
 ## License
 This document is licensed under a Creative Commons Attribution 4.0
@@ -80,13 +78,11 @@ authentication and sessions are essential to the applications function.
 
 ## Technology Selections
 
-The server is implemented with Node.js version 6.x and uses ES2015 Javascript
-conforming to the native ES2015 support provided in this version of Node.js.
-Data is stored in MongoDB (3.0.x).
+The server is implemented with Node.js version 12.x and uses ES2020 Javascript
+conforming to the native ES20xx support provided in this version of Node.js.
+Data is stored in MongoDB (4.x).
 
-The client interface is implemented with React 15.x using ES2015 Javascript
+The client interface is implemented with React 16.x using ES2020 Javascript
 as supported by Babel. Redux and react-router are also used.
 
-Stylesheets are defined with SCSS, with Sass used as the CSS preprocessor.
-
-Gulp is used for build.
+Styles are defined using CSS-in-JS using Styled Components.

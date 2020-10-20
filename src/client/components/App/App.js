@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { theme } from './theme';
-import './Global';
+import { GlobalStyle } from './GlobalStyle';
 import { AuthRoute } from './AuthRoute';
 import { verifyLogin } from '../../store/userActions';
 import { setPins } from '../../store/appActions';
@@ -40,10 +40,13 @@ export class AppBase extends React.Component {
     if (this.state.loading) {
       return (
         <ThemeProvider theme={theme}>
-          <Page>
-            <Header menu={false} />
-            <Box mt='120px' center>Loading ...</Box>
-          </Page>
+          <>
+            <GlobalStyle />
+            <Page>
+              <Header menu={false} />
+              <Box mt='120px' center>Loading ...</Box>
+            </Page>
+          </>
         </ThemeProvider>
       );
     }
@@ -52,22 +55,25 @@ export class AppBase extends React.Component {
       <BrowserRouter>
         <ScrollToTop>
           <ThemeProvider theme={theme}>
-            <Page>
-              <Header menu />
-              <Switch>
-                <Route exact path='/' component={HomePage} />
-                <Route exact path='/register' component={RegisterPage} />
-                <Route exact path='/login' component={LoginPage} />
-                <Route exact path='/logout' component={LogoutPage} />
-                <AuthRoute exact path='/pinned' authenticated={authenticated} component={PinnedPage} />
-                <Route exact path='/pins/:id' component={UserPinsPage} />
-                <AuthRoute exact path='/manage' authenticated={authenticated} component={ManagePinsPage} />
-                <AuthRoute exact path='/add' authenticated={authenticated} component={AddPin} />
-                <AuthRoute exact path='/edit/:_id' authenticated={authenticated} component={EditPin} />
-                <Route exact path='/about' component={AboutPage} />
-                <Route path='*' component={NotFoundPage} />
-              </Switch>
-            </Page>
+            <>
+              <GlobalStyle />
+              <Page>
+                <Header menu />
+                <Switch>
+                  <Route exact path='/' component={HomePage} />
+                  <Route exact path='/register' component={RegisterPage} />
+                  <Route exact path='/login' component={LoginPage} />
+                  <Route exact path='/logout' component={LogoutPage} />
+                  <AuthRoute exact path='/pinned' authenticated={authenticated} component={PinnedPage} />
+                  <Route exact path='/pins/:id' component={UserPinsPage} />
+                  <AuthRoute exact path='/manage' authenticated={authenticated} component={ManagePinsPage} />
+                  <AuthRoute exact path='/add' authenticated={authenticated} component={AddPin} />
+                  <AuthRoute exact path='/edit/:_id' authenticated={authenticated} component={EditPin} />
+                  <Route exact path='/about' component={AboutPage} />
+                  <Route path='*' component={NotFoundPage} />
+                </Switch>
+              </Page>
+            </>
           </ThemeProvider>
         </ScrollToTop>
       </BrowserRouter>

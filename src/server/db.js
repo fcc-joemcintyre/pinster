@@ -1,7 +1,7 @@
-const MongoClient = require ('mongodb').MongoClient;
-const ObjectId = require ('mongodb').ObjectId;
+const { MongoClient, ObjectId } = require ('mongodb');
 const hash = require ('./hash');
 
+let client = null;
 let db = null;
 let users = null;
 let pins = null;
@@ -9,14 +9,16 @@ let pins = null;
 // connect to database and set up collections
 async function init (uri) {
   console.log ('INFO db.init');
-  if (db) { return; }
+  if (client) { return; }
 
   try {
-    db = await MongoClient.connect (uri);
+    // eslint-disable-next-line require-atomic-updates
+    client = await MongoClient.connect (uri, { useNewUrlParser: true, useUnifiedTopology: true });
+    db = client.db ();
     users = db.collection ('users');
     pins = db.collection ('pins');
-    await users.ensureIndex ({ id: 1 }, { unique: true });
-    await pins.ensureIndex ({ creator: 1 }, { unique: false });
+    await users.createIndex ({ id: 1 }, { unique: true });
+    await pins.createIndex ({ creator: 1 }, { unique: false });
   } catch (err) {
     console.log ('ERROR db.init', err);
     throw err;
@@ -25,13 +27,14 @@ async function init (uri) {
 
 // Close database and null out references
 async function close () {
-  if (db) {
+  if (client) {
     try {
       users = null;
       pins = null;
-      await db.close ();
-      db = null;
-    } catch (err) {
+      await client.close ();
+    } finally {
+      // eslint-disable-next-line require-atomic-updates
+      client = null;
       db = null;
     }
   }
