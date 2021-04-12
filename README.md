@@ -12,19 +12,14 @@ and *styled-components* on the client. The server uses *Nodejs (8.x)*,
 
 The application can be used at https://pinster-jm.herokuapp.com
 
-## CLI Commands
-
-Either *yarn* or *npm* can be used. Where *yarn* is shown, it can be replaced
-with *npm run*.
-
 ## Development setup
 
-Clone the *Github* repo, then install the dependencies using *yarn* or *npm*.
+Clone the *Github* repo, then install the dependencies.
 
 ```
 git clone https://github.com/fcc-joemcintyre/pinster.git
 cd pinster
-yarn (or npm install)
+npm i
 ```
 
 The database supported is *MongoDB*. This can be a local or hosted instance (you
@@ -37,16 +32,13 @@ name used by the test runner is *pinsterTest*.
 In a terminal, build can be activated with
 
 ```
-yarn [build | build-stage]
+npm run [build | build-stage]
 ```
-
-The build uses *gulp* to run the set of tasks defined in *gulpfile.js*. The
-build options are,
 
 - build: regular build
 - build-stage: build application ready to be deployed to Heroku or similar
 
-*build* is a continuous build option - the gulp build will
+*build* is a continuous build option - the build will
 set up watches and rerun build elements as file changes are saved.
 *build-stage* is a one time build option, run again to build a new stage output.
 
@@ -55,14 +47,14 @@ set up watches and rerun build elements as file changes are saved.
 Testing can be done for all components,
 
 ```
-yarn test
+npm test
 ```
 
 Or components individually,
 
 ```
-yarn test-db
-yarn test-server
+npm run test-db
+npm run test-server
 ```
 
 ### Server
@@ -71,7 +63,7 @@ In a terminal, continuous server operation, updating on changes,
 can be activated with
 
 ```
-yarn start
+npm start
 ```
 
 The *nodemon* utility provides restart on update.

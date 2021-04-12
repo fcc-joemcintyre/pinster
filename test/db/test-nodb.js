@@ -1,31 +1,5 @@
 const db = require ('../../dist/db');
 
-// mongo URI with port number not an active MongoDB instance
-const badMongoUri = 'mongodb://localhost:22222/pinsterTest';
-
-describe ('init/close', function () {
-  describe ('init', function () {
-    it ('should generate an error', async function () {
-      try {
-        await db.init (badMongoUri);
-        throw new Error ('init did not fail with bad URI');
-      } catch (err) {
-        // test passed
-      }
-    });
-  });
-
-  describe ('close', function () {
-    it ('should fail silently', async function () {
-      try {
-        await db.close ();
-      } catch (err) {
-        throw new Error ('close should fail silently');
-      }
-    });
-  });
-});
-
 describe ('users', function () {
   describe ('findUserByUsername', function () {
     it ('should generate an error', async function () {

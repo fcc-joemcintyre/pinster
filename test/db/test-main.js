@@ -1,5 +1,5 @@
 /* eslint global-require: off */
-const MongoClient = require ('mongodb').MongoClient;
+const { MongoClient } = require ('mongodb');
 const db = require ('../../dist/db');
 
 const uri = 'mongodb://localhost:27017/pinsterTest';
@@ -17,7 +17,9 @@ describe ('test init/close', function () {
 // test application functions
 describe ('test-main', function () {
   before (async function () {
-    const instance = await MongoClient.connect (uri);
+    const options = { useNewUrlParser: true, useUnifiedTopology: true };
+    const client = await MongoClient.connect (uri, options);
+    const instance = client.db ();
     const users = instance.collection ('users');
     await users.ensureIndex ({ id: 1 }, { unique: true });
     await users.remove ({});
@@ -33,7 +35,7 @@ describe ('test-main', function () {
       { creator: 'l-bob', username: 'bob', category: 'C3', title: 'T6', text: 'Text6', url: 'http://example.com/image6.png', pinners: [] },
     ];
     await pins.insert (data, { w: 1 });
-    await instance.close ();
+    await client.close ();
     await db.init (uri);
   });
 
