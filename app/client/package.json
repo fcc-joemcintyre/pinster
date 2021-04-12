@@ -1,0 +1,48 @@
+{
+  "name": "pinster-client",
+  "author": "Joe McIntyre (j_h_mcintyre@yahoo.com)",
+  "description": "Pin your favorite images from around the net",
+  "version": "1.2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fcc-joemcintyre/pinster"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "prop-types": "15.7.2",
+    "react": "16.14.0",
+    "react-dom": "16.14.0",
+    "react-is": "16.13.1",
+    "react-masonry-component": "6.2.1",
+    "react-redux": "7.2.1",
+    "react-router": "5.2.0",
+    "react-router-dom": "5.2.0",
+    "redux": "4.0.5",
+    "redux-thunk": "2.3.0",
+    "styled-components": "5.2.0"
+  },
+  "scripts": {
+    "dev": "webpack --mode=development -w",
+    "build": "webpack --mode=production",
+    "lint": "eslint --no-error-on-unmatched-pattern src/**"
+  },
+  "devDependencies": {
+    "@babel/core": "7.12.3",
+    "@babel/plugin-proposal-object-rest-spread": "7.12.1",
+    "@babel/preset-env": "7.12.1",
+    "@babel/preset-react": "7.12.1",
+    "@babel/register": "7.12.1",
+    "@cygns/eslint-config": "5.0.0",
+    "babel-loader": "8.1.0",
+    "babel-plugin-styled-components": "1.11.1",
+    "compression-webpack-plugin": "4.0.0",
+    "eslint": "7.11.0",
+    "eslint-import-resolver-webpack": "0.13.0",
+    "eslint-plugin-import": "2.22.1",
+    "eslint-plugin-react": "7.21.4",
+    "eslint-plugin-react-hooks": "4.1.2",
+    "react-test-renderer": "16.14.0",
+    "webpack": "4.44.1",
+    "webpack-cli": "3.3.12"
+  }
+}

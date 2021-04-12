@@ -5,8 +5,8 @@ Pinster lets you show off the ones you like and see the ones other people
 like.
 
 This application is built using *React (16.x)*, *Redux*, *react-router*
-and *styled-components* on the client. The server uses *Nodejs (8.x)*,
-*Express* and *Passport*. The database is *MongoDB (3.4.x)*.
+and *styled-components* on the client. The server uses *Nodejs (15.x)*,
+*Express* and *Passport*. The database is *MongoDB (4.x)*.
 
 ## Live instance
 
@@ -27,34 +27,44 @@ can also choose to use a local instance for dev/test and a hosted instance for
 deployment). The database name for the application is *pinster*. The database
 name used by the test runner is *pinsterTest*.
 
-### Build
+### Build (Development)
 
-In a terminal, build can be activated with
+There are two build processes for development, one for the server and one for
+the client.
+
+In one terminal,
 
 ```
-npm run [build | build-stage]
+npm run dev:server
 ```
 
-- build: regular build
-- build-stage: build application ready to be deployed to Heroku or similar
+In a second terminal,
 
-*build* is a continuous build option - the build will
-set up watches and rerun build elements as file changes are saved.
-*build-stage* is a one time build option, run again to build a new stage output.
+```
+npm run dev:client
+```
+
+These development builds are continuous build - they will set up watches
+and rerun build elements as file changes are saved.
+
+### Build (Production)
+
+There is one build command that runs both server and client production builds.
+
+In a terminal,
+
+```
+npm run prod
+```
+
+This production build is a single step process, it is not continuous build.
 
 ## Testing
 
-Testing can be done for all components,
+Testing can started using,
 
 ```
 npm test
-```
-
-Or components individually,
-
-```
-npm run test-db
-npm run test-server
 ```
 
 ### Server
@@ -76,7 +86,7 @@ application at http://localhost:3000
 ## Deployment
 
 The build process creates the *dist* directory containing all the deployment
-files (in the project directory or in the staging directory).
+files.
 
 The entry point for the server is *main.js*.
 The port number for the server can be passed on the command (-p/--port) or using
