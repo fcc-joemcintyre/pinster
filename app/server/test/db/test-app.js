@@ -34,7 +34,7 @@ describe ('pins', function () {
       const result = await db.insertPin (
         { creator: 'l-newuser', username: 'newuser', category: '', title: '', text: '', url: '', pinners: [] }
       );
-      if (result.insertedCount !== 1) {
+      if (result.acknowledged !== true) {
         throw new Error (`insert failed: ${JSON.stringify (result)}`);
       }
     });

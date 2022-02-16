@@ -13,7 +13,7 @@ async function init (uri) {
 
   try {
     // eslint-disable-next-line require-atomic-updates
-    client = await MongoClient.connect (uri, { useNewUrlParser: true, useUnifiedTopology: true });
+    client = await MongoClient.connect (uri);
     db = client.db ();
     users = db.collection ('users');
     pins = db.collection ('pins');
@@ -67,13 +67,13 @@ async function insertLocalUser (username, password) {
 }
 
 function insertSocialUser (user) {
-  return users.insert (user, { w: 1 });
+  return users.insertOne (user, { w: 1 });
 }
 
 
 // remove user
 function removeUser (id) {
-  return users.remove ({ id });
+  return users.deleteOne ({ id });
 }
 
 // get all pins
@@ -93,7 +93,7 @@ function getPin (_id) {
 
 // insert a pin
 function insertPin (newPin) {
-  return pins.insert (newPin, { w: 1 });
+  return pins.insertOne (newPin, { w: 1 });
 }
 
 // update a pin
@@ -106,7 +106,7 @@ function updatePin (_id, category, title, text, url) {
 
 // remove a pin
 function removePin (_id) {
-  return pins.remove ({ _id: new ObjectId (_id) });
+  return pins.deleteOne ({ _id: new ObjectId (_id) });
 }
 
 // add user to list of pinners

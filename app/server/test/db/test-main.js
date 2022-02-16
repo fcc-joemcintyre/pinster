@@ -17,7 +17,7 @@ describe ('db: test init/close', function () {
 // test application functions
 describe ('db: test-main', function () {
   before (async function () {
-    const options = { useNewUrlParser: true, useUnifiedTopology: true };
+    const options = {};
     const client = await MongoClient.connect (uri, options);
     const instance = client.db ();
     const users = instance.collection ('users');
