@@ -101,7 +101,7 @@ export async function getPins (req: Request, res: Response) {
     return ({
       ...rest,
       count: pin.pinners.length,
-      pinned: pin.pinners.indexOf (user.key) !== -1,
+      pinned: pin.pinners.indexOf (user?.key || 0) !== -1,
     });
   });
   res.status (200).json (t);
