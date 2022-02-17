@@ -1,20 +1,20 @@
 import { SET_AUTHENTICATED } from './constants';
 import { get, post } from './util/jsonFetch';
 
-export function register (username, password) {
-  return () => post ('/api/register', { username, password });
+export function register (email, name, password) {
+  return () => post ('/api/register', { email, name, password });
 }
 
-export function login (username, password) {
+export function login (email, password) {
   return async (dispatch) => {
-    const user = await post ('/api/login', { username, password });
-    dispatch (setAuthenticated (true, user.id, user.username));
+    const user = await post ('/api/login', { email, password });
+    dispatch (setAuthenticated (true, user.key));
   };
 }
 
 export function logout () {
   return async (dispatch) => {
-    dispatch (setAuthenticated (false, '', ''));
+    dispatch (setAuthenticated (false, 0));
     try {
       await post ('/api/logout');
     } catch (err) {
@@ -26,13 +26,11 @@ export function logout () {
 export function verifyLogin () {
   return async (dispatch) => {
     const data = await get ('/api/verifylogin');
-    const id = data.authenticated ? data.user.id : '';
-    const username = data.authenticated ? data.user.username : '';
-    dispatch (setAuthenticated (data.authenticated, id, username));
+    dispatch (setAuthenticated (data.authenticated, data.key));
     return data.authenticated;
   };
 }
 
-export function setAuthenticated (authenticated, id, username) {
-  return { type: SET_AUTHENTICATED, authenticated, id, username };
+export function setAuthenticated (authenticated, key) {
+  return { type: SET_AUTHENTICATED, authenticated, key };
 }

@@ -2,18 +2,15 @@ import { SET_AUTHENTICATED } from './constants';
 
 const initialState = {
   authenticated: false,
-  id: '',
-  username: '',
+  key: 0,
 };
 
 export function user (state = initialState, action) {
   switch (action.type) {
     case SET_AUTHENTICATED:
-      // eslint-disable-next-line prefer-object-spread
-      return Object.assign ({}, state, {
+      return ({
         authenticated: action.authenticated,
-        id: action.id,
-        username: action.username,
+        key: action.key,
       });
 
     default:
