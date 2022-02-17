@@ -47,7 +47,7 @@ export class RegisterPageBase extends Component {
       this.setState ({ message: { status: 'working', text: 'Registering ...' } });
       try {
         const { username, password } = getFieldValues (this.state.fields);
-        await this.props.dispatch (register (username, password));
+        await this.props.dispatch (register (username, 'Name', password));
         try {
           await this.props.dispatch (login (username, password));
           this.props.history.replace ('/');

@@ -1,7 +1,7 @@
 /* global fetch window: true */
-const JsonFetchError = require ('./JsonFetchError');
+import { JsonFetchError } from './JsonFetchError.js';
 
-async function get (path) {
+export async function get (path) {
   let res;
   try {
     res = await fetch (`${window.location.origin}${path}`, {
@@ -23,7 +23,7 @@ async function get (path) {
   }
 }
 
-async function post (path, body) {
+export async function post (path, body) {
   let res;
   try {
     res = await fetch (`${window.location.origin}${path}`, {
@@ -46,7 +46,7 @@ async function post (path, body) {
   }
 }
 
-async function postForm (path, body) {
+export async function postForm (path, body) {
   let res;
   try {
     res = await fetch (`${window.location.origin}${path}`, {
@@ -68,7 +68,7 @@ async function postForm (path, body) {
   }
 }
 
-async function put (path, body) {
+export async function put (path, body) {
   let res;
   try {
     res = await fetch (`${window.location.origin}${path}`, {
@@ -91,7 +91,7 @@ async function put (path, body) {
   }
 }
 
-async function remove (path) {
+export async function remove (path) {
   let res;
   try {
     res = await fetch (`${window.location.origin}${path}`, {
@@ -112,9 +112,3 @@ async function remove (path) {
     return res.json ();
   }
 }
-
-exports.get = get;
-exports.post = post;
-exports.postForm = postForm;
-exports.put = put;
-exports.remove = remove;
