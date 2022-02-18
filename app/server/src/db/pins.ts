@@ -11,6 +11,21 @@ export type Pin = {
   pinners: number[],
 };
 
+export type PinResult = {
+  status: number,
+  pin?: Pin,
+};
+
+export type PinArrayResult = {
+  status: number,
+  pins?: Pin[],
+};
+
+export type PinnerArrayResult = {
+  status: number,
+  pinners?: number[],
+};
+
 let c: Collection<Pin>;
 
 /**
@@ -23,28 +38,31 @@ export function initPins (db: Db) {
 
 /**
  * Get all pins
- * @returns Pins array
+ * @returns Pin array result
  */
-export function getPins () {
-  return c.find ().toArray ();
+export async function getPins (): Promise<PinArrayResult> {
+  const t = await c.find ().toArray ();
+  return ({ status: 200, pins: t });
 }
 
 /**
  * Get pins by creator
  * @param creator Creator email
- * @returns Pins array
+ * @returns Pin array result
  */
-export function getPinsByCreator (creator: number) {
-  return c.find ({ creator }).toArray ();
+export async function getPinsByCreator (creator: number): Promise<PinArrayResult> {
+  const t = await c.find ({ creator }).toArray ();
+  return ({ status: 200, pins: t });
 }
 
 /**
  * Get a single pin
  * @param key Key
- * @returns Pin, or null if not found
+ * @returns Pin result
  */
-export function getPin (key: number) {
-  return c.findOne ({ key });
+export async function getPin (key: number): Promise<PinResult> {
+  const t = await c.findOne ({ key });
+  return ({ status: t ? 200 : 404, pin: t || undefined });
 }
 
 /**
@@ -54,14 +72,20 @@ export function getPin (key: number) {
  * @param title Title
  * @param text Text
  * @param url URL
- * @returns Insert result, or undefined if not created
+ * @returns Pin result
  */
-export async function createPin (creator: number, category: string, title: string, text: string, url: string) {
+export async function createPin (
+  creator: number, category: string, title: string, text: string, url: string
+): Promise<PinResult> {
   const key = await getNextSequence ('pins');
   if (key) {
-    return c.insertOne ({ key, creator, category, title, text, url, pinners: [] });
+    const t = await c.insertOne ({ key, creator, category, title, text, url, pinners: [] });
+    if (t.acknowledged) {
+      const t1 = await c.findOne ({ _id: t.insertedId });
+      return ({ status: t1 ? 200 : 404, pin: t1 || undefined });
+    }
   }
-  return undefined;
+  return { status: 500 };
 }
 
 /**
@@ -71,22 +95,31 @@ export async function createPin (creator: number, category: string, title: strin
  * @param title Title
  * @param text Text
  * @param url URL
- * @returns Update result
+ * @returns Pin result
  */
-export function updatePin (key: number, category: string, title: string, text: string, url: string) {
-  return c.updateOne (
+export async function updatePin (
+  key: number, category: string, title: string, text: string, url: string
+): Promise<PinResult> {
+  const t = await c.findOneAndUpdate (
     { key },
-    { $set: { category, title, text, url } }
+    { $set: { category, title, text, url } },
+    { returnDocument: 'after' },
   );
+  if (t.ok) {
+    return ({ status: 200, pin: t.value || undefined });
+  } else {
+    return ({ status: 500 });
+  }
 }
 
 /**
  * Remove a pin
  * @param key Key
- * @returns Delete result
+ * @returns Pin result
  */
-export function removePin (key: number) {
-  return c.deleteOne ({ key });
+export async function removePin (key: number): Promise<PinResult> {
+  const t = await c.deleteOne ({ key });
+  return ({ status: t.acknowledged ? 200 : 404 });
 }
 
 /**
@@ -94,28 +127,34 @@ export function removePin (key: number) {
  * @param key Key
  * @param pinner Key of pinner
  * @param action true to add, false to remove
- * @returns Update result
+ * @returns Pin result
  */
-export function setPinner (key: number, pinner: number, action: boolean) {
+export async function setPinner (
+  key: number, pinner: number, action: boolean
+): Promise<PinResult> {
+  let t;
   if (action) {
-    return c.updateOne (
+    t = await c.findOneAndUpdate (
       { key },
-      { $addToSet: { pinners: pinner } }
+      { $addToSet: { pinners: pinner } },
+      { returnDocument: 'after' },
     );
   } else {
-    return c.updateOne (
+    t = await c.findOneAndUpdate (
       { key },
-      { $pull: { pinners: pinner } }
+      { $pull: { pinners: pinner } },
+      { returnDocument: 'after' },
     );
   }
+  return ({ status: t.ok ? 200 : 404, pin: t.value || undefined });
 }
 
 /**
  * Get list of pinners for a pin
  * @param key Key
- * @returns Array of user keys that have pinned this pin
+ * @returns Pinner array result
  */
-export async function getPinners (key: number) {
-  const data = await c.findOne ({ key });
-  return data?.pinners || [];
+export async function getPinners (key: number): Promise<PinnerArrayResult> {
+  const t = await c.findOne ({ key });
+  return ({ status: t ? 200 : 404, pinners: t?.pinners || undefined });
 }

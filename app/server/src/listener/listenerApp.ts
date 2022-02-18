@@ -12,7 +12,7 @@ export async function createPin (req: Request, res: Response) {
   const user = req.user as User;
   const { category, title, text, url } = req.body;
   const t = await db.createPin (user.key, category, title, text, url);
-  res.status (t?.acknowledged ? 200 : 400).json ({});
+  res.status (t.status).json (t.pin || {});
 }
 
 /**
@@ -28,7 +28,7 @@ export async function updatePin (req: Request, res: Response) {
     return;
   }
   const t = await db.updatePin (key, req.body.category, req.body.title, req.body.text, req.body.url);
-  res.status (t.acknowledged ? 200 : 400).json ({});
+  res.status (t.status).json (t.pin || {});
 }
 
 /**
@@ -44,7 +44,7 @@ export async function deletePin (req: Request, res: Response) {
     return;
   }
   const t = await db.removePin (key);
-  res.status (t.acknowledged ? 200 : 400).json ({});
+  res.status (t.status).json ({});
 }
 
 /**
@@ -60,18 +60,12 @@ export async function getPin (req: Request, res: Response) {
     return;
   }
   const user = req.user as User;
-  const pin = await db.getPin (key);
-  if (pin === null) {
+  const t = await db.getPin (key);
+  if (t.status !== 200 || t.pin === undefined) {
     res.status (404).json ({});
   } else {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { pinners, ...rest } = pin;
-    const t = {
-      ...rest,
-      count: pin.pinners.length,
-      pinned: pin.pinners.indexOf (user.key) !== -1,
-    };
-    res.status (200).json (t);
+    const t1 = transformPin (t.pin, user?.key);
+    res.status (200).json (t1);
   }
 }
 
@@ -82,29 +76,25 @@ export async function getPin (req: Request, res: Response) {
  */
 export async function getPins (req: Request, res: Response) {
   console.log ('getPins');
-  let pins;
+  let t;
   if ((req.query) && (req.query.creator)) {
     const creator = Number (req.query.creator);
     if (Number.isNaN (creator)) {
       res.status (404).json ({});
       return;
     }
-    pins = await db.getPinsByCreator (creator);
+    t = await db.getPinsByCreator (creator);
   } else {
-    pins = await db.getPins ();
+    t = await db.getPins ();
   }
 
   const user = req.user as User;
-  const t = pins.map ((pin) => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { pinners, ...rest } = pin;
-    return ({
-      ...rest,
-      count: pin.pinners.length,
-      pinned: pin.pinners.indexOf (user?.key || 0) !== -1,
-    });
-  });
-  res.status (200).json (t);
+  if (t.status === 200 && t.pins !== undefined) {
+    const t1 = t.pins.map ((pin) => transformPin (pin, user?.key));
+    res.status (200).json (t1);
+  } else {
+    res.status (400).json ({});
+  }
 }
 
 /**
@@ -115,9 +105,14 @@ export async function getPins (req: Request, res: Response) {
 export async function getPinned (req: Request, res: Response) {
   console.log ('getPinned', req.params);
   const user = req.user as User;
-  const pins = await db.getPins ();
-  const list = pins.filter ((pin) => pin.pinners.includes (user.key));
-  res.status (200).json (list);
+  const t = await db.getPins ();
+  if (t.status === 200 && t.pins !== undefined) {
+    const t1 = t.pins.filter ((pin) => pin.pinners.includes (user.key));
+    const t2 = t1.map ((pin) => transformPin (pin, user?.key));
+    res.status (200).json (t2);
+  } else {
+    res.status (400).json ({});
+  }
 }
 
 /**
@@ -136,5 +131,25 @@ export async function setPinned (req: Request, res: Response) {
   }
 
   const t = await db.setPinner (key, user.key, pinned === 'true');
-  res.status (t.acknowledged ? 200 : 400).json ();
+  if (t.status !== 200 || t.pin === undefined) {
+    res.status (t.status).json ({});
+  } else {
+    const t1 = transformPin (t.pin, user?.key);
+    res.status (200).json (t1);
+  }
+}
+
+/**
+ * Transform pin to replace list of pinners with count, pinned indicator
+ * @param pin Pins to transform
+ * @param user Key of user to determine pinned indicator
+ * @returns Transformed array of pins
+ */
+function transformPin (pin: db.Pin, user = 0) {
+  const { pinners, ...rest } = pin;
+  return ({
+    ...rest,
+    count: pinners.length,
+    pinned: pinners.indexOf (user) !== -1,
+  });
 }
