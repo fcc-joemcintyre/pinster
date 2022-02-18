@@ -81,15 +81,7 @@ export async function register (req: Request, res: Response) {
     res.status (400).json ({});
   } else {
     const t = await registerUser (req.body.email, req.body.name, req.body.password);
-    if (t === undefined) {
-      res.status (500).json ({});
-    } else if (t === null) {
-      res.status (400).json ({});
-    } else if (t === 409) {
-      res.status (409).json ({});
-    } else {
-      console.log ('  registered', req.body.email);
-      res.status (200).json ({});
-    }
+    console.log (t.status === 200 ? 'registered' : 'error', req.body.email);
+    res.status (t.status).json ({});
   }
 }

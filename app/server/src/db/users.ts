@@ -10,6 +10,11 @@ export type User = {
   salt: string,
 };
 
+export type UserResult = {
+  status: number,
+  user?: User,
+};
+
 let c: Collection<User>;
 
 /**
@@ -25,8 +30,9 @@ export function initUsers (db: Db) {
  * @param email User email
  * @returns User result
  */
-export function getUserByEmail (email: string) {
-  return c.findOne ({ email });
+export async function getUserByEmail (email: string): Promise<UserResult> {
+  const t = await c.findOne ({ email });
+  return ({ status: t ? 200 : 404, user: t as User });
 }
 
 /**
@@ -34,16 +40,16 @@ export function getUserByEmail (email: string) {
  * @param email Email
  * @param name Name
  * @param password Password
- * @returns Result for new user
+ * @returns User result
  */
 export async function registerUser (
   email: string,
   name: string,
   password: string
-) {
+): Promise<UserResult> {
   const key = await getNextSequence ('users');
   if (!key) {
-    return undefined;
+    return { status: 500 };
   }
 
   try {
@@ -52,16 +58,17 @@ export async function registerUser (
       { key, email, name, hash: hash.hash, salt: hash.salt },
     );
     if (t.acknowledged) {
-      return c.findOne (t.insertedId);
+      const t1 = await c.findOne (t.insertedId);
+      return ({ status: t1 ? 200 : 404, user: t1 as User });
     } else {
-      return undefined;
+      return ({ status: 400 });
     }
   } catch (err) {
     if (err instanceof MongoServerError) {
       if (err.code === 11000) {
-        return 409;
+        return ({ status: 409 });
       }
     }
-    return undefined;
+    return ({ status: 500 });
   }
 }

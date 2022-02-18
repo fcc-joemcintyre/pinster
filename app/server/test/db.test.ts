@@ -56,28 +56,29 @@ describe ('db / users', function () {
   describe ('register user', function () {
     it ('should create new user', async function () {
       const r = await registerUser ('amy@example.com', 'Amy Smith', 'test');
-      expect (r).toBeDefined ();
-      expect (r).not.toEqual (409);
-      const t = r as User;
+      expect (r.status).toEqual (200);
+      const t = r.user as User;
       expect (t.email).toEqual ('amy@example.com');
       expect (t.name).toEqual ('Amy Smith');
     });
 
     it ('duplicate should error', async function () {
       const r = await registerUser ('amy@example.com', 'Amy Smith', 'test');
-      expect (r).toEqual (409);
+      expect (r.status).toEqual (409);
     });
   });
 
   describe ('get user', function () {
     it ('find amy@example.com should find user', async function () {
       const r = await getUserByEmail ('amy@example.com');
-      expect (r).toBeAnObjectWith ({ key: 1, email: 'amy@example.com' });
+      expect (r.status).toEqual (200);
+      expect (r.user).toBeAnObjectWith ({ key: 1, email: 'amy@example.com' });
     });
 
     it ('find bob@example.com should not find user', async function () {
       const r = await getUserByEmail ('bob@example.com');
-      expect (r).toEqual (null);
+      expect (r.status).toEqual (404);
+      expect (r.user).toBeNullish ();
     });
   });
 });

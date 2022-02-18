@@ -13,12 +13,12 @@ export function initAuth () {
   const options = { usernameField: 'email', passwordField: 'password' };
   passport.use (new LocalStrategy (options, async (email, password, callback) => {
     try {
-      const user = await getUserByEmail (email);
-      if (!user) {
+      const r = await getUserByEmail (email);
+      if (r.status !== 200 || r.user === undefined) {
         return callback (null, false);
       }
-      const passwordMatch = compareHash (password, user.hash, user.salt);
-      return callback (null, (passwordMatch) ? user : false);
+      const passwordMatch = compareHash (password, r.user.hash, r.user.salt);
+      return callback (null, (passwordMatch) ? r.user : false);
     } catch (err) {
       return callback (err);
     }
