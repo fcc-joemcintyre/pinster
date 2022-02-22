@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import passport from 'passport';
 import { registerUser, User } from '../db/users.js';
+import { validateLogin, validateRegister } from './validators.js';
 
 /**
  * Login, authenticating user and creating a session
@@ -10,24 +11,29 @@ import { registerUser, User } from '../db/users.js';
  */
 export function login (req: Request, res: Response, next: NextFunction) {
   console.log ('login');
-  passport.authenticate ('local', (err, user) => {
-    if (err) {
-      return next (err);
-    }
-    // if not a valid user, return 401 auth error
-    if (!user) {
-      console.log ('  login', 'unauthenticated');
-      return res.status (401).json ({});
-    }
-    return req.login (user, (err1) => {
-      if (err1) {
+  if (!validateLogin (req.body)) {
+    console.log ('ERROR login (400) invalid body', validateLogin.errors);
+    res.status (400).json ({});
+  } else {
+    passport.authenticate ('local', (err, user) => {
+      if (err) {
         return next (err);
       }
-      console.log ('  login', user.email);
-      const result = { key: user.key };
-      return res.status (200).json (result);
-    });
-  }) (req, res, next);
+      // if not a valid user, return 401 auth error
+      if (!user) {
+        console.log ('  login', 'unauthenticated');
+        return res.status (401).json ({});
+      }
+      return req.login (user, (err1) => {
+        if (err1) {
+          return next (err);
+        }
+        console.log ('  login', user.email);
+        const result = { key: user.key };
+        return res.status (200).json (result);
+      });
+    }) (req, res, next);
+  }
 }
 
 /**
@@ -76,12 +82,13 @@ export function verifyLogin (req: Request, res: Response) {
  */
 export async function register (req: Request, res: Response) {
   console.log ('register');
-  if (!(req.body && req.body.email && req.body.name && req.body.password)) {
-    console.log ('register invalid body', req.body);
+  if (!validateRegister (req.body)) {
+    console.log ('ERROR register (400) invalid body', validateRegister.errors);
     res.status (400).json ({});
   } else {
-    const t = await registerUser (req.body.email, req.body.name, req.body.password);
-    console.log (t.status === 200 ? 'registered' : 'error', req.body.email);
+    const { email, name, password } = req.body as { email: string, name: string, password: string };
+    const t = await registerUser (email, name, password);
+    console.log (t.status === 200 ? 'registered' : 'error', email);
     res.status (t.status).json ({});
   }
 }

@@ -22,8 +22,8 @@
   },
   "scripts": {
     "build": "npm run build:copy && tsc",
-    "build:copy": "mkdir -p ../../dist/public && cp -r public/* ../../dist/public",
-    "dev": "nodemon --watch public --exec 'npm run build:copy' & tsc -w",
+    "build:copy": "mkdir -p ../../dist/public && mkdir -p ../../dist/schema && cp -r public/* ../../dist/public && cp -r schema/* ../../dist/schema",
+    "dev": "nodemon --watch public --watch schema --exec 'npm run build:copy' & tsc -w",
     "test": "mocha",
     "lint": "eslint --ext .js,.ts,.tsx --no-error-on-unmatched-pattern .",
     "start": "node dist/main.js --port=3000"
