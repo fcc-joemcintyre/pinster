@@ -100,9 +100,8 @@ export async function startServer (port: number, dbLocation: string): Promise<vo
     });
 
     server = http.createServer (app);
-    server.listen (port, () => {
-      console.log (`INFO Server listening on port ${port}`);
-    });
+    await listenAsync (server, port);
+    console.log (`INFO Server listening on port ${port}`);
   } catch (err) {
     console.log ('ERROR Server startup', err);
     process.exit (1);
@@ -118,4 +117,16 @@ export async function stopServer (): Promise<void> {
     await server.close ();
     await closeDatabase ();
   }
+}
+
+/**
+ * Async / await support for http.Server.listen
+ * @param s http.Server instance
+ * @param port port number
+ * @returns Promise to await server.listen on
+ */
+function listenAsync (s: http.Server, port: number) {
+  return new Promise ((resolve) => {
+    s.listen (port, () => { resolve (true); });
+  });
 }

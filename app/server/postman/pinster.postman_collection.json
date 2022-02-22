@@ -1,0 +1,136 @@
+{
+	"info": {
+		"_postman_id": "0f621b8c-2191-4672-8658-ce979033c375",
+		"name": "pinster",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test ('status to be 200', () => {",
+							"    pm.response.to.have.status (200);",
+							"})",
+							"",
+							"pm.test ('user key to be 1', () => {",
+							"    var data = pm.response.json ();",
+							"    pm.expect (data.key).to.equal (1);",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"a@example.com\",\n    \"password\": \"test\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/api/login",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Pins (initial)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test ('status to be 200', () => {",
+							"    pm.response.to.have.status (200);",
+							"})",
+							"",
+							"pm.test ('pin count to be 3', () => {",
+							"    var data = pm.response.json ();",
+							"    pm.expect (data).length (3);",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/pins",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"pins"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Pin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test ('status to be 200', () => {",
+							"    pm.response.to.have.status (200);",
+							"})",
+							"",
+							"pm.test ('populated pin', () => {",
+							"    var data = pm.response.json ();",
+							"    pm.expect (data.key).to.equal (4);",
+							"    pm.expect (data.creator).to.equal (1);",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"category\": \"C1\",\n    \"title\": \"T4\",\n    \"text\": \"Text 4\",\n    \"url\": \"https://www.example.com/4.jpg\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/api/pins",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"pins"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
