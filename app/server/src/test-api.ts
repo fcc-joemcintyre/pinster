@@ -43,8 +43,8 @@ async function main (): Promise<void> {
   // if running tests, start test runner
   if (!server) {
     newman.run ({
-      collection: 'app/server/postman/pinster.postman_collection.json',
-      environment: 'app/server/postman/local.postman_environment.json',
+      collection: '../app/server/postman/pinster.postman_collection.json',
+      environment: '../app/server/postman/local.postman_environment.json',
       reporters: 'cli',
     }, async () => {
       await stopServer ();

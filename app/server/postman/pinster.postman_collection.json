@@ -6,6 +6,61 @@
 	},
 	"item": [
 		{
+			"name": "Test reset",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{hostTest}}/api/test/reset",
+					"host": [
+						"{{hostTest}}"
+					],
+					"path": [
+						"api",
+						"test",
+						"reset"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Pins (unauthenticated)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test ('status to be 200', () => {",
+							"    pm.response.to.have.status (200);",
+							"})",
+							"",
+							"pm.test ('pin count to be 3', () => {",
+							"    var data = pm.response.json ();",
+							"    pm.expect (data).length (3);",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/pins",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"pins"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Login",
 			"event": [
 				{
@@ -38,9 +93,9 @@
 					}
 				},
 				"url": {
-					"raw": "{{url}}/api/login",
+					"raw": "{{host}}/api/login",
 					"host": [
-						"{{url}}"
+						"{{host}}"
 					],
 					"path": [
 						"api",
@@ -51,7 +106,7 @@
 			"response": []
 		},
 		{
-			"name": "Get Pins (initial)",
+			"name": "Get Pins (authenticated, initial)",
 			"event": [
 				{
 					"listen": "test",
@@ -74,9 +129,9 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{url}}/api/pins",
+					"raw": "{{host}}/api/pins",
 					"host": [
-						"{{url}}"
+						"{{host}}"
 					],
 					"path": [
 						"api",
@@ -98,9 +153,20 @@
 							"})",
 							"",
 							"pm.test ('populated pin', () => {",
-							"    var data = pm.response.json ();",
-							"    pm.expect (data.key).to.equal (4);",
-							"    pm.expect (data.creator).to.equal (1);",
+							"    var t = pm.response.json ();",
+							"    pm.expect (t).to.not.be.undefined;",
+							"    pm.expect (t._id).to.not.be.undefined;",
+							"    pm.expect (t).to.deep.equal ({",
+							"        _id: t._id,",
+							"        key: 4,",
+							"        creator: 1,",
+							"        category: 'C1',",
+							"        title: 'T4',",
+							"        text: 'Text 4',",
+							"        url: 'https://www.example.com/4.jpg',",
+							"        count: 0,",
+							"        pinned: false,",
+							"    });",
 							"})"
 						],
 						"type": "text/javascript"
@@ -120,9 +186,62 @@
 					}
 				},
 				"url": {
-					"raw": "{{url}}/api/pins",
+					"raw": "{{host}}/api/pins",
 					"host": [
-						"{{url}}"
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"pins"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Pins (after addition)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test ('status to be 200', () => {",
+							"    pm.response.to.have.status (200);",
+							"})",
+							"",
+							"pm.test ('pin count to be 4', () => {",
+							"    var data = pm.response.json ();",
+							"    pm.expect (data).length (4);",
+							"})",
+							"pm.test ('new pin to have expected data', () => {",
+							"    var data = pm.response.json ();",
+							"    var t = data.find ((a) => a.title === 'T4');",
+							"    pm.expect (t).to.not.be.undefined;",
+							"    pm.expect (t._id).to.not.be.undefined;",
+							"    pm.expect (t).to.deep.equal ({",
+							"        _id: t._id,",
+							"        key: 4,",
+							"        creator: 1,",
+							"        category: 'C1',",
+							"        title: 'T4',",
+							"        text: 'Text 4',",
+							"        url: 'https://www.example.com/4.jpg',",
+							"        count: 0,",
+							"        pinned: false,",
+							"    });",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/pins",
+					"host": [
+						"{{host}}"
 					],
 					"path": [
 						"api",

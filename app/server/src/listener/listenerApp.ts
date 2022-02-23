@@ -12,7 +12,12 @@ export async function createPin (req: Request, res: Response) {
   const user = req.user as User;
   const { category, title, text, url } = req.body;
   const t = await db.createPin (user.key, category, title, text, url);
-  res.status (t.status).json (t.pin || {});
+  if (t.status !== 200 || t.pin === undefined) {
+    res.status (t.status).json ({});
+  } else {
+    const t1 = transformPin (t.pin, user?.key);
+    res.status (200).json (t1);
+  }
 }
 
 /**
@@ -22,13 +27,19 @@ export async function createPin (req: Request, res: Response) {
  */
 export async function updatePin (req: Request, res: Response) {
   console.log ('updatePin');
+  const user = req.user as User;
   const key = Number (req.params.key);
   if (Number.isNaN (key)) {
     res.status (400).json ({});
     return;
   }
   const t = await db.updatePin (key, req.body.category, req.body.title, req.body.text, req.body.url);
-  res.status (t.status).json (t.pin || {});
+  if (t.status !== 200 || t.pin === undefined) {
+    res.status (t.status).json ({});
+  } else {
+    const t1 = transformPin (t.pin, user?.key);
+    res.status (200).json (t1);
+  }
 }
 
 /**
