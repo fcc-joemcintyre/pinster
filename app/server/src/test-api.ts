@@ -1,3 +1,5 @@
+import express from 'express';
+import http from 'http';
 import { MongoClient } from 'mongodb';
 import newman from 'newman'; // eslint-disable-line
 import { Pin } from './db/pins.js';
@@ -14,9 +16,47 @@ const salt = '2ddbd3923c0ff0dc86215cf8cc277f1a';
 main ();
 
 /**
- * Initialize and start test server instance
+ * Initialize test server instance
+ * if --server arg provided, start server for interactive use
+ * if no arg provided, run postman tests and exit
  */
 async function main (): Promise<void> {
+  const args = process.argv.slice (2);
+  const server = args.reduce ((acc: boolean, a) => (
+    acc || a.toLowerCase () === '--server'
+  ), false);
+
+  // reset database and start application server
+  await resetDatabase ();
+  await startServer (port, uri);
+
+  // start management server to support test specific APIs
+  const app = express ();
+  app.post ('/api/test/reset', async (req, res) => {
+    console.log ('reset test environment');
+    await resetDatabase ();
+    res.status (200).json ({});
+  });
+  const t = http.createServer (app);
+  await listenAsync (t, 3001);
+
+  // if running tests, start test runner
+  if (!server) {
+    newman.run ({
+      collection: 'app/server/postman/pinster.postman_collection.json',
+      environment: 'app/server/postman/local.postman_environment.json',
+      reporters: 'cli',
+    }, async () => {
+      await stopServer ();
+      process.exit (0);
+    });
+  }
+}
+
+/**
+ * Initialize database
+ */
+async function resetDatabase () {
   // initialize database
   const initialCounters = [
     { _id: 'users', sequence: 3 },
@@ -50,15 +90,16 @@ async function main (): Promise<void> {
   await c3.deleteMany ({});
   await c3.insertMany (initialPins);
   client.close ();
+}
 
-  await startServer (port, uri);
-
-  newman.run ({
-    collection: 'app/server/postman/pinster.postman_collection.json',
-    environment: 'app/server/postman/local.postman_environment.json',
-    reporters: 'cli',
-  }, async () => {
-    await stopServer ();
-    process.exit (0);
+/**
+ * Async / await support for http.Server.listen
+ * @param s http.Server instance
+ * @param p port number
+ * @returns Promise to await server.listen on
+ */
+function listenAsync (s: http.Server, p: number) {
+  return new Promise ((resolve) => {
+    s.listen (p, () => { resolve (true); });
   });
 }
