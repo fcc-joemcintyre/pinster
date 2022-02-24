@@ -25,7 +25,163 @@
 			"response": []
 		},
 		{
-			"name": "Get Pins (unauthenticated)",
+			"name": "Unsupported API",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test ('status to be 404', () => {",
+							"    pm.response.to.have.status (404);",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/nothing",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"nothing"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User: Register",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test ('status to be 200', () => {",
+							"    pm.response.to.have.status (200);",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"test@example.com\",\n    \"name\": \"Amy Brown\",\n    \"password\": \"test\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/register",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User: Login new user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test ('status to be 200', () => {",
+							"    pm.response.to.have.status (200);",
+							"})",
+							"",
+							"pm.test ('user key to be 4', () => {",
+							"    var data = pm.response.json ();",
+							"    pm.expect (data.key).to.equal (4);",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"test@example.com\",\n    \"password\": \"test\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/login",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User: Logout",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test ('status to be 200', () => {",
+							"    pm.response.to.have.status (200);",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/logout",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Unauth: Get pins",
 			"event": [
 				{
 					"listen": "test",
@@ -106,7 +262,7 @@
 			"response": []
 		},
 		{
-			"name": "Get Pins (authenticated, initial)",
+			"name": "Get pins, initial",
 			"event": [
 				{
 					"listen": "test",
@@ -142,7 +298,43 @@
 			"response": []
 		},
 		{
-			"name": "Create Pin",
+			"name": "Get pinned pins, initial",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test ('status to be 200', () => {",
+							"    pm.response.to.have.status (200);",
+							"})",
+							"",
+							"pm.test ('updated pin to have expected data', () => {",
+							"    var t = pm.response.json ();",
+							"    pm.expect (t).to.have.length (0);",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/pinned",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"pinned"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create pin",
 			"event": [
 				{
 					"listen": "test",
@@ -199,7 +391,7 @@
 			"response": []
 		},
 		{
-			"name": "Get Pins (after addition)",
+			"name": "Get pins, verify addition",
 			"event": [
 				{
 					"listen": "test",
@@ -213,7 +405,8 @@
 							"    var data = pm.response.json ();",
 							"    pm.expect (data).length (4);",
 							"})",
-							"pm.test ('new pin to have expected data', () => {",
+							"",
+							"pm.test ('new pin exists, with have expected data', () => {",
 							"    var data = pm.response.json ();",
 							"    var t = data.find ((a) => a.title === 'T4');",
 							"    pm.expect (t).to.not.be.undefined;",
@@ -246,6 +439,550 @@
 					"path": [
 						"api",
 						"pins"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update pin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test ('status to be 200', () => {",
+							"    pm.response.to.have.status (200);",
+							"})",
+							"",
+							"pm.test ('populated pin', () => {",
+							"    var t = pm.response.json ();",
+							"    pm.expect (t).to.not.be.undefined;",
+							"    pm.expect (t._id).to.not.be.undefined;",
+							"    pm.expect (t).to.deep.equal ({",
+							"        _id: t._id,",
+							"        key: 4,",
+							"        creator: 1,",
+							"        category: 'C1u',",
+							"        title: 'T4u',",
+							"        text: 'Text 4u',",
+							"        url: 'https://www.example.com/4u.jpg',",
+							"        count: 0,",
+							"        pinned: false,",
+							"    });",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"category\": \"C1u\",\n    \"title\": \"T4u\",\n    \"text\": \"Text 4u\",\n    \"url\": \"https://www.example.com/4u.jpg\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/pins/4",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"pins",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get pin, verify update",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test ('status to be 200', () => {",
+							"    pm.response.to.have.status (200);",
+							"})",
+							"",
+							"pm.test ('updated pin to have expected data', () => {",
+							"    var t = pm.response.json ();",
+							"    pm.expect (t).to.not.be.undefined;",
+							"    pm.expect (t._id).to.not.be.undefined;",
+							"    pm.expect (t).to.deep.equal ({",
+							"        _id: t._id,",
+							"        key: 4,",
+							"        creator: 1,",
+							"        category: 'C1u',",
+							"        title: 'T4u',",
+							"        text: 'Text 4u',",
+							"        url: 'https://www.example.com/4u.jpg',",
+							"        count: 0,",
+							"        pinned: false,",
+							"    });",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/pins/4",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"pins",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Set pin on created pin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test ('status to be 200', () => {",
+							"    pm.response.to.have.status (200);",
+							"})",
+							"",
+							"pm.test ('populated pin', () => {",
+							"    var t = pm.response.json ();",
+							"    pm.expect (t).to.not.be.undefined;",
+							"    pm.expect (t._id).to.not.be.undefined;",
+							"    pm.expect (t).to.deep.equal ({",
+							"        _id: t._id,",
+							"        key: 4,",
+							"        creator: 1,",
+							"        category: 'C1u',",
+							"        title: 'T4u',",
+							"        text: 'Text 4u',",
+							"        url: 'https://www.example.com/4u.jpg',",
+							"        count: 1,",
+							"        pinned: true,",
+							"    });",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"category\": \"C1u\",\n    \"title\": \"T4u\",\n    \"text\": \"Text 4u\",\n    \"url\": \"https://www.example.com/4u.jpg\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/pins/4/pin/true",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"pins",
+						"4",
+						"pin",
+						"true"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Set pin on a pin created by a different user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test ('status to be 200', () => {",
+							"    pm.response.to.have.status (200);",
+							"})",
+							"",
+							"pm.test ('populated pin', () => {",
+							"    var t = pm.response.json ();",
+							"    pm.expect (t).to.not.be.undefined;",
+							"    pm.expect (t._id).to.not.be.undefined;",
+							"    pm.expect (t).to.deep.equal ({",
+							"        _id: t._id,",
+							"        key: 3,",
+							"        creator: 2,",
+							"        category: 'C1',",
+							"        title: 'T3',",
+							"        text: 'Text 3',",
+							"        url: 'https://www.example.com/3.jpg',",
+							"        count: 1,",
+							"        pinned: true,",
+							"    });",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"category\": \"C1u\",\n    \"title\": \"T4u\",\n    \"text\": \"Text 4u\",\n    \"url\": \"https://www.example.com/4u.jpg\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/pins/3/pin/true",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"pins",
+						"3",
+						"pin",
+						"true"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get pin, verify pinned status",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test ('status to be 200', () => {",
+							"    pm.response.to.have.status (200);",
+							"})",
+							"",
+							"pm.test ('updated pin to have expected data', () => {",
+							"    var t = pm.response.json ();",
+							"    pm.expect (t).to.not.be.undefined;",
+							"    pm.expect (t._id).to.not.be.undefined;",
+							"    pm.expect (t).to.deep.equal ({",
+							"        _id: t._id,",
+							"        key: 3,",
+							"        creator: 2,",
+							"        category: 'C1',",
+							"        title: 'T3',",
+							"        text: 'Text 3',",
+							"        url: 'https://www.example.com/3.jpg',",
+							"        count: 1,",
+							"        pinned: true,",
+							"    });",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/pins/3",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"pins",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get pinned pins for user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test ('status to be 200', () => {",
+							"    pm.response.to.have.status (200);",
+							"})",
+							"",
+							"pm.test ('updated pin to have expected data', () => {",
+							"    var t = pm.response.json ();",
+							"    pm.expect (t).to.have.length (2);",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/pinned",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"pinned"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Unset pin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test ('status to be 200', () => {",
+							"    pm.response.to.have.status (200);",
+							"})",
+							"",
+							"pm.test ('populated pin', () => {",
+							"    var t = pm.response.json ();",
+							"    pm.expect (t).to.not.be.undefined;",
+							"    pm.expect (t._id).to.not.be.undefined;",
+							"    pm.expect (t).to.deep.equal ({",
+							"        _id: t._id,",
+							"        key: 3,",
+							"        creator: 2,",
+							"        category: 'C1',",
+							"        title: 'T3',",
+							"        text: 'Text 3',",
+							"        url: 'https://www.example.com/3.jpg',",
+							"        count: 0,",
+							"        pinned: false,",
+							"    });",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"category\": \"C1u\",\n    \"title\": \"T4u\",\n    \"text\": \"Text 4u\",\n    \"url\": \"https://www.example.com/4u.jpg\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/pins/3/pin/false",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"pins",
+						"3",
+						"pin",
+						"false"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get pin, verified unpinned status",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test ('status to be 200', () => {",
+							"    pm.response.to.have.status (200);",
+							"})",
+							"",
+							"pm.test ('updated pin to have expected data', () => {",
+							"    var t = pm.response.json ();",
+							"    pm.expect (t).to.not.be.undefined;",
+							"    pm.expect (t._id).to.not.be.undefined;",
+							"    pm.expect (t).to.deep.equal ({",
+							"        _id: t._id,",
+							"        key: 3,",
+							"        creator: 2,",
+							"        category: 'C1',",
+							"        title: 'T3',",
+							"        text: 'Text 3',",
+							"        url: 'https://www.example.com/3.jpg',",
+							"        count: 0,",
+							"        pinned: false,",
+							"    });",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/pins/3",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"pins",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete pin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test ('status to be 200', () => {",
+							"    pm.response.to.have.status (200);",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/pins/4",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"pins",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get pins, verify list after deletion",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test ('status to be 200', () => {",
+							"    pm.response.to.have.status (200);",
+							"})",
+							"",
+							"pm.test ('pin count to be 3', () => {",
+							"    var data = pm.response.json ();",
+							"    pm.expect (data).length (3);",
+							"})",
+							"",
+							"pm.test ('not to include pin with key=4', () => {",
+							"    var data = pm.response.json ();",
+							"    var t = data.find ((a) => a.key === 4);",
+							"    pm.expect (t).to.be.undefined;",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/api/pins",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"pins"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Logout",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test ('status to be 200', () => {",
+							"    pm.response.to.have.status (200);",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/logout",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"logout"
 					]
 				}
 			},

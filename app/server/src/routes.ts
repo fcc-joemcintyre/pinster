@@ -13,12 +13,12 @@ export function initRoutes (app: Application): void {
   app.post ('/api/register', register);
 
   app.get ('/api/pinned', isAuthenticated, getPinned);
-  app.get ('/api/pins/:_id', getPin);
+  app.get ('/api/pins/:key', getPin);
   app.get ('/api/pins', getPins);
   app.post ('/api/pins', isAuthenticated, createPin);
-  app.post ('/api/pins/:_id', isAuthenticated, updatePin);
-  app.post ('/api/pins/:_id/pin/:value', isAuthenticated, setPinned);
-  app.delete ('/api/pins/:_id', isAuthenticated, deletePin);
+  app.post ('/api/pins/:key', isAuthenticated, updatePin);
+  app.post ('/api/pins/:key/pin/:value', isAuthenticated, setPinned);
+  app.delete ('/api/pins/:key', isAuthenticated, deletePin);
 }
 
 /**
