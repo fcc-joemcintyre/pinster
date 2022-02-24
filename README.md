@@ -54,17 +54,29 @@ There is one build command that runs both server and client production builds.
 In a terminal,
 
 ```
-npm run prod
+npm run build
 ```
 
 This production build is a single step process, it is not continuous build.
 
 ## Testing
 
-Testing can started using,
+Run unit tests using,
 
 ```
 npm test
+```
+
+Run automated API tests using,
+
+```
+npm run postman:run
+```
+
+To use Postman client interactively, start the API test server using,
+
+```
+npm run postman:server
 ```
 
 ### Server
