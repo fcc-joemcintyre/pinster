@@ -1,8 +1,8 @@
-import styled from 'styled-components';
-import { common } from '../css';
+import styled from '@emotion/styled';
+import { common } from '../common';
 
 export const Fixed = styled.div`
-  ${common}
+  ${common};
   position: fixed;
   top: ${(props) => props.top};
   left: ${(props) => props.left};

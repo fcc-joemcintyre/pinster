@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import { darker } from '../css';
+import styled from '@emotion/styled';
+import { darker } from '../common';
 import { size } from './size';
 
 /* eslint-disable indent */

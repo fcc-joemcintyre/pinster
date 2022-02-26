@@ -1,6 +1,7 @@
-import styled, { css } from 'styled-components';
+import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import { NavLink } from 'react-router-dom';
-import { common, darker } from '../css';
+import { common, darker } from '../common';
 import { DropMenuImpl } from './DropMenuImpl'; // eslint-disable-line
 import { SubMenuImpl } from './SubMenuImpl'; // eslint-disable-line
 
@@ -10,8 +11,8 @@ export const MenuBar = styled.div`
   margin-left: ${(props) => (props.right ? 'auto' : 0)};
 `;
 
-const item = css`
-  ${(props) => props.theme.menuText}
+const item = (props) => css`
+  ${props.theme.menuText}
   position: relative;
   margin-right: 10px;
   white-space: nowrap;
@@ -21,10 +22,10 @@ const item = css`
     margin-right: 0;
   }
   &:hover {
-    ${(props) => props.theme.menuTextHover};
+    ${props.theme.menuTextHover};
   }
   &.active {
-    ${(props) => props.theme.menuTextActive};
+    ${props.theme.menuTextActive};
   }
 `;
 

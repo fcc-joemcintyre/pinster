@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 
 export const FormSectionTitle = styled.div`
   ${({ theme }) => (theme && theme.fonts && theme.fonts.h5)};

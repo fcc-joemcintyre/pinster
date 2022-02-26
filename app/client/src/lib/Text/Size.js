@@ -1,25 +1,25 @@
 import PropTypes from 'prop-types';
-import { css } from 'styled-components';
+import { css } from '@emotion/react';
 
-export const Size = css`
-  font-size: ${({ theme }) => (theme && theme.fontSize && theme.fontSize[3]) || '16px'};
-  ${({ theme, small }) => small && `
-    font-size: ${(theme && theme.fontSize && theme.fontSize[2]) || '14px'};
+export const Size = (props) => css`
+  font-size: ${(props.theme && props.theme.fontSize && props.theme.fontSize[3]) || '16px'};
+  ${props.small && `
+    font-size: ${(props.theme && props.theme.fontSize && props.theme.fontSize[2]) || '14px'};
   `};
-  ${({ theme, xsmall }) => xsmall && `
-    font-size: ${(theme && theme.fontSize && theme.fontSize[1]) || '12px'};
+  ${props.xsmall && `
+    font-size: ${(props.theme && props.theme.fontSize && props.theme.fontSize[1]) || '12px'};
   `};
-  ${({ theme, xxsmall }) => xxsmall && `
-    font-size: ${(theme && theme.fontSize && theme.fontSize[0]) || '11px'};
+  ${props.xxsmall && `
+    font-size: ${(props.theme && props.theme.fontSize && props.theme.fontSize[0]) || '11px'};
   `};
-  ${({ theme, large }) => large && `
-    font-size: ${(theme && theme.fontSize && theme.fontSize[4]) || '18px'};
+  ${props.large && `
+    font-size: ${(props.theme && props.theme.fontSize && props.theme.fontSize[4]) || '18px'};
   `};
-  ${({ theme, xlarge }) => xlarge && `
-    font-size: ${(theme && theme.fontSize && theme.fontSize[5]) || '22px'};
+  ${props.xlarge && `
+    font-size: ${(props.theme && props.theme.fontSize && props.theme.fontSize[5]) || '22px'};
   `};
-  ${({ theme, xxlarge }) => xxlarge && `
-    font-size: ${(theme && theme.fontSize && theme.fontSize[6]) || '26px'};
+  ${props.xxlarge && `
+    font-size: ${(props.theme && props.theme.fontSize && props.theme.fontSize[6]) || '26px'};
   `};
 `;
 

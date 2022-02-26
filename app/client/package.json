@@ -10,6 +10,8 @@
   "license": "MIT",
   "dependencies": {
     "@cygns/validators": "0.0.1",
+    "@emotion/react": "11.8.1",
+    "@emotion/styled": "11.8.1",
     "prop-types": "15.8.1",
     "react": "17.0.2",
     "react-dom": "17.0.2",
@@ -19,8 +21,7 @@
     "react-router": "5.2.0",
     "react-router-dom": "5.2.0",
     "redux": "4.1.2",
-    "redux-thunk": "2.4.1",
-    "styled-components": "5.3.3"
+    "redux-thunk": "2.4.1"
   },
   "scripts": {
     "dev": "webpack --mode=development -w",
@@ -32,10 +33,9 @@
     "@babel/plugin-proposal-object-rest-spread": "7.17.3",
     "@babel/preset-env": "7.16.11",
     "@babel/preset-react": "7.16.7",
-    "@babel/register": "7.17.0",
     "@cygns/eslint-config": "5.0.0",
+    "@emotion/babel-plugin": "11.7.2",
     "babel-loader": "8.2.3",
-    "babel-plugin-styled-components": "2.0.5",
     "compression-webpack-plugin": "9.2.0",
     "eslint": "7.24.0",
     "eslint-import-resolver-webpack": "0.13.2",

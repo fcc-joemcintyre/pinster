@@ -1,6 +1,6 @@
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import PropTypes from 'prop-types';
-import { common } from '../css';
+import { common } from '../common';
 
 export const Absolute = styled.div`
   ${common}

@@ -1,19 +1,19 @@
 import PropTypes from 'prop-types';
-import { css } from 'styled-components';
+import { css } from '@emotion/react';
 
-export const size = css`
+export const size = (props) => css`
   font-size: 16px;
   padding: 6px 12px;
 
-  ${({ small }) => small && css`
+  ${props.small && css`
     font-size: 12px;
     padding: 2px 4px;
   `};
-  ${({ medium }) => medium && css`
+  ${props.medium && css`
     font-size: 14px;
     padding: 2px 6px;
   `};
-  ${({ large }) => large && css`
+  ${props.large && css`
     font-size: 18px;
     width: 100%;
     padding: 6px 12px;

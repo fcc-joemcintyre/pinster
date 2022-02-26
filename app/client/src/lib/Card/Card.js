@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { common } from '../css';
+import styled from '@emotion/styled';
+import { common } from '../common';
 import { Flex } from '../Layout';
 
 export const Card = styled (Flex)`

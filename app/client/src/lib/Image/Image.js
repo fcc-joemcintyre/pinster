@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 
 export const Image = styled.img`
   display: ${({ inline }) => (inline ? 'inline-block' : 'block')};

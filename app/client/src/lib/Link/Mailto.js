@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 
 export const Mailto = ({ to, subject, children, ...props }) => (
   <a href={`mailto:${to}${subject && `?subject=${subject}`}`} {...props}>{children}</a>

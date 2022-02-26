@@ -5,16 +5,16 @@ module.exports = {
         browsers: [
           'chrome >= 61',
           'firefox >= 55',
-          'opera >= 49',
           'ios >= 10.3',
           'safari >= 10.1',
-          'edge >= 15',
         ],
       },
     }],
-    '@babel/preset-react',
+    ['@babel/preset-react', {
+      runtime: 'automatic',
+    }],
   ],
   plugins: [
-    'babel-plugin-styled-components',
+    '@emotion',
   ],
 };

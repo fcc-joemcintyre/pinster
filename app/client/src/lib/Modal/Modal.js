@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { createPortal } from 'react-dom';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import { Row, FlexGroup } from '../Layout';
 import { Button } from '../Button';
 

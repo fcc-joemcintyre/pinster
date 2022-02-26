@@ -1,7 +1,7 @@
 /* eslint-env jest */
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import { ThemeProvider } from 'styled-components';
+import { ThemeProvider } from '@emotion/styled';
 import renderer from 'react-test-renderer';
 import { PlainLink } from '..';
 

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import { common } from '../css';
+import styled from '@emotion/styled';
+import { common } from '../common';
 
 export const Divider = styled.div`
   ${common}

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import { Fixed, Relative, Flex } from '../../lib/Layout';
 import { DropMenu, MenuBar, MenuNavLink, MenuSeparator } from '../../lib/Menu';
 
