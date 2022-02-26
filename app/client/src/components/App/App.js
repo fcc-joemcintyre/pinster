@@ -1,6 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { ThemeProvider } from '@emotion/react';
 import { theme } from './theme';
@@ -22,73 +21,59 @@ import { AddPin, EditPin } from '../EditPin';
 import { AboutPage } from '../AboutPage';
 import { NotFoundPage } from './NotFoundPage';
 
-export class AppBase extends React.Component {
-  constructor (props) {
-    super (props);
-    this.state = {
-      loading: true,
-    };
+export const App = () => {
+  const dispatch = useDispatch ();
+  const [loading, setLoading] = useState (true);
+  const authenticated = useSelector ((a) => a.user.authenticated);
+
+  useEffect (() => {
+    async function q () {
+      await dispatch (verifyLogin ());
+      await dispatch (setPins ());
+      setLoading (false);
+    }
+    q ();
+  }, []);
+
+  if (loading) {
+    return (
+      <ThemeProvider theme={theme}>
+        <>
+          <GlobalStyle />
+          <Page>
+            <Header menu={false} />
+            <Box mt='120px' center>Loading ...</Box>
+          </Page>
+        </>
+      </ThemeProvider>
+    );
   }
 
-  async componentDidMount () {
-    await this.props.dispatch (verifyLogin ());
-    await this.props.dispatch (setPins ());
-    this.setState ({ loading: false });
-  }
-
-  render () {
-    if (this.state.loading) {
-      return (
+  return (
+    <BrowserRouter>
+      <ScrollToTop>
         <ThemeProvider theme={theme}>
           <>
             <GlobalStyle />
             <Page>
-              <Header menu={false} />
-              <Box mt='120px' center>Loading ...</Box>
+              <Header menu />
+              <Switch>
+                <Route exact path='/' component={HomePage} />
+                <Route exact path='/register' component={RegisterPage} />
+                <Route exact path='/login' component={LoginPage} />
+                <Route exact path='/logout' component={LogoutPage} />
+                <AuthRoute exact path='/pinned' authenticated={authenticated} component={PinnedPage} />
+                <Route exact path='/pins/:_id' component={UserPinsPage} />
+                <AuthRoute exact path='/manage' authenticated={authenticated} component={ManagePinsPage} />
+                <AuthRoute exact path='/add' authenticated={authenticated} component={AddPin} />
+                <AuthRoute exact path='/edit/:_id' authenticated={authenticated} component={EditPin} />
+                <Route exact path='/about' component={AboutPage} />
+                <Route path='*' component={NotFoundPage} />
+              </Switch>
             </Page>
           </>
         </ThemeProvider>
-      );
-    }
-    const { authenticated } = this.props;
-    return (
-      <BrowserRouter>
-        <ScrollToTop>
-          <ThemeProvider theme={theme}>
-            <>
-              <GlobalStyle />
-              <Page>
-                <Header menu />
-                <Switch>
-                  <Route exact path='/' component={HomePage} />
-                  <Route exact path='/register' component={RegisterPage} />
-                  <Route exact path='/login' component={LoginPage} />
-                  <Route exact path='/logout' component={LogoutPage} />
-                  <AuthRoute exact path='/pinned' authenticated={authenticated} component={PinnedPage} />
-                  <Route exact path='/pins/:_id' component={UserPinsPage} />
-                  <AuthRoute exact path='/manage' authenticated={authenticated} component={ManagePinsPage} />
-                  <AuthRoute exact path='/add' authenticated={authenticated} component={AddPin} />
-                  <AuthRoute exact path='/edit/:_id' authenticated={authenticated} component={EditPin} />
-                  <Route exact path='/about' component={AboutPage} />
-                  <Route path='*' component={NotFoundPage} />
-                </Switch>
-              </Page>
-            </>
-          </ThemeProvider>
-        </ScrollToTop>
-      </BrowserRouter>
-    );
-  }
-}
-
-const mapStateToProps = ({ user }) => ({
-  authenticated: user.authenticated,
-  theme: user.theme || 'base',
-});
-
-export const App = connect (mapStateToProps) (AppBase);
-
-AppBase.propTypes = {
-  authenticated: PropTypes.bool.isRequired,
-  dispatch: PropTypes.func.isRequired,
+      </ScrollToTop>
+    </BrowserRouter>
+  );
 };
