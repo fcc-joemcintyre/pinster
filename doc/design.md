@@ -48,8 +48,9 @@ Data Exchange:
 
 | Field    | Description |
 | -------- | ----------- |
-| id       | Unique, indexed. Assigned to each user, with prefix indicating source. Prefixes: l- locally created user, t- : Twitter user |
-| username | short text name for user |
+| key      | Unique, indexed. Generated for each added user. |
+| email    | email address for user |
+| name     | name for user |
 | hash     | password hash (only for local users)|
 | salt     | password salt (only for local users)|
 
@@ -57,7 +58,8 @@ Data Exchange:
 
 | Field    | Description |
 | -------- | ----------- |
-| creator  | Unique, indexed, FKey User.id. Pin creator. |
+| key      | Unique, indexed. Generated for each added pin. |
+| creator  | FKey User.key. Pin creator. |
 | username | Name to display on pin |
 | category | Category pin assigned to |
 | title    | Title to display on the pin |
@@ -78,11 +80,12 @@ authentication and sessions are essential to the applications function.
 
 ## Technology Selections
 
-The server is implemented with Node.js version 12.x and uses ES2020 Javascript
-conforming to the native ES20xx support provided in this version of Node.js.
-Data is stored in MongoDB (4.x).
+The server is implemented with Node.js version 16.x and uses Typescript
+generating ES2020 Javascript conforming to the native ES20xx support provided
+in this version of Node.js.
+Data is stored in MongoDB (4.x driver for MongoDB 4.x or 5.x servers).
 
-The client interface is implemented with React 16.x using ES2020 Javascript
+The client interface is implemented with React 17.x using ES2020 Javascript
 as supported by Babel. Redux and react-router are also used.
 
 Styles are defined using CSS-in-JS using Styled Components.
