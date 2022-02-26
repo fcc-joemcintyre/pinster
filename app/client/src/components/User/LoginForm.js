@@ -5,22 +5,24 @@ import { fieldPropTypes } from '../../lib/formkit/formPropTypes';
 import { PageContent, Row, FlexColumn, FlexGroup } from '../../lib/Layout';
 import { Form } from '../../lib/Form';
 import { Field } from '../../lib/FieldBordered';
-import { FieldFilteredInput } from '../../lib/Field';
+import { FieldFilteredInput, FieldInput } from '../../lib/Field';
 import { Label } from '../../lib/Label';
 import { H1 } from '../../lib/Text';
 import { Button } from '../../lib/Button';
 import { MessageText } from '../../lib/MessageText';
 
-const usernameChars = /[A-Za-z0-9]/;
+const emailErrors = {
+  format: 'Not a valid email address',
+};
 const passwordChars = /[A-Za-z0-9!@#$%^&*-+_=]/;
 const passwordErrors = {
   length: 'Must be 4+ characters',
   format: 'Invalid characters',
 };
 
-export const LoginForm = ({ message, fields, fields: { username, password }, onChange, onValidate, onSubmit }) => {
+export const LoginForm = ({ message, fields, fields: { email, password }, onChange, onValidate, onSubmit }) => {
   function resetFocus () {
-    const id = getFirstError (fields) || username.name;
+    const id = getFirstError (fields) || email.name;
     const el = document.getElementById (id);
     if (el) {
       el.focus ();
@@ -38,14 +40,14 @@ export const LoginForm = ({ message, fields, fields: { username, password }, onC
       <Form center w='300px' onSubmit={(e) => { onSubmit (e).then (() => { resetFocus (); }); }}>
         <FlexColumn>
           <Field>
-            <Label htmlFor={username.name} required={username.required}>User name</Label>
-            <FieldFilteredInput
-              field={username}
+            <Label htmlFor={email.name} required={email.required}>Email</Label>
+            <FieldInput
+              field={email}
               autoFocus
               maxLength={20}
               autoCapitalize='none'
               autoCorrect='off'
-              filter={usernameChars}
+              errors={emailErrors}
               onChange={onChange}
               onValidate={onValidate}
             />
@@ -80,7 +82,7 @@ LoginForm.propTypes = {
     text: PropTypes.string.isRequired,
   }).isRequired,
   fields: PropTypes.shape ({
-    username: PropTypes.shape (fieldPropTypes).isRequired,
+    email: PropTypes.shape (fieldPropTypes).isRequired,
     password: PropTypes.shape (fieldPropTypes).isRequired,
   }).isRequired,
   onChange: PropTypes.func.isRequired,

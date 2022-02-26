@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
-import { isPassword } from '@cygns/validators';
+import { isEmail, isPassword } from '@cygns/validators';
 import { LoginForm } from './LoginForm';
 import { login } from '../../store/userActions';
 import { createField, getFieldValues, inString, outString, defaultOnChange, defaultOnValidate, defaultOnValidateForm }
@@ -15,7 +15,7 @@ class LoginPageBase extends Component {
     super (props);
     this.state = {
       fields: {
-        username: createField ('username', '', true, [], 'Your user name', inString, outString),
+        email: createField ('email', '', true, [isEmail], 'Your email', inString, outString),
         password: createField ('password', '', true, [isPassword], 'Your password', inString, outString),
       },
       message: { status: 'info', text: defaultText },
@@ -33,8 +33,8 @@ class LoginPageBase extends Component {
     if (this.onValidateForm ()) {
       this.setState ({ message: { status: 'working', text: 'Logging in' } });
       try {
-        const { username, password } = getFieldValues (this.state.fields);
-        await this.props.dispatch (login (username, password));
+        const { email, password } = getFieldValues (this.state.fields);
+        await this.props.dispatch (login (email, password));
         this.setState ({ message: { status: 'ok', text: 'Logged in' }, redirectToReferrer: true });
       } catch (err) {
         this.setState ({ message: { status: 'error', text: 'Error logging in, check values' } });
