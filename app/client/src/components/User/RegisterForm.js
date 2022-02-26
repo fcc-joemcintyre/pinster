@@ -5,13 +5,12 @@ import { fieldPropTypes } from '../../lib/formkit/formPropTypes';
 import { PageContent, Row, FlexColumn, FlexGroup } from '../../lib/Layout';
 import { Form } from '../../lib/Form';
 import { Field } from '../../lib/FieldBordered';
-import { FieldFilteredInput } from '../../lib/Field';
+import { FieldFilteredInput, FieldInput } from '../../lib/Field';
 import { Label } from '../../lib/Label';
 import { H1 } from '../../lib/Text';
 import { Button } from '../../lib/Button';
 import { MessageText } from '../../lib/MessageText';
 
-const nameChars = /[A-Za-z0-9]/;
 const passwordChars = /[A-Za-z0-9!@#$%^&*-+_=]/;
 const errors = {
   format: 'Invalid password',
@@ -19,10 +18,10 @@ const errors = {
   matching: 'Password and verify password don\'t match',
 };
 
-export const RegisterForm = ({ message, fields, fields: { username, password, verifyPassword },
+export const RegisterForm = ({ message, fields, fields: { email, name, password, verifyPassword },
   onChange, onValidate, onSubmit }) => {
   function resetFocus () {
-    const id = getFirstError (fields) || username.name;
+    const id = getFirstError (fields) || email.name;
     const el = document.getElementById (id);
     if (el) {
       el.focus ();
@@ -40,14 +39,24 @@ export const RegisterForm = ({ message, fields, fields: { username, password, ve
       <Form center w='280px' onSubmit={(e) => { onSubmit (e).then (() => { resetFocus (); }); }}>
         <FlexColumn>
           <Field>
-            <Label htmlFor={username.name} required={username.required}>User name</Label>
-            <FieldFilteredInput
-              field={username}
+            <Label htmlFor={email.name} required={email.required}>Email</Label>
+            <FieldInput
+              field={email}
               autoFocus
               maxLength={20}
               autoCapitalize='none'
               autoCorrect='off'
-              filter={nameChars}
+              onChange={onChange}
+              onValidate={onValidate}
+            />
+          </Field>
+          <Field>
+            <Label htmlFor={name.name} required={name.required}>User name</Label>
+            <FieldInput
+              field={name}
+              maxLength={20}
+              autoCapitalize='none'
+              autoCorrect='off'
               onChange={onChange}
               onValidate={onValidate}
             />
@@ -94,7 +103,8 @@ RegisterForm.propTypes = {
     text: PropTypes.string.isRequired,
   }).isRequired,
   fields: PropTypes.shape ({
-    username: PropTypes.shape (fieldPropTypes).isRequired,
+    email: PropTypes.shape (fieldPropTypes).isRequired,
+    name: PropTypes.shape (fieldPropTypes).isRequired,
     password: PropTypes.shape (fieldPropTypes).isRequired,
     verifyPassword: PropTypes.shape (fieldPropTypes).isRequired,
   }).isRequired,

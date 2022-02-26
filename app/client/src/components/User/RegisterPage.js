@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { isPassword } from '@cygns/validators';
+import { isEmail, isPassword } from '@cygns/validators';
 import { RegisterForm } from './RegisterForm';
 import { register, login } from '../../store/userActions';
 import { createField, getFieldValues, inString, outString, defaultOnChange, defaultOnValidate, defaultOnValidateForm }
@@ -15,7 +15,8 @@ export class RegisterPageBase extends Component {
     this.isMatching = this.isMatching.bind (this);
     this.state = {
       fields: {
-        username: createField ('username', '', true, [], 'Up to 20 characters, no spaces', inString, outString),
+        email: createField ('email', '', true, [isEmail], 'Your email', inString, outString),
+        name: createField ('name', '', true, [], 'Your name', inString, outString),
         password: createField ('password', '', true, [isPassword, this.isMatching], '4 to 20 characters',
           inString, outString),
         verifyPassword: createField ('verifyPassword', '', true, [isPassword, this.isMatching],
@@ -46,10 +47,10 @@ export class RegisterPageBase extends Component {
     if (this.onValidateForm ()) {
       this.setState ({ message: { status: 'working', text: 'Registering ...' } });
       try {
-        const { username, password } = getFieldValues (this.state.fields);
-        await this.props.dispatch (register (username, 'Name', password));
+        const { email, name, password } = getFieldValues (this.state.fields);
+        await this.props.dispatch (register (email, name, password));
         try {
-          await this.props.dispatch (login (username, password));
+          await this.props.dispatch (login (email, password));
           this.props.history.replace ('/');
         } catch (err) {
           this.setState ({ message: { status: 'error', text: 'Registered, but could not login' } });
