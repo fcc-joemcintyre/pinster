@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { ThemeProvider } from '@emotion/react';
@@ -8,7 +8,7 @@ import { AuthRoute } from './AuthRoute';
 import { verifyLogin } from '../../store/userActions';
 import { setPins } from '../../store/appActions';
 import { Header } from './Header';
-import { ScrollToTop } from '../../lib/ScrollToTop';
+import { ScrollToTop } from './ScrollToTop';
 import { Page, Box } from '../../lib/Layout';
 
 import { HomePage } from '../HomePage';
