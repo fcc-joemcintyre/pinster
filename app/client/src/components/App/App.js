@@ -13,8 +13,9 @@ import { ScrollToTop } from './ScrollToTop';
 import { Page, Box } from '../../lib/Layout';
 
 import { HomePage } from '../HomePage';
-import { RegisterPage, LoginPage } from '../User';
-import { LogoutPage } from '../LogoutPage';
+import { Register } from '../register';
+import { Login } from '../login';
+import { Logout } from '../logout';
 import { PinnedPage } from '../PinnedPage';
 import { UserPinsPage } from '../UserPinsPage';
 import { ManagePinsPage } from '../ManagePinsPage';
@@ -62,9 +63,30 @@ export const App = () => {
               <Header menu />
               <Switch>
                 <Route exact path='/' component={HomePage} />
-                <Route exact path='/register' component={RegisterPage} />
-                <Route exact path='/login' component={LoginPage} />
-                <Route exact path='/logout' component={LogoutPage} />
+                <Route exact path='/register'>
+                  <ThemeProvider theme={theme}>
+                    <>
+                      <CssBaseline />
+                      <Register />
+                    </>
+                  </ThemeProvider>
+                </Route>
+                <Route exact path='/login'>
+                  <ThemeProvider theme={theme}>
+                    <>
+                      <CssBaseline />
+                      <Login />
+                    </>
+                  </ThemeProvider>
+                </Route>
+                <Route exact path='/logout'>
+                  <ThemeProvider theme={theme}>
+                    <>
+                      <CssBaseline />
+                      <Logout />
+                    </>
+                  </ThemeProvider>
+                </Route>
                 <AuthRoute exact path='/pinned' authenticated={authenticated} component={PinnedPage} />
                 <Route exact path='/pins/:_id' component={UserPinsPage} />
                 <AuthRoute exact path='/manage' authenticated={authenticated} component={ManagePinsPage} />
