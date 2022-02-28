@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { ThemeProvider } from '@emotion/react';
-import { theme } from './theme';
+import { ThemeProvider as ThemeProviderLegacy } from '@emotion/react';
+import { CssBaseline, ThemeProvider } from '@mui/material';
+import { getTheme, theme as themeLegacy } from './theme';
 import { GlobalStyle } from './GlobalStyle';
 import { AuthRoute } from './AuthRoute';
 import { verifyLogin } from '../../store/userActions';
@@ -18,8 +19,10 @@ import { PinnedPage } from '../PinnedPage';
 import { UserPinsPage } from '../UserPinsPage';
 import { ManagePinsPage } from '../ManagePinsPage';
 import { AddPin, EditPin } from '../EditPin';
-import { AboutPage } from '../AboutPage';
+import { About } from '../about';
 import { NotFoundPage } from './NotFoundPage';
+
+const theme = getTheme ();
 
 export const App = () => {
   const dispatch = useDispatch ();
@@ -33,11 +36,11 @@ export const App = () => {
       setLoading (false);
     }
     q ();
-  }, []);
+  }, [dispatch]);
 
   if (loading) {
     return (
-      <ThemeProvider theme={theme}>
+      <ThemeProviderLegacy theme={themeLegacy}>
         <>
           <GlobalStyle />
           <Page>
@@ -45,14 +48,14 @@ export const App = () => {
             <Box mt='120px' center>Loading ...</Box>
           </Page>
         </>
-      </ThemeProvider>
+      </ThemeProviderLegacy>
     );
   }
 
   return (
     <BrowserRouter>
       <ScrollToTop>
-        <ThemeProvider theme={theme}>
+        <ThemeProviderLegacy theme={themeLegacy}>
           <>
             <GlobalStyle />
             <Page>
@@ -67,12 +70,19 @@ export const App = () => {
                 <AuthRoute exact path='/manage' authenticated={authenticated} component={ManagePinsPage} />
                 <AuthRoute exact path='/add' authenticated={authenticated} component={AddPin} />
                 <AuthRoute exact path='/edit/:_id' authenticated={authenticated} component={EditPin} />
-                <Route exact path='/about' component={AboutPage} />
+                <Route exact path='/about'>
+                  <ThemeProvider theme={theme}>
+                    <>
+                      <CssBaseline />
+                      <About />
+                    </>
+                  </ThemeProvider>
+                </Route>
                 <Route path='*' component={NotFoundPage} />
               </Switch>
             </Page>
           </>
-        </ThemeProvider>
+        </ThemeProviderLegacy>
       </ScrollToTop>
     </BrowserRouter>
   );

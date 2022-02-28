@@ -1,3 +1,35 @@
+import { createTheme } from '@mui/material';
+
+export function getTheme () {
+  return createTheme ({
+    palette: {
+      mode: 'light',
+    },
+    typography: {
+      fontFamily: 'Roboto,sans-serif',
+      h1: {
+        fontSize: '1.5rem',
+      },
+      h2: {
+        fontSize: '1.3rem',
+      },
+    },
+    components: {
+      MuiButton: {
+        defaultProps: {
+          variant: 'outlined',
+          disableRipple: true,
+        },
+      },
+      MuiTextField: {
+        defaultProps: {
+          size: 'small',
+        },
+      },
+    },
+  });
+}
+
 export const theme = {
   // page content settings
   contentWidth: '768px',
@@ -21,7 +53,7 @@ export const theme = {
       line-height: 1.2;
     `,
     h1: `
-      font-family: 'Merriweather', sans-serif;
+      font-family: 'Lato', sans-serif;
       font-size: 30px;
       font-weight: 400;
       margin-top: 10px;

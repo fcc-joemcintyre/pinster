@@ -1,0 +1,18 @@
+{
+  "extends": [
+    "@cygns/eslint-config-node",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "env": {
+    "browser": true
+  },
+  "rules": {
+    "jsdoc/require-param-type": "off",
+    "jsdoc/require-returns-type": "off",
+    "import/extensions": ["error", "ignorePackages", {
+      "js": "always"
+    }],
+    "@typescript-eslint/no-extra-semi": "off"
+  }
+}
