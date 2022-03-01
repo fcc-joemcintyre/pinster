@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { CssBaseline, ThemeProvider, Typography } from '@mui/material';
 
 import { verifyLogin } from '../../store/userActions';
@@ -55,18 +55,20 @@ export const App = () => {
           <>
             <CssBaseline />
             { authenticated ? <NavAuth /> : <NavUnauth /> }
-            <Switch>
-              <Route exact path='/'><Home /></Route>
-              <Route exact path='/register'><Register /></Route>
-              <Route exact path='/login'><Login /></Route>
-              <Route exact path='/logout'><Logout /></Route>
-              <AuthRoute exact path='/pinned'><Pinned /></AuthRoute>
-              <AuthRoute exact path='/manage'><Manage /></AuthRoute>
-              <AuthRoute exact path='/add'><AddPin /></AuthRoute>
-              <AuthRoute exact path='/edit/:key'><EditPin /></AuthRoute>
-              <Route exact path='/about'><About /></Route>
-              <Route path='*'><NotFoundPage /></Route>
-            </Switch>
+            <Routes>
+              <Route path='/' element={<Home />} />
+              <Route path='/register' element={<Register />} />
+              <Route path='/login' element={<Login />} />
+              <Route path='/logout' element={<Logout />} />
+              <Route path='/about' element={<About />} />
+
+              <Route path='/pinned' element={<AuthRoute><Pinned /></AuthRoute>} />
+              <Route path='/manage' element={<AuthRoute><Manage /></AuthRoute>} />
+              <Route path='/add' element={<AuthRoute><AddPin /></AuthRoute>} />
+              <Route path='/edit/:key' element={<AuthRoute><EditPin /></AuthRoute>} />
+
+              <Route path='*' element={<NotFoundPage />} />
+            </Routes>
           </>
         </ThemeProvider>
       </ScrollToTop>

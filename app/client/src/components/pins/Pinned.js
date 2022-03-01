@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 import { Masonry } from '@mui/lab';
 import { Typography } from '@mui/material';
 import { deletePin } from '../../store/appActions';
@@ -9,7 +9,7 @@ import { Pin } from './Pin';
 
 export const Pinned = () => {
   const dispatch = useDispatch ();
-  const history = useHistory ();
+  const navigate = useNavigate ();
   const pins = useSelector ((a) => a.pins.filter ((b) => b.pinned));
 
   return (
@@ -23,7 +23,7 @@ export const Pinned = () => {
               authenticated
               editPage
               pin={pin}
-              onEditPin={(key) => { history.push (`/edit/${key}`); }}
+              onEditPin={(key) => { navigate (`/edit/${key}`); }}
               onDeletePin={(key) => { dispatch (deletePin (key)); }}
             />
           ))}

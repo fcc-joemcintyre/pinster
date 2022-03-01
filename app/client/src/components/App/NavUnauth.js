@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useHistory, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { AppBar, Button, Drawer, IconButton, List, ListItemText, ListItem,
   Toolbar, Typography, useMediaQuery }
@@ -14,7 +14,7 @@ export const NavUnauth = () => {
 
 const MobileNav = () => {
   const [drawer, setDrawer] = useState (false);
-  const history = useHistory ();
+  const navigate = useNavigate ();
   const path = useLocation ().pathname;
 
   const onToggleDrawer = (open) => (e) => {
@@ -28,7 +28,7 @@ const MobileNav = () => {
     <>
       <AppBar position='fixed'>
         <StyledToolbar>
-          <Title onClick={() => history.push ('/')}>
+          <Title onClick={() => navigate ('/')}>
             Pinster
           </Title>
           <IconButton
@@ -79,14 +79,14 @@ const MobileNav = () => {
 };
 
 const DesktopNav = () => {
-  const history = useHistory ();
+  const navigate = useNavigate ();
 
   return (
     <>
       <AppBar position='fixed'>
         <StyledToolbar>
           <div>
-            <Title onClick={() => history.push ('/')}>
+            <Title onClick={() => navigate ('/')}>
               Pinster
             </Title>
           </div>

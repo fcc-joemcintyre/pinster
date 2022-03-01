@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 import { createField, useFields } from '@cygns/use-fields';
 import { isEmail, isPassword } from '@cygns/validators';
 import { RegisterForm } from './RegisterForm';
@@ -26,7 +26,7 @@ const initialFields = [
 
 export const Register = () => {
   const dispatch = useDispatch ();
-  const history = useHistory ();
+  const navigate = useNavigate ();
   const { fields, onChange, onValidate, getValues, validateAll } = useFields (initialFields, [isMatch]);
   const [message, setMessage] = useState ({ status: 'info', text: defaultText });
 
@@ -40,7 +40,7 @@ export const Register = () => {
         await dispatch (register (email, name, password));
         try {
           await dispatch (login (email, password));
-          history.replace ('/');
+          navigate.replace ('/');
         } catch (err) {
           setMessage ({ status: 'error', text: 'Registered, but could not login' });
         }
@@ -50,7 +50,7 @@ export const Register = () => {
     } else {
       setMessage ({ status: 'error', text: 'Invalid content, check and try again' });
     }
-  }, [dispatch, getValues, history, validateAll]);
+  }, [dispatch, getValues, navigate, validateAll]);
 
   return (
     <RegisterForm

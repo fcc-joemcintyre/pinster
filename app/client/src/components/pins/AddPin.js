@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 import { createField, useFields } from '@cygns/use-fields';
 import { addPin } from '../../store/appActions';
 import { PinForm } from './PinForm';
@@ -14,7 +14,7 @@ const initialFields = [
 
 export const AddPin = () => {
   const dispatch = useDispatch ();
-  const history = useHistory ();
+  const navigate = useNavigate ();
   const { fields, onChange, onValidate, getValues, validateAll } = useFields (initialFields);
 
   const onSubmit = useCallback (async (e) => {
@@ -24,12 +24,12 @@ export const AddPin = () => {
       const { url, category, title, text } = getValues ();
       try {
         await dispatch (addPin (category, title, text, url));
-        history.push ('/manage');
+        navigate ('/manage');
       } catch (err) {
         // todo error
       }
     }
-  }, [dispatch, getValues, history, validateAll]);
+  }, [dispatch, getValues, navigate, validateAll]);
 
   return (
     <PinForm

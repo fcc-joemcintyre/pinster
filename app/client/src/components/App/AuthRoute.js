@@ -1,29 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
-import { Route, Redirect } from 'react-router';
+import { Navigate, useLocation } from 'react-router';
 
-export const AuthRoute = ({ children, ...rest }) => {
+export const AuthRoute = ({ children }) => {
   const authenticated = useSelector ((a) => a.user.authenticated);
-  return (
-    <Route
-      {...rest}
-      render={(routeProps) => {
-        if (authenticated) {
-          return children;
-        } else {
-          return (
-            <Redirect
-              to={{
-                pathname: '/login',
-                state: { from: routeProps.location },
-              }}
-            />
-          );
-        }
-      }}
-    />
-  );
+  const location = useLocation ();
+
+  if (!authenticated) {
+    return <Navigate to='/login' state={{ from: location }} replace />;
+  }
+
+  return children;
 };
 
 AuthRoute.propTypes = {

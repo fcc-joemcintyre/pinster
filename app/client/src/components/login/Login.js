@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import { createField, useFields } from '@cygns/use-fields';
 import { isEmail, isPassword } from '@cygns/validators';
 import { LoginForm } from './LoginForm';
@@ -15,11 +15,14 @@ const initialFields = [
 
 export const Login = () => {
   const dispatch = useDispatch ();
-  const history = useHistory ();
+  const navigate = useNavigate ();
+  const location = useLocation ();
   const { fields, onChange, onValidate, getValues, validateAll } = useFields (initialFields);
   const [message, setMessage] = useState ({ status: 'info', text: defaultText });
 
-  const onSubmit = useCallback ((e) => {
+  const from = location.state?.from?.pathname || '/';
+
+  const onSubmit = useCallback (async (e) => {
     e.preventDefault ();
 
     const errors = validateAll ();
@@ -27,16 +30,16 @@ export const Login = () => {
       setMessage ({ status: 'working', text: 'Logging in' });
       try {
         const { email, password } = getValues ();
-        dispatch (login (email, password));
+        await dispatch (login (email, password));
         setMessage ({ status: 'ok', text: 'Logged in' });
-        history.replace ('/');
+        navigate (from, { replace: true });
       } catch (err) {
         setMessage ({ status: 'error', text: 'Error logging in' });
       }
     } else {
       setMessage ({ status: 'error', text: 'Complete form and try again' });
     }
-  }, [dispatch, getValues, history, validateAll]);
+  }, [dispatch, from, getValues, navigate, validateAll]);
 
   return (
     <LoginForm

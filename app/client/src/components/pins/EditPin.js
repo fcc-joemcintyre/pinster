@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { createField, useFields } from '@cygns/use-fields';
 import { Typography } from '@mui/material';
 import { updatePin } from '../../store/appActions';
@@ -9,7 +9,7 @@ import { PinForm } from './PinForm';
 
 export const EditPin = () => {
   const dispatch = useDispatch ();
-  const history = useHistory ();
+  const navigate = useNavigate ();
   const params = useParams ();
   const t = Number (params.key);
   const key = Number.isNaN (t) ? undefined : t;
@@ -31,12 +31,12 @@ export const EditPin = () => {
       const { url, category, title, text } = getValues ();
       try {
         await dispatch (updatePin (key, category, title, text, url));
-        history.push ('/manage');
+        navigate ('/manage');
       } catch (err) {
         // todo error
       }
     }
-  }, [dispatch, getValues, history, key, validateAll]);
+  }, [dispatch, getValues, key, navigate, validateAll]);
 
   if (!key || !pin) {
     return (

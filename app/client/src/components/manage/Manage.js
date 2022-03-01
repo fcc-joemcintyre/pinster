@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 import styled from '@emotion/styled';
 import { Masonry } from '@mui/lab';
 import { Box, Paper } from '@mui/material';
@@ -11,7 +11,7 @@ import { AddIcon } from './AddIcon';
 
 export const Manage = () => {
   const dispatch = useDispatch ();
-  const history = useHistory ();
+  const navigate = useNavigate ();
   const pins = useSelector ((a) => a.pins.filter ((b) => b.creator === a.user.key));
 
   return (
@@ -19,7 +19,7 @@ export const Manage = () => {
       <Masonry columns={{ xs: 2, sm: 4 }} spacing={2}>
         <AddPin
           key='0'
-          onClick={() => { history.push ('/add'); }}
+          onClick={() => { navigate ('/add'); }}
         >
           <Box textAlign='center' pt='20px'>
             <AddIcon />
@@ -34,7 +34,7 @@ export const Manage = () => {
             authenticated
             editPage
             pin={pin}
-            onEditPin={(key) => { history.push (`/edit/${key}`); }}
+            onEditPin={(key) => { navigate (`/edit/${key}`); }}
             onDeletePin={(key) => { dispatch (deletePin (key)); }}
           />
         ))}
