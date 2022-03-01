@@ -40,7 +40,7 @@ export const Register = () => {
         await dispatch (register (email, name, password));
         try {
           await dispatch (login (email, password));
-          navigate.replace ('/');
+          navigate ('/', { replace: true });
         } catch (err) {
           setMessage ({ status: 'error', text: 'Registered, but could not login' });
         }
