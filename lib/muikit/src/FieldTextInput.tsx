@@ -13,6 +13,7 @@ type Props = {
   md?: GridSize | boolean,
   lg?: GridSize | boolean,
   xl?: GridSize | boolean,
+  rows?: number,
   maxLength?: number,
   info?: string,
   errors?: Record<string, string>,
@@ -39,6 +40,7 @@ export const FieldTextInput: React.FC<Props> = (
     md = false,
     lg = false,
     xl = false,
+    rows = 1,
     maxLength,
     info,
     errors,
@@ -62,6 +64,8 @@ export const FieldTextInput: React.FC<Props> = (
       value={field.value}
       required={field.required}
       error={Boolean (field.error)}
+      multiline={rows > 1}
+      rows={rows}
       inputProps={maxLength ? { maxLength } : {}}
       InputLabelProps={{ shrink: true }}
       helperText={getInfo (true, errors || {}, field.error || '', true, info)}
