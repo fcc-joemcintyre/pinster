@@ -10,7 +10,7 @@ export const Pin = ({ authenticated, pin, onEditPin, onDeletePin, onTogglePinned
 
   return (
     <Paper>
-      <img src={pin.url} fit='cover' style={{ maxHeight: '140px', maxWidth: '100%' }} />
+      <img src={pin.url} style={{ maxHeight: '140px', maxWidth: '100%', objectFit: 'cover' }} />
       <Box p='4px'>
         <Typography textAlign='center' paragraph>{pin.title}</Typography>
         <Typography variant='body2'>{pin.text}</Typography>
