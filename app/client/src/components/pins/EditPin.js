@@ -49,7 +49,12 @@ export const EditPin = () => {
   return (
     <PinForm
       action='Edit'
-      fields={fields}
+      fields={{
+        url: fields.url,
+        category: fields.category,
+        title: fields.title,
+        text: fields.text,
+      }}
       onChange={onChange}
       onValidate={onValidate}
       onSubmit={onSubmit}

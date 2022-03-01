@@ -55,7 +55,12 @@ export const Register = () => {
   return (
     <RegisterForm
       message={message}
-      fields={fields}
+      fields={{
+        email: fields.email,
+        name: fields.name,
+        password: fields.password,
+        verifyPassword: fields.verifyPassword,
+      }}
       onChange={onChange}
       onValidate={onValidate}
       onSubmit={onSubmit}

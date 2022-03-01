@@ -44,7 +44,10 @@ export const Login = () => {
   return (
     <LoginForm
       message={message}
-      fields={fields}
+      fields={{
+        email: fields.email,
+        password: fields.password,
+      }}
       onChange={onChange}
       onValidate={onValidate}
       onSubmit={onSubmit}

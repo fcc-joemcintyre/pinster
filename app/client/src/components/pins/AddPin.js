@@ -34,7 +34,12 @@ export const AddPin = () => {
   return (
     <PinForm
       action='Add'
-      fields={fields}
+      fields={{
+        url: fields.url,
+        category: fields.category,
+        title: fields.title,
+        text: fields.text,
+      }}
       onChange={onChange}
       onValidate={onValidate}
       onSubmit={onSubmit}
