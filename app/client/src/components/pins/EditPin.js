@@ -36,7 +36,7 @@ export const EditPin = () => {
         // todo error
       }
     }
-  }, [dispatch, getValues, key, validateAll]);
+  }, [dispatch, getValues, history, key, validateAll]);
 
   if (!key || !pin) {
     return (

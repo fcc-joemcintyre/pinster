@@ -29,7 +29,7 @@ export const AddPin = () => {
         // todo error
       }
     }
-  }, [dispatch, getValues, validateAll]);
+  }, [dispatch, getValues, history, validateAll]);
 
   return (
     <PinForm
