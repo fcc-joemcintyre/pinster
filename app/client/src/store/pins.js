@@ -10,7 +10,7 @@ export function pins (state = initialState, action) {
 
     case SET_PIN_COUNT:
       return state.map ((pin) => {
-        if (pin._id === action.id) {
+        if (pin.key === action.key) {
           return Object.assign ({}, pin, { count: action.count, pinned: action.pinned });
         } else {
           return pin;
@@ -22,7 +22,7 @@ export function pins (state = initialState, action) {
 
     case SET_PINNED:
       return state.map ((pin) => {
-        const pinned = (action.list.indexOf (pin._id) !== -1);
+        const pinned = (action.list.indexOf (pin.key) !== -1);
         return Object.assign ({}, pin, { pinned });
       });
 

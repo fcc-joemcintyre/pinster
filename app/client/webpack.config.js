@@ -6,7 +6,7 @@ const baseDest = path.resolve (__dirname, '../../dist');
 
 module.exports = {
   entry: {
-    app: './src/components/App/index.js',
+    app: './src/components/app/index.js',
   },
   output: {
     filename: '[name].bundle.js',

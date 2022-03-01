@@ -18,17 +18,17 @@ export function addPin (category, title, text, url) {
 }
 
 // update an existing pin
-export function updatePin (_id, category, title, text, url) {
+export function updatePin (key, category, title, text, url) {
   return async (dispatch) => {
-    await post (`/api/pins/${_id}`, { category, title, text, url });
+    await post (`/api/pins/${key}`, { category, title, text, url });
     dispatch (setPins ());
   };
 }
 
 // delete an existing pin
-export function deletePin (_id) {
+export function deletePin (key) {
   return async (dispatch) => {
-    await remove (`/api/pins/${_id}`);
+    await remove (`/api/pins/${key}`);
     dispatch (setPins ());
   };
 }
@@ -50,11 +50,11 @@ export function togglePinned (pin) {
   return async (dispatch, getState) => {
     // must be authenticated, and creator is always pinned, cannot change pinned state
     const { user } = getState ();
-    if ((user.authenticated === false) || (user.id === pin.creator)) {
+    if ((user.authenticated === false) || (user.key === pin.creator)) {
       return;
     }
-    const uri = `/api/pins/${pin._id}/pin/${pin.pinned ? 'false' : 'true'}`;
+    const uri = `/api/pins/${pin.key}/pin/${pin.pinned ? 'false' : 'true'}`;
     const data = await post (uri);
-    dispatch ({ type: SET_PIN_COUNT, id: data._id, count: data.count, pinned: data.pinned });
+    dispatch ({ type: SET_PIN_COUNT, key: data.key, count: data.count, pinned: data.pinned });
   };
 }

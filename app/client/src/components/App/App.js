@@ -1,34 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { ThemeProvider as ThemeProviderLegacy } from '@emotion/react';
-import { CssBaseline, ThemeProvider } from '@mui/material';
-import { getTheme, theme as themeLegacy } from './theme';
-import { GlobalStyle } from './GlobalStyle';
-import { AuthRoute } from './AuthRoute';
+import { CssBaseline, ThemeProvider, Typography } from '@mui/material';
+
 import { verifyLogin } from '../../store/userActions';
 import { setPins } from '../../store/appActions';
-import { Header } from './Header';
-import { ScrollToTop } from './ScrollToTop';
-import { Page, Box } from '../../lib/Layout';
 
-import { HomePage } from '../HomePage';
+import { Home } from '../home';
 import { Register } from '../register';
 import { Login } from '../login';
 import { Logout } from '../logout';
-import { PinnedPage } from '../PinnedPage';
-import { UserPinsPage } from '../UserPinsPage';
-import { ManagePinsPage } from '../ManagePinsPage';
-import { AddPin, EditPin } from '../EditPin';
+import { AddPin, EditPin, Pinned } from '../pins';
+import { Manage } from '../manage';
 import { About } from '../about';
+
+import { getTheme } from './theme';
+import { AuthRoute } from './AuthRoute';
+import { NavAuth } from './NavAuth';
+import { NavUnauth } from './NavUnauth';
 import { NotFoundPage } from './NotFoundPage';
+import { ScrollToTop } from './ScrollToTop';
 
 const theme = getTheme ();
 
 export const App = () => {
   const dispatch = useDispatch ();
-  const [loading, setLoading] = useState (true);
   const authenticated = useSelector ((a) => a.user.authenticated);
+  const [loading, setLoading] = useState (true);
 
   useEffect (() => {
     async function q () {
@@ -41,70 +39,36 @@ export const App = () => {
 
   if (loading) {
     return (
-      <ThemeProviderLegacy theme={themeLegacy}>
+      <ThemeProvider theme={theme}>
         <>
-          <GlobalStyle />
-          <Page>
-            <Header menu={false} />
-            <Box mt='120px' center>Loading ...</Box>
-          </Page>
+          <CssBaseline />
+          <Typography textAlign='center'>Loading ...</Typography>
         </>
-      </ThemeProviderLegacy>
+      </ThemeProvider>
     );
   }
 
   return (
     <BrowserRouter>
       <ScrollToTop>
-        <ThemeProviderLegacy theme={themeLegacy}>
+        <ThemeProvider theme={theme}>
           <>
-            <GlobalStyle />
-            <Page>
-              <Header menu />
-              <Switch>
-                <Route exact path='/' component={HomePage} />
-                <Route exact path='/register'>
-                  <ThemeProvider theme={theme}>
-                    <>
-                      <CssBaseline />
-                      <Register />
-                    </>
-                  </ThemeProvider>
-                </Route>
-                <Route exact path='/login'>
-                  <ThemeProvider theme={theme}>
-                    <>
-                      <CssBaseline />
-                      <Login />
-                    </>
-                  </ThemeProvider>
-                </Route>
-                <Route exact path='/logout'>
-                  <ThemeProvider theme={theme}>
-                    <>
-                      <CssBaseline />
-                      <Logout />
-                    </>
-                  </ThemeProvider>
-                </Route>
-                <AuthRoute exact path='/pinned' authenticated={authenticated} component={PinnedPage} />
-                <Route exact path='/pins/:_id' component={UserPinsPage} />
-                <AuthRoute exact path='/manage' authenticated={authenticated} component={ManagePinsPage} />
-                <AuthRoute exact path='/add' authenticated={authenticated} component={AddPin} />
-                <AuthRoute exact path='/edit/:_id' authenticated={authenticated} component={EditPin} />
-                <Route exact path='/about'>
-                  <ThemeProvider theme={theme}>
-                    <>
-                      <CssBaseline />
-                      <About />
-                    </>
-                  </ThemeProvider>
-                </Route>
-                <Route path='*' component={NotFoundPage} />
-              </Switch>
-            </Page>
+            <CssBaseline />
+            { authenticated ? <NavAuth /> : <NavUnauth /> }
+            <Switch>
+              <Route exact path='/'><Home /></Route>
+              <Route exact path='/register'><Register /></Route>
+              <Route exact path='/login'><Login /></Route>
+              <Route exact path='/logout'><Logout /></Route>
+              <AuthRoute exact path='/pinned'><Pinned /></AuthRoute>
+              <AuthRoute exact path='/manage'><Manage /></AuthRoute>
+              <AuthRoute exact path='/add'><AddPin /></AuthRoute>
+              <AuthRoute exact path='/edit/:key'><EditPin /></AuthRoute>
+              <Route exact path='/about'><About /></Route>
+              <Route path='*'><NotFoundPage /></Route>
+            </Switch>
           </>
-        </ThemeProviderLegacy>
+        </ThemeProvider>
       </ScrollToTop>
     </BrowserRouter>
   );
