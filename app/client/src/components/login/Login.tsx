@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useLocation, useNavigate } from 'react-router';
+import { Location, useLocation, useNavigate } from 'react-router';
 import { createField, useFields } from '@cygns/use-fields';
 import { isEmail, isPassword } from '@cygns/validators';
 import { LoginForm } from './LoginForm';
@@ -20,7 +20,8 @@ export const Login = () => {
   const { fields, onChange, onValidate, getValues, validateAll } = useFields (initialFields);
   const [message, setMessage] = useState ({ status: 'info', text: defaultText });
 
-  const from = location.state?.from?.pathname || '/';
+  const t = location.state as { from: Location };
+  const from = t?.from?.pathname || '/';
 
   const onSubmit = useCallback (async (e) => {
     e.preventDefault ();
@@ -39,6 +40,7 @@ export const Login = () => {
     } else {
       setMessage ({ status: 'error', text: 'Complete form and try again' });
     }
+    return errors;
   }, [dispatch, from, getValues, navigate, validateAll]);
 
   return (

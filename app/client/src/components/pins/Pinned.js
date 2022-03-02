@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { Masonry } from '@mui/lab';
 import { Typography } from '@mui/material';
+/** @typedef { import ('../../store/configureStore').RootState } RootState */
 import { deletePin } from '../../store/appActions';
 import { PageContent } from '../util';
 import { Pin } from './Pin';
@@ -10,7 +11,7 @@ import { Pin } from './Pin';
 export const Pinned = () => {
   const dispatch = useDispatch ();
   const navigate = useNavigate ();
-  const pins = useSelector ((a) => a.pins.filter ((b) => b.pinned));
+  const pins = useSelector ((/** @type RootState */ a) => a.pins.filter ((b) => b.pinned));
 
   return (
     <PageContent>

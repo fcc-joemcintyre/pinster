@@ -1,20 +1,36 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Button, Grid, Typography } from '@mui/material';
 import { FieldTextInput } from '@cygns/muikit';
-import { fieldPropTypes } from '@cygns/use-fields';
+import { Field, FieldError } from '@cygns/use-fields';
 import { PageContent } from '../util';
+
+type Props = {
+  message: {
+    status: string,
+    text: string,
+  }
+  fields: {
+    email: Field,
+    password: Field,
+  },
+  onChange: React.ChangeEventHandler,
+  onValidate: React.FocusEventHandler,
+  onSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<FieldError[] | null>,
+}
 
 const passwordErrors = {
   length: 'Must be 4+ characters',
   format: 'Invalid characters',
 };
 
-export const LoginForm = (
-  { fields: { email, password }, onChange, onValidate, onSubmit }
-) => (
+export const LoginForm = ({
+  message, fields: { email, password }, onChange, onValidate, onSubmit,
+}: Props) => (
   <PageContent>
     <Typography variant='h1' textAlign='center'>Login</Typography>
+    <Typography paragraph textAlign='center' color={message.status === 'error' ? '#ff0000' : '#000000'}>
+      {message.text}
+    </Typography>
     <form
       noValidate
       onSubmit={async (e) => {
@@ -52,17 +68,3 @@ export const LoginForm = (
     </form>
   </PageContent>
 );
-
-LoginForm.propTypes = {
-  message: PropTypes.shape ({
-    status: PropTypes.string.isRequired,
-    text: PropTypes.string.isRequired,
-  }).isRequired,
-  fields: PropTypes.shape ({
-    email: PropTypes.shape (fieldPropTypes).isRequired,
-    password: PropTypes.shape (fieldPropTypes).isRequired,
-  }).isRequired,
-  onChange: PropTypes.func.isRequired,
-  onValidate: PropTypes.func.isRequired,
-  onSubmit: PropTypes.func.isRequired,
-};

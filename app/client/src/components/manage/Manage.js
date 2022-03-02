@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router';
 import styled from '@emotion/styled';
 import { Masonry } from '@mui/lab';
 import { Box, Paper } from '@mui/material';
+/** @typedef { import ('../../store/configureStore').RootState } RootState */
 import { deletePin } from '../../store/appActions';
 import { Pin } from '../pins';
 import { PageContent } from '../util';
@@ -12,7 +13,7 @@ import { AddIcon } from './AddIcon';
 export const Manage = () => {
   const dispatch = useDispatch ();
   const navigate = useNavigate ();
-  const pins = useSelector ((a) => a.pins.filter ((b) => b.creator === a.user.key));
+  const pins = useSelector ((/** @type RootState */ a) => a.pins.filter ((b) => b.creator === a.user.key));
 
   return (
     <PageContent>

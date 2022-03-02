@@ -5,7 +5,7 @@ import configureStore from '../../store/configureStore';
 import { App } from './App';
 
 // initialize store
-const store = configureStore ();
+const store = configureStore (undefined);
 render (
   <Provider store={store}>
     <App />

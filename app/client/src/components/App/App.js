@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { CssBaseline, ThemeProvider, Typography } from '@mui/material';
 
+/** @typedef { import ('../../store/configureStore').RootState } RootState */
 import { verifyLogin } from '../../store/userActions';
 import { setPins } from '../../store/appActions';
 
@@ -25,7 +26,7 @@ const theme = getTheme ();
 
 export const App = () => {
   const dispatch = useDispatch ();
-  const authenticated = useSelector ((a) => a.user.authenticated);
+  const authenticated = useSelector ((/** @type RootState */ a) => a.user.authenticated);
   const [loading, setLoading] = useState (true);
 
   useEffect (() => {
