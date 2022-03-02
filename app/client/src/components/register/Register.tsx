@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { createField, useFields } from '@cygns/use-fields';
@@ -50,6 +50,7 @@ export const Register = () => {
     } else {
       setMessage ({ status: 'error', text: 'Invalid content, check and try again' });
     }
+    return errors;
   }, [dispatch, getValues, navigate, validateAll]);
 
   return (

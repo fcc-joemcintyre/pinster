@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Typography } from '@mui/material';
-/** @typedef { import ('../../store/configureStore').RootState } RootState */
+import { RootState } from '../../store/configureStore';
 import { logout } from '../../store/userActions';
 import { PageContent } from '../util';
 
 export const Logout = () => {
   const dispatch = useDispatch ();
-  const authenticated = useSelector ((/** @type RootState */ a) => a.user.authenticated);
+  const authenticated = useSelector ((a: RootState) => a.user.authenticated);
   const [working, setWorking] = useState (true);
 
   useEffect (() => {
