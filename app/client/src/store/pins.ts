@@ -1,7 +1,11 @@
 /* eslint-disable prefer-object-spread */
 import { SET_PINS, SET_PIN_COUNT, CLEAR_PINNED, SET_PINNED } from './constants';
 
-const initialState = [];
+type Pin = {
+  key: number,
+};
+
+const initialState: Pin[] = [];
 
 export function pins (state = initialState, action) {
   switch (action.type) {

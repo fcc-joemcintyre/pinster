@@ -1,35 +1,51 @@
 import { SET_PINS, SET_PIN_COUNT, CLEAR_PINNED, SET_PINNED } from './constants';
 import { get, post, remove } from './util/jsonFetch';
 
-// get pins from server
+// load pins from server
 export function setPins () {
   return async (dispatch) => {
-    const pins = await get ('/api/pins');
-    dispatch ({ type: SET_PINS, pins });
+    const res = await get ('/api/pins');
+    if (res.status === 200) {
+      dispatch ({ type: SET_PINS, pins: res.data });
+    } else {
+      throw res.status;
+    }
   };
 }
 
 // create a new pin
 export function addPin (category, title, text, url) {
   return async (dispatch) => {
-    await post ('/api/pins', { category, title, text, url });
-    dispatch (setPins ());
+    const res = await post ('/api/pins', { category, title, text, url });
+    if (res.status === 200) {
+      dispatch (setPins ());
+    } else {
+      throw res.status;
+    }
   };
 }
 
 // update an existing pin
 export function updatePin (key, category, title, text, url) {
   return async (dispatch) => {
-    await post (`/api/pins/${key}`, { category, title, text, url });
-    dispatch (setPins ());
+    const res = await post (`/api/pins/${key}`, { category, title, text, url });
+    if (res.status === 200) {
+      dispatch (setPins ());
+    } else {
+      throw res.status;
+    }
   };
 }
 
 // delete an existing pin
 export function deletePin (key) {
   return async (dispatch) => {
-    await remove (`/api/pins/${key}`);
-    dispatch (setPins ());
+    const res = await remove (`/api/pins/${key}`);
+    if (res.status === 200) {
+      dispatch (setPins ());
+    } else {
+      throw res.status;
+    }
   };
 }
 
@@ -54,7 +70,11 @@ export function togglePinned (pin) {
       return;
     }
     const uri = `/api/pins/${pin.key}/pin/${pin.pinned ? 'false' : 'true'}`;
-    const data = await post (uri);
-    dispatch ({ type: SET_PIN_COUNT, key: data.key, count: data.count, pinned: data.pinned });
+    const res = await post (uri, {});
+    if (res.status === 200) {
+      dispatch ({ type: SET_PIN_COUNT, key: res.data.key, count: res.data.count, pinned: res.data.pinned });
+    } else {
+      throw (res.status);
+    }
   };
 }
