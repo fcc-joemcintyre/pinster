@@ -1,5 +1,23 @@
 {
+  "extends": [
+    "@cygns/eslint-config",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
   "env": {
     "browser": true
+  },
+  "overrides": [
+    {
+      "files": ["**/*.ts", "**/*.tsx"],
+      "plugins": ["typescript-eslint"],
+      "rules": {
+        "no-use-before-define": "off",
+        "@typescript-eslint/no-use-before-define": ["error"]
+      }
+    }
+  ],
+  "rules": {
+    "no-use-before-define": "off"
   }
 }

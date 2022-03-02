@@ -12,8 +12,20 @@ module.exports = {
     filename: '[name].bundle.js',
     path: `${baseDest}/public/js`,
   },
+  resolve: {
+    extensions: ['.ts', '.tsx', '.js'],
+  },
   module: {
     rules: [
+      {
+        test: /\.tsx?$/,
+        loader: 'ts-loader',
+        options: {
+          compilerOptions: {
+            noEmit: false,
+          },
+        },
+      },
       {
         test: /\.js$/,
         exclude: /node_modules/,
