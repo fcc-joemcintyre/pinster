@@ -7,22 +7,13 @@
   "env": {
     "browser": true
   },
-  "overrides": [
-    {
-      "files": ["**/*.ts", "**/*.tsx"],
-      "plugins": ["@typescript-eslint"],
-      "rules": {
-        "no-use-before-define": "off",
-        "@typescript-eslint/no-use-before-define": ["error"],
-        "react/jsx-filename-extension": "off",
-        "react/react-in-jsx-scope": "off"
-      }
-    }
-  ],
   "rules": {
     "import/extensions": "off",
     "import/no-unresolved": "off",
     "no-use-before-define": "off",
-    "react/jsx-uses-react": "off"
+    "react/jsx-filename-extension": "off",
+    "react/jsx-uses-react": "off",
+    "react/react-in-jsx-scope": "off",
+    "react/require-default-props": "off"
   }
 }

@@ -1,6 +1,6 @@
 import { AddPin } from './AddPin';
 import { EditPin } from './EditPin';
-import { Pin } from './Pin';
+import { PinCard } from './PinCard';
 import { Pinned } from './Pinned';
 
-export { AddPin, EditPin, Pin, Pinned };
+export { AddPin, EditPin, PinCard, Pinned };

@@ -33,16 +33,10 @@
     "lint": "eslint --ext .js,.ts,.tsx --no-error-on-unmatched-pattern src/**"
   },
   "devDependencies": {
-    "@babel/core": "7.17.5",
-    "@babel/plugin-proposal-object-rest-spread": "7.17.3",
-    "@babel/preset-env": "7.16.11",
-    "@babel/preset-react": "7.16.7",
     "@cygns/eslint-config": "5.0.0",
-    "@emotion/babel-plugin": "11.7.2",
     "@types/react": "17.0.39",
     "@typescript-eslint/eslint-plugin": "5.12.1",
     "@typescript-eslint/parser": "5.12.1",
-    "babel-loader": "8.2.3",
     "compression-webpack-plugin": "9.2.0",
     "eslint": "7.24.0",
     "eslint-import-resolver-webpack": "0.13.2",

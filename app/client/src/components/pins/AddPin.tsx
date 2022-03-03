@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { createField, useFields } from '@cygns/use-fields';
@@ -29,6 +29,7 @@ export const AddPin = () => {
         // todo error
       }
     }
+    return errors;
   }, [dispatch, getValues, navigate, validateAll]);
 
   return (

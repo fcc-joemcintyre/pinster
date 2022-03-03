@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { AppBar, Button, Drawer, IconButton, List, ListItemText, ListItem,
@@ -6,21 +6,15 @@ import { AppBar, Button, Drawer, IconButton, List, ListItemText, ListItem,
   from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 
-const items = [
-  { key: 1, text: 'Pinned', to: '/pinned', exact: true, when: 0 },
-  { key: 2, text: 'Manage', to: '/manage', exact: true, when: 0 },
-  { key: 4, text: 'About', to: '/about', exact: true, when: 0 },
-  { key: 5, text: 'Logout', to: '/logout', exact: true, when: 0 },
-];
-
-export const NavAuth = () => {
+export const NavUnauth = () => {
   const mobile = useMediaQuery ('(max-width: 767px)');
+
   return mobile ? <MobileNav /> : <DesktopNav />;
 };
 
 const MobileNav = () => {
-  const navigate = useNavigate ();
   const [drawer, setDrawer] = useState (false);
+  const navigate = useNavigate ();
   const path = useLocation ().pathname;
 
   const onToggleDrawer = (open) => (e) => {
@@ -29,18 +23,6 @@ const MobileNav = () => {
       setDrawer (open);
     }
   };
-
-  const menus = (
-    <List sx={{ backgroundColor: '#000', height: '100%' }}>
-      {items.map ((a) => (
-        <Link key={a.key} to={a.to} style={{ textDecoration: 'none' }}>
-          <ListItem button selected={path === a.to}>
-            <ListItemText sx={{ color: 'white' }}>{a.text}</ListItemText>
-          </ListItem>
-        </Link>
-      ))}
-    </List>
-  );
 
   return (
     <>
@@ -70,7 +52,23 @@ const MobileNav = () => {
               onClick={onToggleDrawer (false)}
               onKeyDown={onToggleDrawer (false)}
             >
-              {menus}
+              <List sx={{ backgroundColor: '#000', height: '100%' }}>
+                <Link to='/about' style={{ textDecoration: 'none' }}>
+                  <ListItem button selected={path === '/about'}>
+                    <ListItemText sx={{ color: 'white' }}>ABOUT</ListItemText>
+                  </ListItem>
+                </Link>
+                <Link to='/register' style={{ textDecoration: 'none' }}>
+                  <ListItem button selected={path === '/register'}>
+                    <ListItemText sx={{ color: 'white' }}>REGISTER</ListItemText>
+                  </ListItem>
+                </Link>
+                <Link to='/login' style={{ textDecoration: 'none' }}>
+                  <ListItem button selected={path === '/login'}>
+                    <ListItemText sx={{ color: 'white' }}>LOGIN</ListItemText>
+                  </ListItem>
+                </Link>
+              </List>
             </div>
           </Drawer>
         </StyledToolbar>
@@ -93,11 +91,15 @@ const DesktopNav = () => {
             </Title>
           </div>
           <div>
-            { items.map ((a) => (
-              <Link key={a.key} to={a.to} style={{ textDecoration: 'none' }}>
-                <Button variant='text' sx={{ color: '#fff' }}>{a.text}</Button>
-              </Link>
-            ))}
+            <Link to='/about' style={{ textDecoration: 'none' }}>
+              <Button variant='text' sx={{ color: '#fff' }}>ABOUT</Button>
+            </Link>
+            <Link to='/register' style={{ textDecoration: 'none' }}>
+              <Button variant='text' sx={{ color: '#fff' }}>REGISTER</Button>
+            </Link>
+            <Link to='/login' style={{ textDecoration: 'none' }}>
+              <Button variant='text' sx={{ color: '#fff' }}>LOGIN</Button>
+            </Link>
           </div>
         </StyledToolbar>
       </AppBar>

@@ -1,14 +1,25 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { fieldPropTypes } from '@cygns/use-fields';
+import { Field, FieldError } from '@cygns/use-fields';
 import { FieldTextInput } from '@cygns/muikit';
 import { Button, Grid, Typography } from '@mui/material';
 import { PageContent } from '../util';
 
+type Props = {
+  action: string,
+  fields: {
+    url: Field,
+    category: Field,
+    title: Field,
+    text: Field,
+  },
+  onChange: React.ChangeEventHandler,
+  onValidate: React.FocusEventHandler,
+  onSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<FieldError[] | null>,
+};
+
 export const PinForm = ({
   action, fields: { url, category, title, text },
   onChange, onValidate, onSubmit,
-}) => (
+}: Props) => (
   <PageContent>
     <Typography variant='h1' textAlign='center'>{action} Pin</Typography>
     <form
@@ -55,23 +66,10 @@ export const PinForm = ({
 
         <Grid item>
           <Button type='submit'>
-            {action} Pin
+            SAVE
           </Button>
         </Grid>
       </Grid>
     </form>
   </PageContent>
 );
-
-PinForm.propTypes = {
-  action: PropTypes.string.isRequired,
-  fields: PropTypes.shape ({
-    url: PropTypes.shape (fieldPropTypes).isRequired,
-    category: PropTypes.shape (fieldPropTypes).isRequired,
-    title: PropTypes.shape (fieldPropTypes).isRequired,
-    text: PropTypes.shape (fieldPropTypes).isRequired,
-  }).isRequired,
-  onChange: PropTypes.func.isRequired,
-  onValidate: PropTypes.func.isRequired,
-  onSubmit: PropTypes.func.isRequired,
-};

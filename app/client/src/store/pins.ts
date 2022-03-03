@@ -1,8 +1,15 @@
 /* eslint-disable prefer-object-spread */
 import { SET_PINS, SET_PIN_COUNT, CLEAR_PINNED, SET_PINNED } from './constants';
 
-type Pin = {
+export type Pin = {
   key: number,
+  title: string,
+  text: string,
+  category: string,
+  url: string,
+  creator: number,
+  count: number,
+  pinned: boolean,
 };
 
 const initialState: Pin[] = [];

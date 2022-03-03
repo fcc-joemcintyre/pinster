@@ -1,17 +1,16 @@
-import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { Masonry } from '@mui/lab';
 import { Typography } from '@mui/material';
-/** @typedef { import ('../../store/configureStore').RootState } RootState */
+import { RootState } from '../../store/configureStore';
 import { deletePin } from '../../store/appActions';
 import { PageContent } from '../util';
-import { Pin } from './Pin';
+import { PinCard } from './PinCard';
 
 export const Pinned = () => {
   const dispatch = useDispatch ();
   const navigate = useNavigate ();
-  const pins = useSelector ((/** @type RootState */ a) => a.pins.filter ((b) => b.pinned));
+  const pins = useSelector ((a: RootState) => a.pins.filter ((b) => b.pinned));
 
   return (
     <PageContent>
@@ -19,7 +18,7 @@ export const Pinned = () => {
       { pins.length > 0 && (
         <Masonry columns={{ xs: 2, sm: 4 }} spacing={2}>
           { pins.map ((pin) => (
-            <Pin
+            <PinCard
               key={pin.key}
               authenticated
               editPage

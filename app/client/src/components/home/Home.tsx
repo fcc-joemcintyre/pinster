@@ -1,15 +1,15 @@
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Masonry } from '@mui/lab';
-/** @typedef { import ('../../store/configureStore').RootState } RootState */
+import { RootState } from '../../store/configureStore';
 import { togglePinned } from '../../store/appActions';
-import { Pin } from '../pins';
+import { PinCard } from '../pins';
 import { PageContent } from '../util';
 
 export const Home = () => {
   const dispatch = useDispatch ();
-  const authenticated = useSelector ((/** @type RootState */ a) => a.user.authenticated);
-  const pins = useSelector ((/** @type RootState */ a) => a.pins);
+  const authenticated = useSelector ((a: RootState) => a.user.authenticated);
+  const pins = useSelector ((a: RootState) => a.pins);
 
   const onTogglePinned = useCallback ((pin) => {
     dispatch (togglePinned (pin));
@@ -19,7 +19,7 @@ export const Home = () => {
     <PageContent>
       <Masonry columns={{ xs: 2, sm: 4 }} spacing={2}>
         { pins.map ((pin) => (
-          <Pin
+          <PinCard
             key={pin._id}
             authenticated={authenticated}
             editPage={false}

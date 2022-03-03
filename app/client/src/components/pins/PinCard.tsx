@@ -1,9 +1,24 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Box, Button, Divider, Grid, Paper, Stack, Typography } from '@mui/material';
+import { Pin } from '../../store/pins';
 
-export const Pin = ({ authenticated, pin, onEditPin, onDeletePin, onTogglePinned, editPage }) => {
+type Props = {
+  authenticated: boolean,
+  pin: Pin,
+  onEditPin?: (key) => void,
+  onDeletePin?: (key) => void,
+  onTogglePinned?: (key) => void,
+  editPage: boolean,
+};
+
+export const PinCard = ({
+  authenticated,
+  pin,
+  onEditPin = () => { /* no op */ },
+  onDeletePin = () => { /* no op */ },
+  onTogglePinned = () => { /* no op */ },
+  editPage,
+}: Props) => {
   const color = (authenticated && pin.pinned) ? 'red' : 'off';
   const pinImageUri = `${location.origin}/images/pin-${color}-14.png`;
   const pinImage = <img src={pinImageUri} onClick={() => onTogglePinned (pin.key)} />;
@@ -18,9 +33,8 @@ export const Pin = ({ authenticated, pin, onEditPin, onDeletePin, onTogglePinned
         <Typography textAlign='center' mt='6px' mb='4px'>
           {pinImage} {pin.count}
         </Typography>
-        <Grid container>
+        <Grid container justifyContent='space-between'>
           <Grid item>{pin.category}</Grid>
-          <Grid item><Link to={`/pins/${pin.creator}`}>{pin.username}</Link></Grid>
         </Grid>
         { editPage && (
           <>
@@ -34,29 +48,4 @@ export const Pin = ({ authenticated, pin, onEditPin, onDeletePin, onTogglePinned
       </Box>
     </Paper>
   );
-};
-
-Pin.propTypes = {
-  authenticated: PropTypes.bool.isRequired,
-  pin: PropTypes.shape ({
-    key: PropTypes.number,
-    title: PropTypes.string,
-    text: PropTypes.string,
-    category: PropTypes.string,
-    pinned: PropTypes.bool,
-    url: PropTypes.string,
-    creator: PropTypes.number,
-    count: PropTypes.number,
-    username: PropTypes.string,
-  }).isRequired,
-  onEditPin: PropTypes.func,
-  onDeletePin: PropTypes.func,
-  onTogglePinned: PropTypes.func,
-  editPage: PropTypes.bool.isRequired,
-};
-
-Pin.defaultProps = {
-  onEditPin: null,
-  onDeletePin: null,
-  onTogglePinned: null,
 };

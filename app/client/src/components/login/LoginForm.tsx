@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button, Grid, Typography } from '@mui/material';
 import { FieldTextInput } from '@cygns/muikit';
 import { Field, FieldError } from '@cygns/use-fields';
