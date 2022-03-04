@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import { Box, Button, Divider, Grid, Paper, Stack, Typography } from '@mui/material';
 import { Pin } from '../../store/pins';
 
