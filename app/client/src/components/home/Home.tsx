@@ -1,15 +1,14 @@
 import { useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Masonry } from '@mui/lab';
-import { RootState } from '../../store/configureStore';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { togglePinned } from '../../store/appActions';
 import { PinCard } from '../pins';
 import { PageContent } from '../util';
 
 export const Home = () => {
-  const dispatch = useDispatch ();
-  const authenticated = useSelector ((a: RootState) => a.user.authenticated);
-  const pins = useSelector ((a: RootState) => a.pins);
+  const dispatch = useAppDispatch ();
+  const authenticated = useAppSelector ((a) => a.user.authenticated);
+  const pins = useAppSelector ((a) => a.pins);
 
   const onTogglePinned = useCallback ((pin) => {
     dispatch (togglePinned (pin));

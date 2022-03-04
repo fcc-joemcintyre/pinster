@@ -1,9 +1,9 @@
 import { useCallback, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { createField, useFields } from '@cygns/use-fields';
 import { isEmail, isPassword } from '@cygns/validators';
 import { RegisterForm } from './RegisterForm';
+import { useAppDispatch } from '../../store/hooks';
 import { register, login } from '../../store/userActions';
 
 const defaultText = 'Enter registration information';
@@ -25,7 +25,7 @@ const initialFields = [
 ];
 
 export const Register = () => {
-  const dispatch = useDispatch ();
+  const dispatch = useAppDispatch ();
   const navigate = useNavigate ();
   const { fields, onChange, onValidate, getValues, validateAll } = useFields (initialFields, [isMatch]);
   const [message, setMessage] = useState ({ status: 'info', text: defaultText });

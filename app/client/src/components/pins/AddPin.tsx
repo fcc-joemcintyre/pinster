@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { createField, useFields } from '@cygns/use-fields';
+import { useAppDispatch } from '../../store/hooks';
 import { addPin } from '../../store/appActions';
 import { PinForm } from './PinForm';
 
@@ -13,7 +13,7 @@ const initialFields = [
 ];
 
 export const AddPin = () => {
-  const dispatch = useDispatch ();
+  const dispatch = useAppDispatch ();
   const navigate = useNavigate ();
   const { fields, onChange, onValidate, getValues, validateAll } = useFields (initialFields);
 

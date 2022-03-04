@@ -1,18 +1,17 @@
-import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 import styled from '@emotion/styled';
 import { Masonry } from '@mui/lab';
 import { Box, Paper } from '@mui/material';
-import { RootState } from '../../store/configureStore';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { deletePin } from '../../store/appActions';
 import { PinCard } from '../pins';
 import { PageContent } from '../util';
 import { AddIcon } from './AddIcon';
 
 export const Manage = () => {
-  const dispatch = useDispatch ();
+  const dispatch = useAppDispatch ();
   const navigate = useNavigate ();
-  const pins = useSelector ((a: RootState) => a.pins.filter ((b) => b.creator === a.user.key));
+  const pins = useAppSelector ((a) => a.pins.filter ((b) => b.creator === a.user.key));
 
   return (
     <PageContent>

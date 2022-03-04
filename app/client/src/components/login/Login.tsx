@@ -1,9 +1,9 @@
 import { useCallback, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { Location, useLocation, useNavigate } from 'react-router';
 import { createField, useFields } from '@cygns/use-fields';
 import { isEmail, isPassword } from '@cygns/validators';
 import { LoginForm } from './LoginForm';
+import { useAppDispatch } from '../../store/hooks';
 import { login } from '../../store/userActions';
 
 const defaultText = 'Enter login information';
@@ -14,7 +14,7 @@ const initialFields = [
 ];
 
 export const Login = () => {
-  const dispatch = useDispatch ();
+  const dispatch = useAppDispatch ();
   const navigate = useNavigate ();
   const location = useLocation ();
   const { fields, onChange, onValidate, getValues, validateAll } = useFields (initialFields);

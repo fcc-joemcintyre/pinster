@@ -1,10 +1,8 @@
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import configureStore from '../../store/configureStore';
+import { store } from '../../store/store';
 import { App } from './App';
 
-// initialize store
-const store = configureStore (undefined);
 render (
   <Provider store={store}>
     <App />

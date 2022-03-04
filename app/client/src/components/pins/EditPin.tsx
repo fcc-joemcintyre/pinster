@@ -1,20 +1,19 @@
 import { useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router';
 import { createField, useFields } from '@cygns/use-fields';
 import { Typography } from '@mui/material';
-import { RootState } from '../../store/configureStore';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { updatePin } from '../../store/appActions';
 import { PageContent } from '../util';
 import { PinForm } from './PinForm';
 
 export const EditPin = () => {
-  const dispatch = useDispatch ();
+  const dispatch = useAppDispatch ();
   const navigate = useNavigate ();
   const params = useParams ();
   const t = Number (params.key);
   const key = Number.isNaN (t) ? undefined : t;
-  const pin = useSelector ((a: RootState) => (key ? a.pins.find ((b) => b.key === key) : undefined));
+  const pin = useAppSelector ((a) => (key ? a.pins.find ((b) => b.key === key) : undefined));
 
   const initialFields = !pin ? [] : [
     createField ('url', pin.url, true, []),

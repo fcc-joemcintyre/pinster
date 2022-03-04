@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Typography } from '@mui/material';
-import { RootState } from '../../store/configureStore';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { logout } from '../../store/userActions';
 import { PageContent } from '../util';
 
 export const Logout = () => {
-  const dispatch = useDispatch ();
-  const authenticated = useSelector ((a: RootState) => a.user.authenticated);
+  const dispatch = useAppDispatch ();
+  const authenticated = useAppSelector ((a) => a.user.authenticated);
   const [working, setWorking] = useState (true);
 
   useEffect (() => {
