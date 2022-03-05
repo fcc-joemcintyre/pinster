@@ -1,12 +1,11 @@
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import { useNavigate } from 'react-router';
 import { createField, useFields } from '@cygns/use-fields';
 import { isEmail, isPassword } from '@cygns/validators';
 import { RegisterForm } from './RegisterForm';
+import { useLoginMutation, useRegisterMutation } from '../../store/api';
 import { useAppDispatch } from '../../store/hooks';
-import { register, login } from '../../store/userActions';
-
-const defaultText = 'Enter registration information';
+import { setAuthenticated } from '../../store/userSlice';
 
 function isMatch (value, fields) {
   const error = fields.password.value !== fields.verifyPassword.value ? 'matching' : null;
@@ -28,34 +27,29 @@ export const Register = () => {
   const dispatch = useAppDispatch ();
   const navigate = useNavigate ();
   const { fields, onChange, onValidate, getValues, validateAll } = useFields (initialFields, [isMatch]);
-  const [message, setMessage] = useState ({ status: 'info', text: defaultText });
+  const [register, { isLoading, isError, isSuccess }] = useRegisterMutation ();
+  const [login, { isLoading: isLogin, isError: isLoginError }] = useLoginMutation ();
 
   const onSubmit = useCallback (async (e) => {
     e.preventDefault ();
     const errors = validateAll ();
     if (!errors) {
-      setMessage ({ status: 'info', text: 'Registering ...' });
-      try {
-        const { email, name, password } = getValues ();
-        await dispatch (register (email, name, password));
-        try {
-          await dispatch (login (email, password));
-          navigate ('/', { replace: true });
-        } catch (err) {
-          setMessage ({ status: 'error', text: 'Registered, but could not login' });
-        }
-      } catch (err) {
-        setMessage ({ status: 'error', text: 'Error registering, try again' });
-      }
-    } else {
-      setMessage ({ status: 'error', text: 'Invalid content, check and try again' });
+      const { email, name, password } = getValues () as { email: string, name: string, password: string};
+      await register ({ email, name, password });
+      const user = await login ({ email, password }).unwrap ();
+      await dispatch (setAuthenticated ({ authenticated: true, key: user.key }));
+      navigate ('/', { replace: true });
     }
     return errors;
-  }, [dispatch, getValues, navigate, validateAll]);
+  }, [dispatch, getValues, login, navigate, register, validateAll]);
 
   return (
     <RegisterForm
-      message={message}
+      isLoading={isLoading}
+      isError={isError}
+      isSuccess={isSuccess}
+      isLogin={isLogin}
+      isLoginError={isLoginError}
       fields={{
         email: fields.email,
         name: fields.name,

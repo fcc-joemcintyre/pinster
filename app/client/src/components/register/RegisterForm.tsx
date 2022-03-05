@@ -4,10 +4,11 @@ import { Field, FieldError } from '@cygns/use-fields';
 import { PageContent } from '../util';
 
 type Props = {
-  message: {
-    status: string,
-    text: string,
-  }
+  isLoading,
+  isError,
+  isSuccess,
+  isLogin,
+  isLoginError,
   fields: {
     email: Field,
     name: Field,
@@ -29,13 +30,23 @@ const passwordErrors = {
 };
 
 export const RegisterForm = ({
-  message, fields: { email, name, password, verifyPassword },
+  isLoading, isError, isSuccess, isLogin, isLoginError,
+  fields: { email, name, password, verifyPassword },
   onChange, onValidate, onSubmit,
 }: Props) => (
   <PageContent>
     <Typography variant='h1' gutterBottom textAlign='center'>Register</Typography>
-    <Typography paragraph textAlign='center' color={message.status === 'error' ? '#ff0000' : '#000000'}>
-      {message.text}
+    <Typography
+      paragraph
+      textAlign='center'
+      color={isError ? '#ff0000' : '#000000'}
+    >
+      { isLoading ? 'Registering' :
+        isError ? 'Error, check entries and retry' :
+        isSuccess ? 'Registered successfully' :
+        isLogin ? 'Registered, logging in' :
+        isLoginError ? 'Registered, but failed to login.' :
+        'Enter information' }
     </Typography>
     <form
       noValidate

@@ -3,8 +3,9 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { CssBaseline, ThemeProvider, Typography } from '@mui/material';
 
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { verifyLogin } from '../../store/userActions';
+import { useVerifyLoginMutation } from '../../store/api';
 import { setPins } from '../../store/appActions';
+import { setAuthenticated } from '../../store/userSlice';
 
 import { Home } from '../home';
 import { Register } from '../register';
@@ -27,17 +28,19 @@ export const App = () => {
   const dispatch = useAppDispatch ();
   const authenticated = useAppSelector ((a) => a.user.authenticated);
   const [loading, setLoading] = useState (true);
+  const [verifyLogin, { isLoading }] = useVerifyLoginMutation ();
 
   useEffect (() => {
     async function q () {
-      await dispatch (verifyLogin ());
+      const user = await verifyLogin ().unwrap ();
+      await dispatch (setAuthenticated ({ authenticated: user.authenticated, key: user.key }));
       await dispatch (setPins ());
       setLoading (false);
     }
     q ();
-  }, [dispatch]);
+  }, [dispatch, verifyLogin]);
 
-  if (loading) {
+  if (isLoading || loading) {
     return (
       <ThemeProvider theme={theme}>
         <>

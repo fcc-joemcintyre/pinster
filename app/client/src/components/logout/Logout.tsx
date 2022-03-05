@@ -1,38 +1,38 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Typography } from '@mui/material';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { logout } from '../../store/userActions';
+import { useAppDispatch } from '../../store/hooks';
+import { useLogoutMutation } from '../../store/api';
+import { setAuthenticated } from '../../store/userSlice';
 import { PageContent } from '../util';
 
 export const Logout = () => {
   const dispatch = useAppDispatch ();
-  const authenticated = useAppSelector ((a) => a.user.authenticated);
-  const [working, setWorking] = useState (true);
+  const [logout, { isLoading, isError, isSuccess }] = useLogoutMutation ();
 
   useEffect (() => {
     async function q () {
-      await dispatch (logout ());
-      setWorking (false);
+      await logout ();
+      dispatch (setAuthenticated ({ authenticated: false, key: 0 }));
     }
     q ();
-  }, [dispatch]);
+  }, [dispatch, logout]);
 
   return (
     <PageContent>
-      {working ? (
+      {isLoading ? (
         <Typography textAlign='center'>
           Logging out ...
         </Typography>
       ) : (
-        authenticated ? (
+        isError ? (
           <Typography textAlign='center'>
             Logging out did not complete, please retry or close your browser.
           </Typography>
-        ) : (
+        ) : isSuccess ? (
           <Typography textAlign='center'>
             Thank you for using Pinster, we hope to see you back again soon.
           </Typography>
-        )
+        ) : null
       )}
     </PageContent>
   );

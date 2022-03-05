@@ -1,12 +1,11 @@
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import { Location, useLocation, useNavigate } from 'react-router';
 import { createField, useFields } from '@cygns/use-fields';
 import { isEmail, isPassword } from '@cygns/validators';
 import { LoginForm } from './LoginForm';
+import { useLoginMutation } from '../../store/api';
 import { useAppDispatch } from '../../store/hooks';
-import { login } from '../../store/userActions';
-
-const defaultText = 'Enter login information';
+import { setAuthenticated } from '../../store/userSlice';
 
 const initialFields = [
   createField ('email', '', true, [isEmail]),
@@ -18,34 +17,28 @@ export const Login = () => {
   const navigate = useNavigate ();
   const location = useLocation ();
   const { fields, onChange, onValidate, getValues, validateAll } = useFields (initialFields);
-  const [message, setMessage] = useState ({ status: 'info', text: defaultText });
+  const [login, { isLoading, isError, isSuccess }] = useLoginMutation ();
 
   const t = location.state as { from: Location };
   const from = t?.from?.pathname || '/';
 
   const onSubmit = useCallback (async (e) => {
     e.preventDefault ();
-
     const errors = validateAll ();
     if (!errors) {
-      setMessage ({ status: 'working', text: 'Logging in' });
-      try {
-        const { email, password } = getValues ();
-        await dispatch (login (email, password));
-        setMessage ({ status: 'ok', text: 'Logged in' });
-        navigate (from, { replace: true });
-      } catch (err) {
-        setMessage ({ status: 'error', text: 'Error logging in' });
-      }
-    } else {
-      setMessage ({ status: 'error', text: 'Complete form and try again' });
+      const { email, password } = getValues () as { email: string, password: string };
+      const user = await login ({ email, password }).unwrap ();
+      await dispatch (setAuthenticated ({ authenticated: true, key: user.key }));
+      navigate (from, { replace: true });
     }
     return errors;
-  }, [dispatch, from, getValues, navigate, validateAll]);
+  }, [dispatch, from, getValues, login, navigate, validateAll]);
 
   return (
     <LoginForm
-      message={message}
+      isLoading={isLoading}
+      isError={isError}
+      isSuccess={isSuccess}
       fields={{
         email: fields.email,
         password: fields.password,
