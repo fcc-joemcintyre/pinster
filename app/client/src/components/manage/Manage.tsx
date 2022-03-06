@@ -18,7 +18,6 @@ export const Manage = () => {
         { pins.map ((pin) => (
           <PinCard
             key={pin.key}
-            authenticated
             editPage
             pin={pin}
             onEditPin={(key) => { navigate (`/edit/${key}`); }}

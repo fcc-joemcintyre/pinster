@@ -7,7 +7,6 @@ import { PageContent } from '../util';
 
 export const Home = () => {
   const dispatch = useAppDispatch ();
-  const authenticated = useAppSelector ((a) => a.user.authenticated);
   const pins = useAppSelector ((a) => a.pins);
 
   const onTogglePinned = useCallback ((pin) => {
@@ -20,7 +19,6 @@ export const Home = () => {
         { pins.map ((pin) => (
           <PinCard
             key={pin._id}
-            authenticated={authenticated}
             editPage={false}
             pin={pin}
             onTogglePinned={() => { onTogglePinned (pin); }}
