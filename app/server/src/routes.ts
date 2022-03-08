@@ -1,6 +1,6 @@
 import { Application, NextFunction, Request, Response } from 'express';
 import { login, logout, register, verifyLogin } from './listener/listenerUser.js';
-import { createPin, deletePin, getPin, getPinned, getPins, setPinned, updatePin } from './listener/listenerApp.js';
+import { createPin, deletePin, getPin, getPins, setPinned, updatePin } from './listener/listenerApp.js';
 
 /**
  * Initialize routes.
@@ -12,7 +12,6 @@ export function initRoutes (app: Application): void {
   app.get ('/api/verifylogin', verifyLogin);
   app.post ('/api/register', register);
 
-  app.get ('/api/pinned', isAuthenticated, getPinned);
   app.get ('/api/pins/:key', getPin);
   app.get ('/api/pins', getPins);
   app.post ('/api/pins', isAuthenticated, createPin);

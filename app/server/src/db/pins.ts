@@ -47,11 +47,21 @@ export async function getPins (): Promise<PinArrayResult> {
 
 /**
  * Get pins by creator
- * @param creator Creator email
+ * @param creator Creator key
  * @returns Pin array result
  */
 export async function getPinsByCreator (creator: number): Promise<PinArrayResult> {
   const t = await c.find ({ creator }).toArray ();
+  return ({ status: 200, pins: t });
+}
+
+/**
+ * Get pins pinned by a pinner
+ * @param pinner Pinner key
+ * @returns Pin array result
+ */
+export async function getPinsByPinner (pinner: number): Promise<PinArrayResult> {
+  const t = await c.find ({ pinners: pinner }).toArray ();
   return ({ status: 200, pins: t });
 }
 

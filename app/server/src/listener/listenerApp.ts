@@ -91,10 +91,17 @@ export async function getPins (req: Request, res: Response) {
   if ((req.query) && (req.query.creator)) {
     const creator = Number (req.query.creator);
     if (Number.isNaN (creator)) {
-      res.status (404).json ({});
+      res.status (400).json ({});
       return;
     }
     t = await db.getPinsByCreator (creator);
+  } else if ((req.query) && (req.query.pinner)) {
+    const pinner = Number (req.query.pinner);
+    if (Number.isNaN (pinner)) {
+      res.status (400).json ({});
+      return;
+    }
+    t = await db.getPinsByPinner (pinner);
   } else {
     t = await db.getPins ();
   }
@@ -103,24 +110,6 @@ export async function getPins (req: Request, res: Response) {
   if (t.status === 200 && t.pins !== undefined) {
     const t1 = t.pins.map ((pin) => transformPin (pin, user?.key));
     res.status (200).json (t1);
-  } else {
-    res.status (400).json ({});
-  }
-}
-
-/**
- * Get list of pins that the authenticated user has pinned
- * @param req Request
- * @param res Response
- */
-export async function getPinned (req: Request, res: Response) {
-  console.log ('getPinned', req.params);
-  const user = req.user as User;
-  const t = await db.getPins ();
-  if (t.status === 200 && t.pins !== undefined) {
-    const t1 = t.pins.filter ((pin) => pin.pinners.includes (user.key));
-    const t2 = t1.map ((pin) => transformPin (pin, user?.key));
-    res.status (200).json (t2);
   } else {
     res.status (400).json ({});
   }

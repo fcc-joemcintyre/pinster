@@ -3,7 +3,8 @@ import { Db } from 'mongodb';
 import { initDatabase, closeDatabase } from '../src/db/db.js';
 import { initCounters, getNextSequence } from '../src/db/counters.js';
 import { getUserByEmail, initUsers, registerUser, User } from '../src/db/users.js';
-import { createPin, getPin, getPinners, getPins, getPinsByCreator, initPins, removePin, setPinner, updatePin }
+import { createPin, getPin, getPinners, getPins, getPinsByCreator, getPinsByPinner,
+  initPins, removePin, setPinner, updatePin }
   from '../src/db/pins.js';
 
 let db: Db | null;
@@ -119,6 +120,30 @@ describe ('db / apps', function () {
 
     it ('get pins for non-existent creator', async function () {
       const r = await getPinsByCreator (0);
+      expect (r.status).toEqual (200);
+      expect (r.pins).toBeAnArrayOfLength (0);
+    });
+
+    it ('get pins by pinner with 2 pins', async function () {
+      const r = await getPinsByPinner (2);
+      expect (r.status).toEqual (200);
+      expect (r.pins).toBeAnArrayOfLength (2);
+    });
+
+    it ('get pins by pinner with 1 pin', async function () {
+      const r = await getPinsByPinner (3);
+      expect (r.status).toEqual (200);
+      expect (r.pins).toBeAnArrayOfLength (1);
+    });
+
+    it ('get pins by pinner with 0 pins', async function () {
+      const r = await getPinsByPinner (1);
+      expect (r.status).toEqual (200);
+      expect (r.pins).toBeAnArrayOfLength (0);
+    });
+
+    it ('get pins for non-existent pinner', async function () {
+      const r = await getPinsByPinner (0);
       expect (r.status).toEqual (200);
       expect (r.pins).toBeAnArrayOfLength (0);
     });

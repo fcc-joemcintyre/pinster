@@ -18,9 +18,9 @@ const initialUsers: User[] = [
 ];
 
 const initialPins: Pin[] = [
-  { key: 1, creator: 1, category: 'C1', title: 'T1', text: 'Text 1', url: '', pinners: [] },
-  { key: 2, creator: 1, category: 'C1', title: 'T2', text: 'Text 2', url: '', pinners: [] },
-  { key: 3, creator: 2, category: 'C1', title: 'T3', text: 'Text 3', url: '', pinners: [] },
+  { key: 1, creator: 1, category: 'C1', title: 'T1', text: 'Text 1', url: 'https://www.example.com/1.jpg', pinners: [2] },
+  { key: 2, creator: 1, category: 'C1', title: 'T2', text: 'Text 2', url: 'https://www.example.com/2.jpg', pinners: [2, 3] },
+  { key: 3, creator: 2, category: 'C1', title: 'T3', text: 'Text 3', url: 'https://www.example.com/3.jpg', pinners: [] },
 ];
 
 let client: MongoClient;
