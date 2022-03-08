@@ -4,14 +4,13 @@ import { CssBaseline, ThemeProvider, Typography } from '@mui/material';
 
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { useVerifyLoginMutation } from '../../store/api';
-import { setPins } from '../../store/appActions';
 import { setAuthenticated } from '../../store/userSlice';
 
 import { Home } from '../home';
 import { Register } from '../register';
 import { Login } from '../login';
 import { Logout } from '../logout';
-import { AddPin, EditPin, Pinned } from '../pins';
+import { CreatePin, DeletePin, Pinned, UpdatePin } from '../pins';
 import { Manage } from '../manage';
 import { About } from '../about';
 
@@ -28,19 +27,18 @@ export const App = () => {
   const dispatch = useAppDispatch ();
   const authenticated = useAppSelector ((a) => a.user.authenticated);
   const [loading, setLoading] = useState (true);
-  const [verifyLogin, { isLoading }] = useVerifyLoginMutation ();
+  const [verifyLogin] = useVerifyLoginMutation ();
 
   useEffect (() => {
     async function q () {
       const user = await verifyLogin ().unwrap ();
       await dispatch (setAuthenticated ({ authenticated: user.authenticated, key: user.key }));
-      await dispatch (setPins ());
       setLoading (false);
     }
     q ();
   }, [dispatch, verifyLogin]);
 
-  if (isLoading || loading) {
+  if (loading) {
     return (
       <ThemeProvider theme={theme}>
         <>
@@ -67,8 +65,9 @@ export const App = () => {
 
               <Route path='/pinned' element={<AuthRoute><Pinned /></AuthRoute>} />
               <Route path='/manage' element={<AuthRoute><Manage /></AuthRoute>} />
-              <Route path='/add' element={<AuthRoute><AddPin /></AuthRoute>} />
-              <Route path='/edit/:key' element={<AuthRoute><EditPin /></AuthRoute>} />
+              <Route path='/create' element={<AuthRoute><CreatePin /></AuthRoute>} />
+              <Route path='/edit/:key' element={<AuthRoute><UpdatePin /></AuthRoute>} />
+              <Route path='/delete/:key' element={<AuthRoute><DeletePin /></AuthRoute>} />
 
               <Route path='*' element={<NotFoundPage />} />
             </Routes>

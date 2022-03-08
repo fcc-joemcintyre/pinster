@@ -1,13 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { api } from './api';
 import { userSlice } from './userSlice';
-import { pins } from './pins';
+import { pinSlice } from './pinSlice';
 
 export const store = configureStore ({
   reducer: {
     [api.reducerPath]: api.reducer,
     user: userSlice.reducer,
-    pins,
+    pins: pinSlice.reducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware ().concat (api.middleware),
 });

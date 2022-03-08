@@ -1,9 +1,7 @@
 import { useNavigate } from 'react-router';
 import { Box, Button, Divider, Grid, Paper, Stack, Typography } from '@mui/material';
 import PinIcon from '@mui/icons-material/PushPin';
-import { useAppDispatch } from '../../store/hooks';
-import { deletePin, togglePinned } from '../../store/appActions';
-import { Pin } from '../../store/pins';
+import { Pin, useTogglePinMutation } from '../../store/api';
 
 type Props = {
   pin: Pin,
@@ -15,7 +13,7 @@ export const PinCard = ({
   pin, allowEdit, allowToggle,
 }: Props) => {
   const navigate = useNavigate ();
-  const dispatch = useAppDispatch ();
+  const [togglePinned] = useTogglePinMutation ();
 
   return (
     <Paper>
@@ -29,7 +27,7 @@ export const PinCard = ({
             <PinIcon
               fontSize='small'
               style={{ transform: 'rotate(0.125turn)' }}
-              onClick={() => { dispatch (togglePinned (pin.key)); }}
+              onClick={() => { togglePinned ({ key: pin.key, action: !pin.pinned }); }}
             />
             {' '}
             {pin.count}
@@ -50,7 +48,7 @@ export const PinCard = ({
               </Button>
               <Button
                 size='small'
-                onClick={() => { dispatch (deletePin (pin.key)); }}
+                onClick={() => { navigate (`/delete/${pin.key}`); }}
               >
                 Delete
               </Button>

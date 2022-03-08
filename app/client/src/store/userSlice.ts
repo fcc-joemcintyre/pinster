@@ -1,10 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-export type User = {
-  authenticated: boolean,
-  key: number,
-};
+import { User } from './api';
 
 const initialState: User = {
   authenticated: false,

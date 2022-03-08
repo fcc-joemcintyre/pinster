@@ -7,7 +7,7 @@ export const AddPin = () => {
   return (
     <Paper
       sx={{ cursor: 'pointer', color: 'primary.main' }}
-      onClick={() => { navigate ('/add'); }}
+      onClick={() => { navigate ('/create'); }}
     >
       <Box textAlign='center' pt='20px'>
         <AddIcon />

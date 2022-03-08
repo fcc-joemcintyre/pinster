@@ -1,16 +1,20 @@
-import { Masonry } from '@mui/lab';
 import { Typography } from '@mui/material';
+import { Masonry } from '@mui/lab';
 import { useAppSelector } from '../../store/hooks';
+import { useGetPinsForPinnerQuery } from '../../store/api';
 import { PageContent } from '../util';
 import { PinCard } from './PinCard';
 
 export const Pinned = () => {
-  const pins = useAppSelector ((a) => a.pins.filter ((b) => b.pinned));
-
+  const key = useAppSelector ((a) => a.user.key);
+  const { data: pins, isLoading } = useGetPinsForPinnerQuery ({ key });
   return (
     <PageContent>
-      { pins.length === 0 && <Typography>Nothing pinned yet.</Typography> }
-      { pins.length > 0 && (
+      { isLoading || !pins ? (
+        <Typography textAlign='center'>Loading...</Typography>
+      ) : pins.length === 0 ? (
+        <Typography>Nothing pinned yet.</Typography>
+      ) : (
         <Masonry columns={{ xs: 2, sm: 4 }} spacing={2}>
           { pins.map ((pin) => (
             <PinCard
