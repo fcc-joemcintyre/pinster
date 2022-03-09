@@ -11,8 +11,8 @@
     "@cygns/use-fields": "0.0.1",
     "@emotion/react": "11.8.1",
     "@emotion/styled": "11.8.1",
-    "@mui/material": "5.4.4",
-    "@mui/icons-material": "5.4.4",
+    "@mui/material": "5.5.0",
+    "@mui/icons-material": "5.5.0",
     "react": "17.0.2",
     "react-dom": "17.0.2"
   },
@@ -22,10 +22,12 @@
   },
   "devDependencies": {
     "@cygns/eslint-config": "5.0.0",
+    "@typescript-eslint/parser": "5.14.0",
+    "@typescript-eslint/eslint-plugin": "5.14.0",
     "eslint": "7.24.0",
     "eslint-plugin-import": "2.25.4",
-    "eslint-plugin-react": "7.28.0",
+    "eslint-plugin-react": "7.29.3",
     "eslint-plugin-react-hooks": "4.3.0",
-    "typescript": "4.5.5"
+    "typescript": "4.6.2"
   }
 }

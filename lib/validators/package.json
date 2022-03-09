@@ -16,13 +16,13 @@
   "devDependencies": {
     "@cygns/eslint-config-node": "6.0.0",
     "@types/mocha": "9.1.0",
-    "@typescript-eslint/eslint-plugin": "5.12.1",
-    "@typescript-eslint/parser": "5.12.1",
-    "earljs": "0.2.1",
+    "@typescript-eslint/eslint-plugin": "5.14.0",
+    "@typescript-eslint/parser": "5.14.0",
+    "earljs": "0.2.2",
     "eslint": "7.24.0",
     "eslint-plugin-import": "2.25.4",
     "mocha": "9.2.1",
-    "ts-node": "10.5.0",
-    "typescript": "4.5.5"
+    "ts-node": "10.7.0",
+    "typescript": "4.6.2"
   }
 }
