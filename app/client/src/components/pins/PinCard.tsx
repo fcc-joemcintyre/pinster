@@ -17,7 +17,12 @@ export const PinCard = ({
 
   return (
     <Paper>
-      <img src={pin.url} style={{ maxHeight: '140px', maxWidth: '100%', objectFit: 'cover' }} />
+      <img
+        src={pin.url}
+        style={{ maxHeight: '140px', maxWidth: '100%', objectFit: 'cover' }}
+        alt='photo'
+        onError={(e) => { e.currentTarget.src = '/images/image404-75.png'; }}
+      />
       <Box p='4px'>
         <Typography textAlign='center' paragraph>{pin.title}</Typography>
         <Typography variant='body2'>{pin.text}</Typography>
