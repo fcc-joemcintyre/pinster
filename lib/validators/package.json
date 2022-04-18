@@ -14,13 +14,13 @@
     "lint": "eslint --ext .js,.ts,.tsx --no-error-on-unmatched-pattern ."
   },
   "devDependencies": {
-    "@cygns/eslint-config-node": "6.0.0",
+    "@cygns/eslint-config-node": "6.1.0",
     "@types/mocha": "9.1.0",
-    "@typescript-eslint/eslint-plugin": "5.14.0",
-    "@typescript-eslint/parser": "5.14.0",
+    "@typescript-eslint/eslint-plugin": "5.19.0",
+    "@typescript-eslint/parser": "5.19.0",
     "earljs": "0.2.2",
-    "eslint": "7.24.0",
-    "eslint-plugin-import": "2.25.4",
+    "eslint": "8.13.0",
+    "eslint-plugin-import": "2.26.0",
     "mocha": "9.2.1",
     "ts-node": "10.7.0",
     "typescript": "4.6.2"
