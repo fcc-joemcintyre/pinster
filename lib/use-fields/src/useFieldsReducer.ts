@@ -9,7 +9,7 @@ export enum FieldAction {
 };
 
 type Action =
-  { type: FieldAction.VALUE, name: string, value: string } |
+  { type: FieldAction.VALUE, name: string, value: string | boolean } |
   { type: FieldAction.REQUIRED, name: string, required: boolean } |
   { type: FieldAction.ERROR, name: string, error: string | null } |
   { type: FieldAction.ERRORS, errors: FieldError[] } |

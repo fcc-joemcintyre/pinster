@@ -1,5 +1,5 @@
 /* eslint-disable import/no-unresolved */
-import { useCallback, useReducer } from 'react';
+import { ChangeEvent, FocusEvent, useCallback, useReducer } from 'react';
 import { Field, FieldError, FieldValue, CrossFieldValidatorFn } from './index.js';
 import { FieldAction, init, reducer } from './useFieldsReducer.js';
 
@@ -15,11 +15,11 @@ export const useFields = (
 ) => {
   const [fields, dispatch] = useReducer (reducer, initialFields, init);
 
-  const setFields = useCallback ((data) => {
+  const setFields = useCallback ((data: Field[]) => {
     dispatch ({ type: FieldAction.SET, fields: init (data) });
   }, [dispatch]);
 
-  const onChange = useCallback ((e) => {
+  const onChange = useCallback ((e: ChangeEvent<HTMLInputElement>) => {
     const { name } = e.target;
     if (name && fields[name]) {
       const value = (e.target.type === 'checkbox') ? e.target.checked : e.target.value;
@@ -27,7 +27,7 @@ export const useFields = (
     }
   }, [dispatch, fields]);
 
-  const onValidate = useCallback ((e) => {
+  const onValidate = useCallback ((e: FocusEvent<HTMLInputElement>) => {
     const name = e.target && e.target.name;
     if (name && fields[name]) {
       const errors = validate (fields[name], fields, validators);
@@ -54,11 +54,11 @@ export const useFields = (
     return result;
   }, [fields]);
 
-  const setValue = useCallback ((name, value) => {
+  const setValue = useCallback ((name: string, value: string | boolean) => {
     dispatch ({ type: FieldAction.VALUE, name, value });
   }, [dispatch]);
 
-  const setRequired = useCallback ((name, required) => {
+  const setRequired = useCallback ((name: string, required: boolean) => {
     dispatch ({ type: FieldAction.REQUIRED, name, required });
   }, [dispatch]);
 
@@ -80,11 +80,11 @@ export const useFields = (
     return list.length > 0 ? list : null;
   }, [fields, dispatch, validators]);
 
-  const addField = useCallback ((field) => {
+  const addField = useCallback ((field: Field) => {
     dispatch ({ type: FieldAction.ADDFIELD, field });
   }, [dispatch]);
 
-  const removeField = useCallback ((name) => {
+  const removeField = useCallback ((name: string) => {
     dispatch ({ type: FieldAction.REMOVEFIELD, name });
   }, [dispatch]);
 

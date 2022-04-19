@@ -10,8 +10,8 @@
   "typings": "./lib/index.d.ts",
   "dependencies": {
     "prop-types": "15.8.1",
-    "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react": "18.0.0",
+    "react-dom": "18.0.0"
   },
   "scripts": {
     "build": "tsc",
@@ -21,6 +21,8 @@
   "devDependencies": {
     "@cygns/eslint-config": "5.1.0",
     "@types/mocha": "9.1.0",
+    "@types/react": "18.0.5",
+    "@types/react-dom": "18.0.1",
     "@typescript-eslint/parser": "5.20.0",
     "@typescript-eslint/eslint-plugin": "5.20.0",
     "earljs": "0.2.3",
