@@ -32,7 +32,15 @@ Client Loading:
 
 Client Display:
 
-
+- Home page displaying a selection of content as a set of pins
+- Page to display set of pins for a user
+- Application information page (About)
+- Interface to register as a new user
+- Login
+- When logged in,
+  - Interface to add news pins
+  - Interface to edit existing pins
+  - Interface to remove existing pins
 
 Data Exchange:
 
@@ -85,7 +93,7 @@ generating ES2020 Javascript conforming to the native ES20xx support provided
 in this version of Node.js.
 Data is stored in MongoDB (4.x driver for MongoDB 4.x or 5.x servers).
 
-The client interface is implemented with React 17.x using ES2020 Javascript
-as supported by Babel. Redux and react-router are also used.
+The client interface is implemented with React 18.x using ES2020 Javascript
+as supported by Babel. Material-UI, react-redux and react-router are also used.
 
-Styles are defined using CSS-in-JS using Styled Components.
+Styles are defined using CSS-in-JS using Emotion.

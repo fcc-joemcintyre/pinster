@@ -4,9 +4,9 @@ The Internet is full of images to share and comment on with your friends,
 Pinster lets you show off the ones you like and see the ones other people
 like.
 
-This application is built using *React (16.x)*, *Redux*, *react-router*
-and *styled-components* on the client. The server uses *Nodejs (15.x)*,
-*Express* and *Passport*. The database is *MongoDB (4.x)*.
+This application is built using *React (18.x)*, *react-redux*, *react-router*
+and *Material-UI / emotion* on the client. The server uses *Nodejs (16.x)*,
+*Express* and *Passport*. The database is *MongoDB (5.x)*.
 
 ## Live instance
 
@@ -110,11 +110,6 @@ The application also uses the following environment variables,
 - SESSION_SECRET
 
 HTTP Session secret (any text string).
-
-- TWITTER_CONSUMER_KEY
-- TWITTER_CONSUMER_SECRET
-
-Twitter API access values, provided by Twitter.
 
 ## License
 MIT
