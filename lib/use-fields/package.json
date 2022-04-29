@@ -10,8 +10,8 @@
   "typings": "./lib/index.d.ts",
   "dependencies": {
     "prop-types": "15.8.1",
-    "react": "18.0.0",
-    "react-dom": "18.0.0"
+    "react": "18.1.0",
+    "react-dom": "18.1.0"
   },
   "scripts": {
     "build": "tsc",
@@ -20,18 +20,18 @@
   },
   "devDependencies": {
     "@cygns/eslint-config": "5.1.0",
-    "@types/mocha": "9.1.0",
-    "@types/react": "18.0.5",
-    "@types/react-dom": "18.0.1",
-    "@typescript-eslint/parser": "5.20.0",
-    "@typescript-eslint/eslint-plugin": "5.20.0",
+    "@types/mocha": "9.1.1",
+    "@types/react": "18.0.8",
+    "@types/react-dom": "18.0.3",
+    "@typescript-eslint/parser": "5.21.0",
+    "@typescript-eslint/eslint-plugin": "5.21.0",
     "earljs": "0.2.3",
-    "eslint": "8.13.0",
+    "eslint": "8.14.0",
     "eslint-plugin-import": "2.26.0",
     "eslint-plugin-react": "7.29.4",
-    "eslint-plugin-react-hooks": "4.4.0",
+    "eslint-plugin-react-hooks": "4.5.0",
     "mocha": "9.2.2",
     "ts-node": "10.7.0",
-    "typescript": "4.6.3"
+    "typescript": "4.6.4"
   }
 }
