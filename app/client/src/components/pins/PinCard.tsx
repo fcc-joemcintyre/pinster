@@ -20,6 +20,7 @@ export const PinCard = ({
       <Box textAlign='center'>
         <img
           src={pin.url}
+          crossOrigin='anonymous'
           style={{ maxHeight: '140px', maxWidth: '100%', objectFit: 'cover' }}
           alt='photo'
           onError={(e) => {
